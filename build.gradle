@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'br.ufcg.computacao'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(platform('org.junit:junit-bom:5.10.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
+application {
+    // Define a classe que será executada ao rodar o comando './gradlew run'
+    // Ideal para executar o benchmark de todos os algoritmos.
+    mainClass = 'br.ufcg.computacao.benchmark.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
