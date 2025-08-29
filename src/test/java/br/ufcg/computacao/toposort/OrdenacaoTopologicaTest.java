@@ -14,20 +14,28 @@ import br.ufcg.computacao.graph.Grafo;
 /**
  * Testes unitários para a classe {@link OrdenacaoTopologica}.
  * 
- * <p>Esta classe contém testes que verificam o funcionamento correto do algoritmo
- * de ordenação topológica em diversos cenários. São testados diferentes tipos de grafos
- * para garantir que o algoritmo funcione corretamente em todas as situações esperadas.</p>
+ * <p>
+ * Esta classe contém testes que verificam o funcionamento correto do algoritmo
+ * de ordenação topológica em diversos cenários. São testados diferentes tipos
+ * de grafos para garantir que o algoritmo funcione corretamente em todas as situações
+ * esperadas.
+ * </p>
  * 
- * <p>Cenários testados:</p>
+ * <p>
+ * Cenários testados:
+ * </p>
  * <ul>
- *   <li>Grafo simples direcionado acíclico (DAG)</li>
- *   <li>Grafo mais complexo representando dependências entre disciplinas acadêmicas</li>
- *   <li>Grafo com ciclos (deve lançar exceção)</li>
- *   <li>Grafo vazio (caso especial)</li>
+ * <li>Grafo simples direcionado acíclico (DAG)</li>
+ * <li>Grafo mais complexo representando dependências entre disciplinas
+ * acadêmicas</li>
+ * <li>Grafo com ciclos (deve lançar exceção)</li>
+ * <li>Grafo vazio (caso especial)</li>
  * </ul>
  * 
- * <p>A validação dos resultados é feita verificando se a ordem topológica retornada
- * respeita todas as restrições de precedência definidas pelas arestas do grafo.</p>
+ * <p>
+ * A validação dos resultados é feita verificando se a ordem topológica
+ * retornada respeita todas as restrições de precedência definidas pelas arestas do grafo.
+ * </p>
  * 
  * @author Joyce Vitória Nascimento Rodrigues
  * @version 1.0
@@ -43,37 +51,35 @@ public class OrdenacaoTopologicaTest {
     /**
      * Configura os grafos de teste antes de cada teste.
      * 
-     * <p>Esta configuração inicializa três tipos diferentes de grafos:</p>
+     * <p>
+     * Esta configuração inicializa três tipos diferentes de grafos:
+     * </p>
      * <ol>
-     *   <li>grafoSimples: Um DAG simples com 6 vértices e dependências variadas</li>
-     *   <li>grafoDisciplinas: Um grafo representando pré-requisitos entre disciplinas acadêmicas</li>
-     *   <li>grafoCiclico: Um grafo com um ciclo para testar a detecção de ciclos</li>
+     * <li>grafoSimples: Um DAG simples com 6 vértices e dependências variadas</li>
+     * <li>grafoDisciplinas: Um grafo representando pré-requisitos entre disciplinas
+     * acadêmicas</li>
+     * <li>grafoCiclico: Um grafo com um ciclo para testar a detecção de ciclos</li>
      * </ol>
      */
     @BeforeEach
     public void setUp() {
         // Grafo simples com 6 vértices formando um DAG
         grafoSimples = new Grafo(6);
-        grafoSimples.adicionarAresta(5, 2); // 5 -> 2
-        grafoSimples.adicionarAresta(5, 0); // 5 -> 0
-        grafoSimples.adicionarAresta(4, 0); // 4 -> 0
-        grafoSimples.adicionarAresta(4, 1); // 4 -> 1
-        grafoSimples.adicionarAresta(2, 3); // 2 -> 3
-        grafoSimples.adicionarAresta(3, 1); // 3 -> 1
+        grafoSimples.adicionarAresta(5, 2);
+        grafoSimples.adicionarAresta(5, 0);
+        grafoSimples.adicionarAresta(4, 0);
+        grafoSimples.adicionarAresta(4, 1);
+        grafoSimples.adicionarAresta(2, 3);
+        grafoSimples.adicionarAresta(3, 1);
 
         // Grafo representando dependências entre disciplinas
         grafoDisciplinas = new Grafo(8);
-        // Matemática Discreta (0) -> Estrutura de Dados (2)
+
         grafoDisciplinas.adicionarAresta(0, 2);
-        // Programação 1 (1) -> Estrutura de Dados (2)
         grafoDisciplinas.adicionarAresta(1, 2);
-        // Estrutura de Dados (2) -> Algoritmos e Grafos (3)
         grafoDisciplinas.adicionarAresta(2, 3);
-        // Estrutura de Dados (2) -> Banco de Dados (5)
         grafoDisciplinas.adicionarAresta(2, 5);
-        // Algoritmos e Grafos (3) -> Inteligência Artificial (4)
         grafoDisciplinas.adicionarAresta(3, 4);
-        // Teoria da Computação (6) -> Compiladores (7)
         grafoDisciplinas.adicionarAresta(6, 7);
 
         // Grafo com ciclo
@@ -85,104 +91,82 @@ public class OrdenacaoTopologicaTest {
 
     /**
      * Testa a ordenação topológica em um grafo simples.
-     * 
-     * <p>Este teste verifica se:</p>
-     * <ul>
-     *   <li>A ordenação topológica do grafoSimples é válida (todas as dependências são respeitadas)</li>
-     *   <li>Todos os vértices estão presentes na ordenação resultante</li>
-     * </ul>
-     * 
-     * <p>Uma ordenação válida para o grafoSimples seria [5, 4, 2, 3, 0, 1] ou qualquer
-     * outra variação que respeite as restrições de precedência.</p>
      */
     @Test
     @DisplayName("Deve ordenar corretamente um grafo simples")
     void testOrdenacaoGrafoSimples() {
         OrdenacaoTopologica ordenacao = new OrdenacaoTopologica(grafoSimples);
         List<Integer> resultado = ordenacao.ordenar();
-        
-        // Verifica se a ordem topológica é válida
+
+
         verificarOrdemTopologicaValida(grafoSimples, resultado);
-        
-        // Um resultado válido seria [5, 4, 2, 3, 0, 1] ou outra variante que respeita as dependências
         assertEquals(6, resultado.size(), "A ordenação deve conter todos os vértices do grafo");
     }
 
     /**
-     * Testa a ordenação topológica em um grafo representando dependências entre disciplinas acadêmicas.
+     * Testa a ordenação topológica em um grafo representando dependências entre
+     * disciplinas acadêmicas.
      * 
-     * <p>Este teste verifica se:</p>
-     * <ul>
-     *   <li>A ordenação topológica do grafoDisciplinas é válida (todas as dependências são respeitadas)</li>
-     *   <li>Relações de pré-requisito específicas são mantidas na ordenação resultante</li>
-     * </ul>
-     * 
-     * <p>Por exemplo, verifica se Estrutura de Dados aparece depois de seus pré-requisitos
-     * (Matemática Discreta e Programação 1) e antes das disciplinas que dependem dela
-     * (Algoritmos e Grafos, Banco de Dados).</p>
      */
     @Test
     @DisplayName("Deve ordenar corretamente um grafo de dependências entre disciplinas")
     void testOrdenacaoDisciplinas() {
         OrdenacaoTopologica ordenacao = new OrdenacaoTopologica(grafoDisciplinas);
         List<Integer> resultado = ordenacao.ordenar();
-        
-        // Verifica se a ordem topológica é válida
+
         verificarOrdemTopologicaValida(grafoDisciplinas, resultado);
-        
+
         // Verifica algumas dependências específicas
-        // Estrutura de Dados (2) deve vir após Matemática Discreta (0) e Programação 1 (1)
-        assertTrue(resultado.indexOf(0) < resultado.indexOf(2), 
+        assertTrue(resultado.indexOf(0) < resultado.indexOf(2),
                 "Matemática Discreta deve vir antes de Estrutura de Dados");
-        assertTrue(resultado.indexOf(1) < resultado.indexOf(2), 
+        assertTrue(resultado.indexOf(1) < resultado.indexOf(2),
                 "Programação 1 deve vir antes de Estrutura de Dados");
-        
-        // Algoritmos e Grafos (3) deve vir após Estrutura de Dados (2)
-        assertTrue(resultado.indexOf(2) < resultado.indexOf(3), 
+        assertTrue(resultado.indexOf(2) < resultado.indexOf(3),
                 "Estrutura de Dados deve vir antes de Algoritmos e Grafos");
-        
-        // Inteligência Artificial (4) deve vir após Algoritmos e Grafos (3)
-        assertTrue(resultado.indexOf(3) < resultado.indexOf(4), 
+        assertTrue(resultado.indexOf(3) < resultado.indexOf(4),
                 "Algoritmos e Grafos deve vir antes de Inteligência Artificial");
     }
 
     /**
-     * Testa o comportamento do algoritmo quando aplicado a um grafo que contém ciclos.
+     * Testa o comportamento do algoritmo quando aplicado a um grafo que contém
+     * ciclos.
      * 
-     * <p>A ordenação topológica só é possível em grafos direcionados acíclicos (DAGs),
+     * <p>
+     * A ordenação topológica só é possível em grafos direcionados acíclicos (DAGs),
      * portanto o algoritmo deve detectar a presença de ciclos e lançar uma exceção
-     * apropriada.</p>
+     * apropriada.
+     * </p>
      * 
-     * <p>Este teste verifica se:</p>
+     * <p>
+     * Este teste verifica se:
+     * </p>
      * <ul>
-     *   <li>Uma exceção do tipo {@link IllegalArgumentException} é lançada quando o grafo contém ciclos</li>
-     *   <li>A mensagem de exceção contém informação útil sobre a presença de ciclos</li>
+     * <li>Uma exceção do tipo {@link IllegalArgumentException} é lançada quando o
+     * grafo contém ciclos</li>
      * </ul>
      */
     @Test
     @DisplayName("Deve lançar exceção para grafo com ciclo")
     void testGrafoComCiclo() {
         OrdenacaoTopologica ordenacao = new OrdenacaoTopologica(grafoCiclico);
-        
-        // Espera-se que uma exceção seja lançada devido à presença de ciclo
+
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             ordenacao.ordenar();
         });
-        
+
         String mensagemEsperada = "O grafo contém ciclos";
         String mensagemAtual = exception.getMessage();
-        
-        assertTrue(mensagemAtual.contains(mensagemEsperada), 
+
+        assertTrue(mensagemAtual.contains(mensagemEsperada),
                 "A mensagem de exceção deve conter '" + mensagemEsperada + "'");
     }
 
     /**
      * Testa o comportamento do algoritmo quando aplicado a um grafo vazio.
      * 
-     * <p>Este é um caso especial que verifica se o algoritmo lida corretamente
-     * com grafos que não contêm vértices.</p>
-     * 
-     * <p>O resultado esperado é uma lista vazia, já que não há vértices para ordenar.</p>
+     * <p>
+     * O resultado esperado é uma lista vazia, já que não há vértices para ordenar.
+     * </p>
      */
     @Test
     @DisplayName("Deve funcionar para grafo vazio")
@@ -190,39 +174,34 @@ public class OrdenacaoTopologicaTest {
         Grafo grafoVazio = new Grafo(0);
         OrdenacaoTopologica ordenacao = new OrdenacaoTopologica(grafoVazio);
         List<Integer> resultado = ordenacao.ordenar();
-        
+
         assertTrue(resultado.isEmpty(), "A ordenação de um grafo vazio deve ser vazia");
     }
 
     /**
      * Método auxiliar para verificar se uma ordenação topológica é válida.
      * 
-     * <p>Uma ordenação topológica é considerada válida se, para cada aresta (u, v) no grafo,
-     * o vértice u aparece antes do vértice v na sequência ordenada. Este método valida
-     * sistematicamente todas as arestas do grafo para garantir que esta propriedade seja mantida.</p>
-     * 
-     * <p>Algoritmo de verificação:</p>
-     * <ol>
-     *   <li>Cria um array para mapear cada vértice à sua posição na ordenação</li>
-     *   <li>Para cada aresta (u, v) no grafo, verifica se u aparece antes de v na ordenação</li>
-     *   <li>Caso alguma aresta viole esta propriedade, o teste falha</li>
-     * </ol>
+     * <p>
+     * Uma ordenação topológica é considerada válida se, para cada aresta (u, v) no
+     * grafo, o vértice u aparece antes do vértice v na sequência ordenada. 
+     * </p>
      * 
      * @param grafo o grafo direcionado original
-     * @param ordem a lista de vértices representando uma possível ordenação topológica
-     * @throws AssertionError se a ordenação não for válida (alguma dependência for violada)
+     * @param ordem a lista de vértices representando uma possível ordenação
+     *              topológica
+     * @throws AssertionError se a ordenação não for válida
      */
     private void verificarOrdemTopologicaValida(Grafo grafo, List<Integer> ordem) {
-        // Criar um mapa para armazenar a posição de cada vértice na ordenação
+        // Mapa para armazenar a posição de cada vértice na ordenação
         int[] posicao = new int[grafo.getNumVertices()];
         for (int i = 0; i < ordem.size(); i++) {
             posicao[ordem.get(i)] = i;
         }
-        
-        // Verificar se todas as dependências são respeitadas
+
+        // Verificação do respeito das dependências
         for (int u = 0; u < grafo.getNumVertices(); u++) {
             for (int v : grafo.getAdjacentes(u)) {
-                assertTrue(posicao[u] < posicao[v], 
+                assertTrue(posicao[u] < posicao[v],
                         "Ordem topológica inválida: vértice " + u + " deve vir antes de " + v);
             }
         }
