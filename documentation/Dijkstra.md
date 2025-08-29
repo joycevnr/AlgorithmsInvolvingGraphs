@@ -4,10 +4,10 @@
 ## Introdução
 Nessa documentação está o resultado da pesquisa teórica sobre o Algoritmo de Dijkstra que calcula a menor distância entre um verticede um grafo até outro. Também se encontra a explicação sobre suas implementações, com e sem o uso de uma fila de prioridade, e uma breve discussão sobre seus desempenhos e eficiência.  
 
-### História e motivação
+## História e motivação
 O Algoritmo de Dijkstra, como o nome já indica, foi desenvolvido pelo matématico holandês Edsger W. Dijkstra(1930-2002).De acordo com uma entrevista que ele deu em 2001 para a revista Communications of the ACM, a história por trás do algritmo começa com a inauguração do computaor ARMAC em 1956, quando Dijkstra precisava achar um problema que pudesse mostrar a utilização prática do computador. O problema deveria demostrar o uso matématico do ARMAC, mas também tinha que ser simples o suficiente para que pessoas que não trabalhassem com matématica pudessem entender o problema e a solução. Com base nessas restrições, Dijkstra escolheu um problema prático e fácil de entender: Escolhendo duas, de 64 cidades na Holanda, qual é o menor caminho entre elas?.Mas o algoritmo só foi escrito durante uma viagem com sua noiva em Amsterdã, quando pararam pra tomar um café, ele desenvolveu um algoritmo que recebendo um grafo, conjunto de vértices/nós conectados entre si por arestas com valores positivos, retornaria o menor caminho entre um ponto e outro, em apenas **20 minutos**. Por não ter acesso a papel e lapis no momento, Dijkstra disse que teve que forçar sua mente a evitar complicações desnecessárias. O Algoritmo de Dijkstra só foi publicado em 1959, três anos depois, porém é usado até hoje pra diversos problemas de logística e é a base para diversos sistemas de navegação como o GPS. Então por que aprender esse algoritmo? As suas aplicações são enumeras, mas se baseiam em procurar a rota mais curta, mais barata e mais rapida.
        
-#### Funcionamento
+## Funcionamento
 A entrada padrão recebe um grafo, em formato de matriz de adjacência ou lista de adjacência, junto com a origem, normalmente representada por um inteiro. Pode também receber o destino, também representado por um inteiro, se o objetivo for receber só a distancia mínima entre a origem e o destino. Nossas implementações receberam a origem(chamaremos de raiz) e uma lista de adjacência. Usaremos lista de adjacência pra representar os grafos, para podermos observar o peso entre as arestas que conectam os vertices. A lista de adjacência consiste em uma lista I de listas, cada lista J dentro dela representa uma lista de arestas que conectam o vertice I aos outros vertices cujos indices são iguais aos contidos na lista J. O valor 0(zero) significa que não a aresta que conecta o vertice I ao vertice J.
 
 Já o retorno da nossa implementação será um array e inteiro contendo dois arrays também de inteiro: O primeiro representa as menores distancia entre o vertice da origem e o vertice I, sendo I um indice do array de distancias, o segundo representa o array de "pais", vertice responsavel por chegar no vertice J, sendo J um indice do array de pais. Implementamos também um método extra printCaminho(int[] pais, int destino) que usa o array de pais resultante do Algoritmo de Dijkstra para mostrar visualmente o menor caminho entre a origem e o destino. 
@@ -115,10 +115,12 @@ E de novo montamos o array menor_caminho com as menores distancias e os vertices
 		return menor_caminho;  
 ```
 
-##### Custo e desempenho
+## Custo e desempenho
 
 O algoritmo de Dijkstra sem fila de prioridade tem dentro de um loop de custo O(V), onde V é o número de vertices, outros dois custos lineares, distanciaMinima(int[] distancias, int[] visitados) tem custo O(V) e a segunda parte do loop também, o que totaliza um custo de O(2V²), o que torna essa implementação O(V²), custo bastante alto. Porém, se o numero de arestas se aproxima de V², então o custo se torna aceitavel. Logo, a implementação de Dijkstra sem fila de prioridade é mais recomendada para grafos mais ensos, com mais conecções entre seus vertices.
+
 Já a implementação com fila de prioridade tem um loop que depende do tamanho da fila, que pode ser no maximo V, onde V é o numero de vertices. Temos que manter em mente que, devido a PriorityQueue ser uma implementação de Heap, o custo de inserções e de remoções é O(logN), nesse caso O(logV). Dentro do loop while acontece primeiro as remoções, O(logV), e depois um loop O(v) com as inserções, ou seja, O(VlogV + VlogV) é o custo aparente desse loop externo. Entretanto, as adições dependem mais do numero A de arestas o que do numero de vertice, ja que nao ocorre inserção na fila caso a aresta seja nula, então o custo fica O(VlogV + AlogV)= O((V+A)logV). Portanto, essa implementação é mais eficiente que a sem fila se (V+A)logV<V²,além disso o custo diminui pra VlogV se o numero de arestas for consideravelmente menor que o numero e vertices, ou seja, se o grafo é esparso, com poucas conecções entre os vertices.
+
 Conclusão:
 1. Algoritmo de Dijkstra sem fila de prioridade tem custo O(V²) e é mais recomendado para grafos densos.
 2. Algoritmo de Dijkstra com fila de prioridade é mais eficiente e tem custo O((V+A)logV) e é mais indicado pra grafos esparsos.
