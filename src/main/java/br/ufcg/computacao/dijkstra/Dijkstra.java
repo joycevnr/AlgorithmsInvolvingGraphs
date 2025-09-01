@@ -1,22 +1,22 @@
-import java.util.ArrayList;
+package br.ufcg.computacao.dijkstra;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
 /**
- * A classe {@code Dijkstra} estende a classe {@code Grafo} e implementa o algoritmo de Dijkstra
+ * A classe {@code Dijkstra} implementa o algoritmo de Dijkstra
  * para encontrar o caminho mínimo entre vértices em um grafo com pesos positivos.
  * 
  * Existem duas implementações desse algoritmo: uma implementação simples sem fila de prioridade
  * e outra otimizada com fila de prioridade.
  * 
- * O grafo deve ser representado como uma lista de adjacência, onde cada elemento da lista é 
- * uma lista de inteiros representando os pesos das arestas para cada vértice vizinho.
+ * O grafo deve ser representado como uma matriz de adjacência, onde cada elemento A[i][j] da matriz A, representa uma aresta
+ * entre o vértice i e o vértice j, se o valor for zero significa que não há aresta que liga os dois vértices.
  * 
- * Exemplo de matriz de adjacência como lista de listas:
+ * Exemplo de matriz de adjacência como int[][]:
  * 
  * {@code
- *  lista.get(i).get(j) = peso da aresta de i para j (0 se não existe uma aresta que conecta i até j ou se i=j)
+ *  grafo[i][j] = peso da aresta de i para j (0 se não existe uma aresta que conecta i até j ou se i=j)
  * }
  * 
  * @author Maria Eduarda Capela Cabral Pinheiro da Silva
@@ -59,15 +59,15 @@ public class Dijkstra {
      * Algoritmo de Dijkstra (versão sem fila de prioridade) para encontrar
      * o menor caminho de um vértice de origem até todos os outros vértices.
      *
-     * @param lista Lista de adjacência representando o grafo com pesos.
+     * @param grafo Matriz de adjacência representando o grafo com pesos.
      * @param raiz Vértice de origem.
      * @return Um array 2D de inteiros: a primeira linha contém as menores distâncias da raiz para todos os vértices.
      * 									a segunda linha contém os "pais" de cada vértice no caminho mínimo.
      * @throws IndexOutOfBoundsException se o índice do vértice de origem (`raiz`) for inválido (menor que 0 ou maior que o número de vértices).
      */
-	public int[][] menor_caminho_semFila(ArrayList<ArrayList<Integer>> lista, int raiz){
-        if(raiz<0 || raiz>lista.size()) throw new IndexOutOfBoundsException("Origem inválida");
-		int vertices = lista.size();
+	public int[][] menor_caminho_semFila(int[][] grafo, int raiz){
+        if(raiz<0 || raiz>grafo.length) throw new IndexOutOfBoundsException("Origem inválida");
+		int vertices = grafo.length;
 		int[] distancias = new int[vertices];
 		boolean[] visitados = new boolean[vertices];
 		int[] pais = new int[vertices];
@@ -79,16 +79,16 @@ public class Dijkstra {
 		distancias[raiz] = 0; 
 
 		for(int i =0; i<vertices-1; i++) {
-			int proximoVertice = distanciaMinima(distancias, visitados);
-			visitados[proximoVertice]=true;
+			int atual = distanciaMinima(distancias, visitados);
+			visitados[atual]=true;
 			
 			for(int j = 0; j<vertices;j++) {
-				int aresta = lista.get(proximoVertice).get(j);
-				if(aresta!=0 && !visitados[j] && distancias[proximoVertice]!=infinito ) {
-					int novaDistancia = distancias[proximoVertice]+aresta;
+				int aresta = grafo[atual][j];
+				if(aresta!=0 && !visitados[j] && distancias[atual]!=infinito ) {
+					int novaDistancia = distancias[atual]+aresta;
 					if(novaDistancia < distancias[j] ){
 						distancias[j] = novaDistancia;
-						pais[j] = proximoVertice;
+						pais[j] = atual;
 					}	
 				}
 			}
@@ -104,15 +104,15 @@ public class Dijkstra {
      * Algoritmo de Dijkstra (versão com fila de prioridade) para encontrar
      * o menor caminho de um vértice de origem até todos os outros vértices.
      *
-     * @param lista Lista de adjacência representando o grafo com pesos.
+     * @param grafo Matriz de adjacência representando o grafo com pesos.
      * @param raiz Vértice de origem.
      * @return Um array 2D de inteiros: a primeira linha contém as menores distâncias da raiz para todos os vértices.
      * 									a segunda linha contém os "pais" de cada vértice no caminho mínimo.
      * @throws IndexOutOfBoundsException se o índice do vértice de origem (`raiz`) for inválido (menor que 0 ou maior que o número de vértices).
      */
-	public int[][] menor_caminho_comFila(ArrayList<ArrayList<Integer>> lista, int raiz) {
-        if(raiz<0 || raiz>lista.size()) throw new IndexOutOfBoundsException("Origem inválida");
-        int vertices = lista.size();
+	public int[][] menor_caminho_comFila(int[][] grafo, int raiz) {
+        if(raiz<0 || raiz>grafo.length) throw new IndexOutOfBoundsException("Origem inválida");
+        int vertices = grafo.length;
      	int[] distancias = new int[vertices];
    		boolean[] visitados = new boolean[vertices];
    		int[] pais = new int[vertices];
@@ -134,7 +134,7 @@ public class Dijkstra {
             visitados[atual] = true;
             
             for (int j = 0; j < vertices; j++) {
-                int aresta = lista.get(atual).get(j);
+                int aresta = grafo[atual][j];
                 if (aresta > 0 && !visitados[j]) {
                     int novaDistancia = distancias[atual] + aresta;
                     if (novaDistancia < distancias[j]) {
