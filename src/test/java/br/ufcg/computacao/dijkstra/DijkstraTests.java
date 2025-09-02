@@ -1,7 +1,8 @@
 package br.ufcg.computacao.dijkstra;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,16 +22,15 @@ import org.junit.jupiter.api.Test;
  * {@code grafoMaior}: um grafo 5x5 mais complexo
  * 
  * 
- * Os grafos são representados como listas de adjacência contendo pesos
- * inteiros.
+ * Os grafos são representados como matrizes de adjacência contendo pesos inteiros.
  * 
  * @autor Maria Eduarda Capela Cabral Pinheiro da Silva
  * 
  */
 
 class DijkstraTests {
-	private ArrayList<ArrayList<Integer>> grafoMenor;
-	private ArrayList<ArrayList<Integer>> grafoMaior;
+	private int[][] grafoMenor;
+	private int[][] grafoMaior;
 	private Dijkstra dijkstra;
 
 	/**
@@ -39,26 +39,9 @@ class DijkstraTests {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		this.grafoMenor = new ArrayList<ArrayList<Integer>>();
-		this.grafoMaior = new ArrayList<ArrayList<Integer>>();
 		this.dijkstra = new Dijkstra();
-		int[][] grafo1 = { { 0, 1, 2 }, { 1, 0, 3 }, { 2, 3, 0 } };
-		int[][] grafo2 = { { 0, 1, 2, 5, 4 }, { 1, 0, 1, 1, 3 }, { 2, 1, 0, 4, 5 }, { 5, 1, 4, 0, 1 },
-				{ 4, 3, 5, 1, 0 } };
-		for (int i = 0; i < grafo1.length; i++) {
-			ArrayList<Integer> novo = new ArrayList<>();
-			for (int j = 0; j < grafo1.length; j++) {
-				novo.add(grafo1[i][j]);
-			}
-			grafoMenor.add(novo);
-		}
-		for (int i = 0; i < grafo2.length; i++) {
-			ArrayList<Integer> novo = new ArrayList<>();
-			for (int j = 0; j < grafo2.length; j++) {
-				novo.add(grafo2[i][j]);
-			}
-			grafoMaior.add(novo);
-		}
+		this.grafoMenor = new int[][]{{0, 1, 2}, {1, 0, 3}, {2, 3, 0}}; 
+		this.grafoMaior = new int[][] {{0, 1, 2, 5, 4}, {1, 0, 1, 1, 3}, {2, 1, 0, 4, 5}, {5, 1, 4, 0, 1}, {4, 3, 5, 1, 0}};
 	}
 
 	/**
