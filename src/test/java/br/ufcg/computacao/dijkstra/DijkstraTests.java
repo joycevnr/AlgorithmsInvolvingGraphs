@@ -1,9 +1,9 @@
-import static org.junit.jupiter.api.Assertions.*;
+package br.ufcg.computacao.dijkstra;
 
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * 
  */
 
-class DijkstraTest {
+class DijkstraTests {
 	private ArrayList<ArrayList<Integer>> grafoMenor;
 	private ArrayList<ArrayList<Integer>> grafoMaior;
 	private Dijkstra dijkstra;
