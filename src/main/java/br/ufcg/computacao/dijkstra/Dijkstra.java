@@ -68,7 +68,7 @@ public class Dijkstra {
      * 									a segunda linha contém os "pais" de cada vértice no caminho mínimo.
      * @throws IndexOutOfBoundsException se o índice do vértice de origem (`raiz`) for inválido (menor que 0 ou maior que o número de vértices).
      */
-	public int[][] menor_caminho_semFila(int[][] grafo, int raiz){
+	public int[][] dijkstra_semFila(int[][] grafo, int raiz){
         if(raiz<0 || raiz>grafo.length) throw new IndexOutOfBoundsException("Origem inválida");
 		int vertices = grafo.length;
 		int[] distancias = new int[vertices];
@@ -112,7 +112,7 @@ public class Dijkstra {
      * 									a segunda linha contém os "pais" de cada vértice no caminho mínimo.
      * @throws IndexOutOfBoundsException se o índice do vértice de origem (`raiz`) for inválido (menor que 0 ou maior que o número de vértices).
      */
-	public int[][] menor_caminho_comFila(int[][] grafo, int raiz) {
+	public int[][] dijkstra_comFila(int[][] grafo, int raiz) {
         if(raiz<0 || raiz>grafo.length) throw new IndexOutOfBoundsException("Origem inválida");
         int vertices = grafo.length;
      	int[] distancias = new int[vertices];

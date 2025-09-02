@@ -13,7 +13,7 @@ A entrada padrão recebe um grafo, em formato de matriz de adjacência ou lista 
 Já o retorno será um array de arrays de inteiros contendo dois arrays: O primeiro representa as menores distâncias entre o vértice da origem e o vértice I, sendo I um índice do array de distâncias, o segundo representa o array de "pais", vértice responsável por chegar no vértice J, sendo J um índice do array de pais. Implementamos também um método extra `java public String printCaminho(int[] pais, int destino)` que usa o array de pais resultante do Algoritmo de Dijkstra para mostrar visualmente o menor caminho entre a origem e o destino. 
 
 **Dijkstra sem fila de prioridade**
-Vamos começar a explicar o passo a passo do funcionamento de `java public int[][] menor_caminho_semFila(int[][] grafo, int raiz)`, nossa implementação inicial do Algoritmo de Dijkstra sem usar fila de prioridade.
+Vamos começar a explicar o passo a passo do funcionamento de `java public int[][] dijkstra_semFila(int[][] grafo, int raiz)`, nossa implementação inicial do Algoritmo de Dijkstra sem usar fila de prioridade.
 Primeiro testamos se a raiz/origem que é fornecida é válida, ou seja, não é um numero negativo e esta representado pelo grafo. Depois atribuimos a variável vértices com o tamanho do array, que é igual ao número total de vértices.
 
 ```java 
@@ -79,7 +79,7 @@ Finalmente, inicializamos o array menor_caminho, que conterá as distancias e os
 Porém perceba que podemos estar passando pelo grafo inteiro, mesmo já tendo encontrado as distancias minimas entre os vértices e a origem, já que estamos sempre repetindo distanciaMinima(int[] distancias, int[] visitados) várias vezes para encontrar o próximo vértice a ser incluído no caminho. Como poderíamos melhorar isso? Como fazer a segunda parte do loop apenas com vértices que podem estar no caminho, ignorando os que não vão ser incluidos no caminho? Usando uma fila de prioridade(PriorityQueue) que guardará apenas os vértices que podem ser incluídos no caminho .
 
 **Dijkstra com fila de prioridade**
-A assinatura dessa implementação é quase igual a outra: `java public int[][] menor_caminho_comFila(ArrayList<ArrayList<Integer>> lista, int raiz)`, assim como o início do código. Vamos testar a origem, inicializar vertices, distancias, visitados e pais e declarar a distância entre a origem e ela como zero.
+A assinatura dessa implementação é quase igual a outra: `java public int[][] dijkstra_comFila(ArrayList<ArrayList<Integer>> lista, int raiz)`, assim como o início do código. Vamos testar a origem, inicializar vertices, distancias, visitados e pais e declarar a distância entre a origem e ela como zero.
 
 ```java
        if(raiz<0 || raiz>grafo.length) throw new IndexOutOfBoundsException("Origem inválida");
