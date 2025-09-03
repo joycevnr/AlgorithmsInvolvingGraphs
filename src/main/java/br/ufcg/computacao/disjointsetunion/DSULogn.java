@@ -1,4 +1,4 @@
-package br.ufcg.computacao.disjoint-set-union;
+package br.ufcg.computacao.disjointsetunion;
 
 public class DSULogn {
     private int[] parent;
