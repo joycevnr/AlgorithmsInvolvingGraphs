@@ -1,15 +1,24 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Implementação do algoritmo de Floyd-Warshall para cálculo de distâncias mínimas em grafos.
  * <p>
- * O grafo é representado por uma matriz de adjacência (nxn), onde cada posição A[n][m]
- * indica a distância entre o vértice n e o vértice m.
+ * Implementação do algoritmo de <strong>Floyd-Warshall</strong> para encontrar os
+ * <strong>menores caminhos entre todos os pares de vértices</strong> em um grafo direcionado
+ * e ponderado. O algoritmo é executado uma única vez e gera uma matriz de distâncias
+ * mínimas e uma matriz de sucessores que permite reconstruir os caminhos.
  * </p>
  *
- * <ul>
- *     <li>Utiliza uma abordagem brute-force para testar todos os caminhos possíveis.</li>
- *     <li>Atualiza apenas as distâncias mínimas entre pares de vértices, sem armazenar os caminhos percorridos.</li>
- *     <li>O valor {@code INFINITO} é usado para representar ausência de aresta entre vértices.</li>
- * </ul>
+ * <p>
+ * O grafo é representado por uma matriz de adjacência (<i>n</i>x<i>n</i>), onde cada
+ * posição {@code A[i][j]} armazena o peso da aresta do vértice <i>i</i> para o vértice <i>j</i>.
+ * A ausência de uma aresta é representada pelo valor {@code INFINITO}.
+ * </p>
+ *
+ * <p>
+ * O tempo de execução do algoritmo é $O(V^3)$, onde <i>V</i> é o número de vértices,
+ * tornando-o adequado quando é necessário calcular todas as distâncias entre pares de vértices.
+ * </p>
  */
 public class FloydWarshall {
 
@@ -17,65 +26,124 @@ public class FloydWarshall {
      * Representa valor "infinito" na matriz de adjacências.
      * É definido como {@code Integer.MAX_VALUE / 2} para evitar overflow em operações de soma.
      */
-    private static final int INFINITO = Integer.MAX_VALUE / 2;
+    public static final int INFINITO = Integer.MAX_VALUE / 2;
+
+    // Matriz que armazena as distâncias mínimas entre todos os pares de vértices.
+    private int[][] distancias; 
+
+    // Matriz para reconstrução dos caminhos mais curtos.
+    private int[][] sucessores; 
 
     /**
-     * Calcula a matriz de distâncias mínimas entre todos os pares de vértices de um grafo,
-     * utilizando o algoritmo de Floyd-Warshall.
+     * Construtor que inicializa e executa o algoritmo de Floyd-Warshall.
      *
-     * @param grafo matriz de adjacência representando o grafo
-     * @return matriz com as distâncias mínimas entre todos os pares de vértices
+     * @param matrizAdjacencia A matriz de adjacência que representa o grafo.
      */
-    public int[][] calcularDistancias(int[][] grafo) {
-        int numVert = grafo.length;
-        int[][] distancias = copy(grafo); // não alterar o original
+    public FloydWarshall(int[][] matrizAdjacencia){
 
-        for (int k = 0; k < numVert; k++)// nó intermediário
-            for (int i = 0; i < numVert; i++) // nó de saída
-                for (int j = 0; j < numVert; j++) // nó de destino
-                    if (distancias[i][k] != INFINITO && distancias[k][j] != INFINITO) 
-                        if (distancias[i][k] + distancias[k][j] < distancias[i][j]) 
-                            distancias[i][j] = distancias[i][k] + distancias[k][j]; // atualiza caminho, se menor
+        inicializar(matrizAdjacencia);
+        calcularDistancias();
 
-        return distancias;
     }
 
     /**
-     * Cria uma cópia da matriz de adjacência do grafo.
+     * Inicializa as matrizes de distâncias e de sucessores com base na matriz de adjacência fornecida.
      *
-     * @param grafo matriz original
-     * @return cópia da matriz
+     * @param grafo A matriz de adjacência original do grafo.
      */
-    private int[][] copy(int[][] grafo) {
-        int numVert = grafo.length;
-        int[][] copia = new int[numVert][numVert];
+    private void inicializar(int[][] grafo){
 
-        for (int i = 0; i < numVert; i++) {
-            for (int j = 0; j < numVert; j++) {
-                copia[i][j] = grafo[i][j];
+        int n = grafo.length;
+        this.distancias = new int[n][n];
+        this.sucessores = new int[n][n];
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++){
+                distancias[i][j] = grafo[i][j]; //copia da matriz
+
+                //preenche matriz de sucessores
+                if (grafo[i][j] != INFINITO && i != j)
+                    sucessores[i][j] = j;
+                else 
+                    sucessores[i][j] = -1;
             }
-        }
-        return copia;
-    }
 
+    }
+    
     /**
-     * Exibe no console as distâncias entre os vértices do grafo.
+     * Executa o algoritmo de Floyd-Warshall para calcular a menor distância entre todos
+     * os pares de vértices.
      * <p>
-     * Apenas imprime distâncias diferentes de zero e diferentes de {@code INFINITO}.
+     * O algoritmo itera sobre todos os vértices possíveis ({@code k}) como nós intermediários,
+     * atualizando as distâncias entre todos os pares de vértices ({@code i} e {@code j}).
+     * Adicionalmente, ele armazena o predecessor de cada vértice no caminho mais curto,
+     * permitindo a reconstrução completa dos caminhos após a execução.
      * </p>
-     *
-     * @param matriz matriz de adjacência ou matriz de distâncias mínimas
      */
-    public void mostrarDistancias(int[][] matriz) {
-        for (int saida = 0; saida < matriz.length; saida++) {
-            System.out.println("Saindo de: " + saida);
-            for (int chegada = 0; chegada < matriz.length; chegada++) {
-                if (matriz[saida][chegada] != 0 && matriz[saida][chegada] != INFINITO) {
-                    System.out.println(matriz[saida][chegada] + " unidades até " + chegada);
-                }
-            }
-            System.out.println("---");
+    private void calcularDistancias(){
+
+        int n = distancias.length;
+        for (int k = 0; k < n; k++)// nó intermediário
+            for (int i = 0; i < n; i++) // nó de saída
+                for (int j = 0; j < n; j++) // nó de destino
+                    if (distancias[i][k] != INFINITO && distancias[k][j] != INFINITO) 
+                        if (distancias[i][k] + distancias[k][j] < distancias[i][j]){ 
+                            distancias[i][j] = distancias[i][k] + distancias[k][j]; // atualiza a distância
+                            sucessores[i][j] = sucessores[i][k]; //guarda o nó intermediário;
+                        }
+    }
+
+
+    /**
+     * Reconstrói e retorna o caminho mais curto do vértice {@code u} para o vértice {@code v}.
+     *
+     * @param u O vértice de origem.
+     * @param v O vértice de destino.
+     * @return Uma lista de inteiros que representa o caminho. Se não houver caminho, retorna
+     * uma lista vazia.
+     */
+    public List<Integer> getCaminho(int u, int v) {
+
+        List<Integer> caminho = new ArrayList<>();
+        if (sucessores[u][v] == -1) return caminho; //sem caminho
+
+        caminho.add(u);
+        while (u != v){
+            u = sucessores[u][v];
+            caminho.add(u);
         }
+
+        return caminho;
+
+    }
+    
+    /**
+     * Retorna a menor distância do vértice {@code u} para o vértice {@code v}.
+     *
+     * @param u O vértice de origem.
+     * @param v O vértice de destino.
+     * @return A menor distância.
+     */    
+    public int getDistancia(int u, int v){
+        return distancias[u][v];
+    }
+
+    /**
+     * Retorna a matriz de distâncias mínimas calculada pelo algoritmo.
+     *
+     * @return Uma matriz de inteiros onde `distancias[i][j]` é a menor distância entre o vértice `i` e o vértice `j`.
+     */
+    public int[][] getDistancias(){
+        return this.distancias;
+    }
+
+    /**
+     * Retorna a matriz de sucessores que armazena os caminhos mais curtos.
+     *
+     * @return Uma matriz de inteiros onde `sucessores[i][j]` é o próximo vértice no caminho mais curto de `i` para `j`.
+     */
+    public int[][] getSucessores(){
+        return this.sucessores;
     }
 
     /**
@@ -92,9 +160,8 @@ public class FloydWarshall {
             {INFINITO, INFINITO, INFINITO, 0}
         };
 
-        FloydWarshall fw = new FloydWarshall();
-        fw.mostrarDistancias(matriz);
-        System.out.println("\n");
-        fw.mostrarDistancias(fw.calcularDistancias(matriz));
+        FloydWarshall fw = new FloydWarshall(matriz);
+        System.out.println(fw.getCaminho(0, 1));
+        
     }
 }
