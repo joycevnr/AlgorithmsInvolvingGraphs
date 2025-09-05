@@ -32,7 +32,6 @@ build
 # Ignore benchmark results
 benchmark-results.json
 /graficos/
-*.png
 *.html
 
 # Python cache files
