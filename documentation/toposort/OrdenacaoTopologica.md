@@ -98,10 +98,77 @@ Saber a eficiência do algoritmo é essencial, então abaixo destaco as suas gra
 
 #### **Benchmark de Desempenho**
 
-A eficiência do algoritmo foi validada através de benchmarks utilizando a biblioteca JMH. Foram gerados grafos acíclicos direcionados (DAGs) de diferentes tamanhos (número de vértices) e densidades (proporção de arestas), e o tempo médio de execução foi medido. Os resultados confirmam a escalabilidade linear do algoritmo, alinhada com sua complexidade teórica de $O(V + E)$.
+A eficiência do algoritmo foi validada através de benchmarks utilizando a biblioteca JMH. Foram gerados grafos acíclicos direcionados (DAGs) de diferentes tamanhos (número de vértices) e densidades (proporção de arestas), e o tempo médio de execução foi medido em milissegundos por operação (ms/op).
 
---GRÁFICOS
+##### **Resultados Experimentais**
 
+Os benchmarks foram realizados com as seguintes configurações:
+- **Número de vértices:** 10, 100, 500 e 1000
+- **Densidades de grafo:** 0.1, 0.3 e 0.5
+- **Métrica:** Tempo médio por operação (ms/op)
+
+| Densidade | Vértices | Tempo (ms/op) | Erro |
+|-----------|----------|---------------|------|
+| 0.1       | 10       | 0.00021       | 0.00002 |
+| 0.1       | 100      | 0.00254       | 0.00032 |
+| 0.1       | 500      | 0.0382        | 0.0045 |
+| 0.1       | 1000     | 0.1321        | 0.0128 |
+| 0.3       | 10       | 0.00025       | 0.00003 |
+| 0.3       | 100      | 0.0042        | 0.0005 |
+| 0.3       | 500      | 0.0841        | 0.0054 |
+| 0.3       | 1000     | 0.3501        | 0.0214 |
+| 0.5       | 10       | 0.00029       | 0.00004 |
+| 0.5       | 100      | 0.0053        | 0.0008 |
+| 0.5       | 500      | 0.1269        | 0.0068 |
+| 0.5       | 1000     | 0.4961        | 0.0246 |
+
+##### **Análise do Crescimento com Número de Vértices**
+
+Quando observamos o comportamento do algoritmo mantendo uma densidade constante (por exemplo, 0.1) e aumentando o número de vértices:
+- De 10 para 100 vértices (10x): o tempo aumenta de 0.00021 para 0.00254 ms/op (~12x)
+- De 100 para 500 vértices (5x): o tempo aumenta de 0.00254 para 0.0382 ms/op (~15x)
+- De 500 para 1000 vértices (2x): o tempo aumenta de 0.0382 para 0.1321 ms/op (~3.5x)
+
+Este crescimento não é perfeitamente linear, mas está próximo do esperado para um algoritmo de complexidade O(V + E), especialmente considerando que o número de arestas E também aumenta com o número de vértices V e a densidade fixa.
+
+##### **Impacto da Densidade**
+
+Observando os resultados para um número fixo de vértices (1000) com densidades crescentes:
+- Densidade 0.1: 0.1321 ms/op
+- Densidade 0.3: 0.3501 ms/op (~2.65x mais lento)
+- Densidade 0.5: 0.4961 ms/op (~3.75x mais lento que 0.1)
+
+O aumento da densidade tem um impacto significativo no desempenho, o que é esperado, já que mais arestas (E) significam mais trabalho para o algoritmo. Este comportamento confirma a complexidade O(V + E), onde E cresce com a densidade.
+
+##### **Visualização Gráfica dos Resultados**
+
+Os gráficos a seguir ilustram visualmente o comportamento do algoritmo de ordenação topológica sob diferentes condições:
+
+**1. Desempenho por Número de Vértices (Densidade = 0.1)**
+
+Este gráfico mostra como o tempo de execução aumenta à medida que o número de vértices cresce, mantendo a densidade constante em 0.1.
+
+![Desempenho por Número de Vértices](assets/numeroVerticeOrdenTopo.png)
+
+Como pode ser observado, o crescimento do tempo de execução acompanha o aumento do número de vértices de forma quase linear, confirmando a complexidade teórica O(V + E).
+
+**2. Desempenho por Densidade (1000 Vértices)**
+
+Este gráfico demonstra como o aumento da densidade do grafo afeta o tempo de execução para um grafo com 1000 vértices.
+
+![Desempenho por Densidade](assets/densidadeOrdenTopo.png)
+
+É possível observar que o aumento da densidade tem um impacto significativo no desempenho, pois um grafo mais denso significa mais arestas para processar.
+
+##### **Verificação da Complexidade Teórica**
+
+Para um grafo direcionado com V vértices e densidade d, o número esperado de arestas é aproximadamente E = d × V × (V-1). Ao aumentar V de 500 para 1000 com densidade 0.3:
+- Para V=500: E ≈ 0.3 × 500 × 499 ≈ 74,850 arestas
+- Para V=1000: E ≈ 0.3 × 1000 × 999 ≈ 299,700 arestas
+
+O aumento de E é aproximadamente 4x, enquanto o aumento no tempo de execução foi de aproximadamente 4.16x (de 0.0841 para 0.3501 ms/op). Esta correspondência confirma que o algoritmo está se comportando conforme a complexidade teórica esperada O(V + E).
+
+OBS.: Pode-se ainda consultar o arquivo HTML de análise dos benchmarks que é gerado a (`toposort-resultados.html`).
 
 
 #### **Aplicações**
