@@ -1,7 +1,8 @@
 package br.ufcg.computacao.dijkstra;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,48 +18,34 @@ import org.junit.jupiter.api.Test;
  * 
  * Os testes utilizam dois grafos:
  * 
- * {@code grafoMenor}: um grafo 3x3 pequeno
- * {@code grafoMaior}: um grafo 5x5 mais complexo
+ * {@code grafoMenorD}: um grafo 3x3 denso pequeno 
+ * {@code grafoMaiorD}: um grafo 5x5 denso mais complexo
+ * {@code grafoMenorE}: um grafo 3x3 esparso pequeno 
+ * {@code grafoMaiorE}: um grafo 5x5 esparso mais complexo
  * 
- * 
- * Os grafos são representados como listas de adjacência contendo pesos
- * inteiros.
+ * Os grafos são representados como matrizes de adjacência contendo pesos inteiros.
  * 
  * @autor Maria Eduarda Capela Cabral Pinheiro da Silva
  * 
  */
 
 class DijkstraTests {
-	private ArrayList<ArrayList<Integer>> grafoMenor;
-	private ArrayList<ArrayList<Integer>> grafoMaior;
+	private int[][] grafoMenorD;
+	private int[][] grafoMaiorD;
+	private int[][] grafoMenorE;
+	private int[][] grafoMaiorE;
 	private Dijkstra dijkstra;
 
 	/**
 	 * Inicializa os grafos e a instância da classe Dijkstra antes de cada teste.
-	 * Converte matrizes de adjacência em listas de adjacência.
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		this.grafoMenor = new ArrayList<ArrayList<Integer>>();
-		this.grafoMaior = new ArrayList<ArrayList<Integer>>();
 		this.dijkstra = new Dijkstra();
-		int[][] grafo1 = { { 0, 1, 2 }, { 1, 0, 3 }, { 2, 3, 0 } };
-		int[][] grafo2 = { { 0, 1, 2, 5, 4 }, { 1, 0, 1, 1, 3 }, { 2, 1, 0, 4, 5 }, { 5, 1, 4, 0, 1 },
-				{ 4, 3, 5, 1, 0 } };
-		for (int i = 0; i < grafo1.length; i++) {
-			ArrayList<Integer> novo = new ArrayList<>();
-			for (int j = 0; j < grafo1.length; j++) {
-				novo.add(grafo1[i][j]);
-			}
-			grafoMenor.add(novo);
-		}
-		for (int i = 0; i < grafo2.length; i++) {
-			ArrayList<Integer> novo = new ArrayList<>();
-			for (int j = 0; j < grafo2.length; j++) {
-				novo.add(grafo2[i][j]);
-			}
-			grafoMaior.add(novo);
-		}
+		this.grafoMenorD = new int[][]{{0, 1, 2}, {1, 0, 3}, {2, 3, 0}}; 
+		this.grafoMaiorD = new int[][] {{0, 1, 2, 5, 4}, {1, 0, 1, 1, 3}, {2, 1, 0, 4, 5}, {5, 1, 4, 0, 1}, {4, 3, 5, 1, 0}};
+		this.grafoMenorE = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}}; 
+		this.grafoMaiorE = new int[][] {{0, 0, 1, 0, 1}, {0, 0, 2, 3, 8}, {1, 2, 0, 0, 0}, {0, 3, 0, 0, 0}, {1, 8, 0, 0, 0}};
 	}
 
 	/**
@@ -70,16 +57,16 @@ class DijkstraTests {
 	@Test
 	void testException() {
 		assertThrows(IndexOutOfBoundsException.class, () -> {
-			dijkstra.menor_caminho_comFila(grafoMenor, -1);
+			dijkstra.dijkstra_comFila(grafoMenorD, -1);
 		});
 		assertThrows(IndexOutOfBoundsException.class, () -> {
-			dijkstra.menor_caminho_comFila(grafoMenor, 100);
+			dijkstra.dijkstra_comFila(grafoMenorD, 100);
 		});
 		assertThrows(IndexOutOfBoundsException.class, () -> {
-			dijkstra.menor_caminho_semFila(grafoMenor, -1);
+			dijkstra.dijkstra_semFila(grafoMenorD, -1);
 		});
 		assertThrows(IndexOutOfBoundsException.class, () -> {
-			dijkstra.menor_caminho_semFila(grafoMenor, 100);
+			dijkstra.dijkstra_semFila(grafoMenorD, 100);
 		});
 	}
 
@@ -90,22 +77,22 @@ class DijkstraTests {
 	@Test
 	void testExceptionMessage() {
 		try {
-			dijkstra.menor_caminho_comFila(grafoMenor, -1);
+			dijkstra.dijkstra_comFila(grafoMenorD, -1);
 		} catch (Exception e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			dijkstra.menor_caminho_comFila(grafoMenor, 100);
+			dijkstra.dijkstra_comFila(grafoMenorD, 100);
 		} catch (Exception e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			dijkstra.menor_caminho_semFila(grafoMenor, -1);
+			dijkstra.dijkstra_semFila(grafoMenorD, -1);
 		} catch (Exception e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			dijkstra.menor_caminho_semFila(grafoMenor, 100);
+			dijkstra.dijkstra_semFila(grafoMenorD, 100);
 		} catch (Exception e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
@@ -118,30 +105,53 @@ class DijkstraTests {
 	 */
 	@Test
 	void testMenorCaminhoSemFilaDistancias() {
-		int[][] caminho = dijkstra.menor_caminho_semFila(grafoMenor, 0); // calcula as menores distancias e os melhores
+		int[][] caminho = dijkstra.dijkstra_semFila(grafoMenorD, 0); // calcula as menores distancias e os melhores
 																			// caminhos entre o vertice 0 e os outros
 																			// vertices
 		assertEquals(0, caminho[0][0]); // de um vertice até ele mesmo a distancia é zero
 		assertEquals(1, caminho[0][1]);
 		assertEquals(2, caminho[0][2]);
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 0);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 0);
 		assertEquals(1, caminho[0][1]);
 		assertEquals(2, caminho[0][2]);
 		assertEquals(2, caminho[0][3]);
 		assertEquals(3, caminho[0][4]);
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 1);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 1);
 		assertEquals(1, caminho[0][2]);
 		assertEquals(1, caminho[0][3]);
 		assertEquals(2, caminho[0][4]);
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 2);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 2);
 		assertEquals(2, caminho[0][3]);
 		assertEquals(3, caminho[0][4]);
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 3);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 3);
 		assertEquals(1, caminho[0][4]);
+		
+		caminho = dijkstra.dijkstra_semFila(grafoMenorE, 0); 
+		assertEquals(0, caminho[0][0]); 	
+		assertEquals(1, caminho[0][1]);
+		assertEquals(2, caminho[0][2]);
+		
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 0);
+		assertEquals(3, caminho[0][1]);
+		assertEquals(1, caminho[0][2]);
+		assertEquals(6, caminho[0][3]);
+		assertEquals(1, caminho[0][4]);
+
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 1);
+		assertEquals(2, caminho[0][2]);
+		assertEquals(3, caminho[0][3]);
+		assertEquals(4, caminho[0][4]);
+
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 2);
+		assertEquals(5, caminho[0][3]);
+		assertEquals(2, caminho[0][4]);
+
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 3);
+		assertEquals(7, caminho[0][4]);
 	}
 
 	/**
@@ -152,29 +162,51 @@ class DijkstraTests {
 	 */
 	@Test
 	void testMenorCaminhoSemFilaCaminho() {
-		int[][] caminho = dijkstra.menor_caminho_semFila(grafoMenor, 0); // calcula as menores distancias e os melhores
+		int[][] caminho = dijkstra.dijkstra_semFila(grafoMenorD, 0); // calcula as menores distancias e os melhores
 																			// caminhos entre o vertice 0 e os outros
 																			// vertices
 		assertEquals("0->1", dijkstra.printCaminho(caminho[1], 1));
 		assertEquals("0->2", dijkstra.printCaminho(caminho[1], 2));
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 0);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 0);
 		assertEquals("0->1", dijkstra.printCaminho(caminho[1], 1));
 		assertEquals("0->2", dijkstra.printCaminho(caminho[1], 2));
 		assertEquals("0->1->3", dijkstra.printCaminho(caminho[1], 3));
 		assertEquals("0->1->3->4", dijkstra.printCaminho(caminho[1], 4));
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 1);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 1);
 		assertEquals("1->2", dijkstra.printCaminho(caminho[1], 2));
 		assertEquals("1->3", dijkstra.printCaminho(caminho[1], 3));
 		assertEquals("1->3->4", dijkstra.printCaminho(caminho[1], 4));
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 2);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 2);
 		assertEquals("2->1->3", dijkstra.printCaminho(caminho[1], 3));
 		assertEquals("2->1->3->4", dijkstra.printCaminho(caminho[1], 4));
 
-		caminho = dijkstra.menor_caminho_semFila(grafoMaior, 3);
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorD, 3);
 		assertEquals("3->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_semFila(grafoMenorE, 0); 
+		assertEquals("0->1", dijkstra.printCaminho(caminho[1], 1));
+		assertEquals("0->1->2", dijkstra.printCaminho(caminho[1], 2));
+
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 0);
+		assertEquals("0->2->1", dijkstra.printCaminho(caminho[1], 1));
+		assertEquals("0->2", dijkstra.printCaminho(caminho[1], 2));
+		assertEquals("0->2->1->3", dijkstra.printCaminho(caminho[1], 3));
+		assertEquals("0->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 1);
+		assertEquals("1->2", dijkstra.printCaminho(caminho[1], 2));
+		assertEquals("1->3", dijkstra.printCaminho(caminho[1], 3));
+		assertEquals("1->2->0->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 2);
+		assertEquals("2->1->3", dijkstra.printCaminho(caminho[1], 3));
+		assertEquals("2->0->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_semFila(grafoMaiorE, 3);
+		assertEquals("3->1->2->0->4", dijkstra.printCaminho(caminho[1], 4));
 	}
 
 	/**
@@ -184,30 +216,53 @@ class DijkstraTests {
 	 */
 	@Test
 	void testMenorCaminhoComFilaDistancias() {
-		int[][] caminho = dijkstra.menor_caminho_comFila(grafoMenor, 0); // calcula as menores distancias e os melhores
+		int[][] caminho = dijkstra.dijkstra_comFila(grafoMenorD, 0); // calcula as menores distancias e os melhores
 																			// caminhos entre o vertice 0 e os outros
 																			// vertices
 		assertEquals(0, caminho[0][0]); // de um vertice até ele mesmo a distancia é zero
 		assertEquals(1, caminho[0][1]);
 		assertEquals(2, caminho[0][2]);
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 0);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 0);
 		assertEquals(1, caminho[0][1]);
 		assertEquals(2, caminho[0][2]);
 		assertEquals(2, caminho[0][3]);
 		assertEquals(3, caminho[0][4]);
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 1);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 1);
 		assertEquals(1, caminho[0][2]);
 		assertEquals(1, caminho[0][3]);
 		assertEquals(2, caminho[0][4]);
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 2);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 2);
 		assertEquals(2, caminho[0][3]);
 		assertEquals(3, caminho[0][4]);
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 3);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 3);
 		assertEquals(1, caminho[0][4]);
+		
+		caminho = dijkstra.dijkstra_comFila(grafoMenorE, 0); 
+		assertEquals(0, caminho[0][0]); 	
+		assertEquals(1, caminho[0][1]);
+		assertEquals(2, caminho[0][2]);
+		
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 0);
+		assertEquals(3, caminho[0][1]);
+		assertEquals(1, caminho[0][2]);
+		assertEquals(6, caminho[0][3]);
+		assertEquals(1, caminho[0][4]);
+
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 1);
+		assertEquals(2, caminho[0][2]);
+		assertEquals(3, caminho[0][3]);
+		assertEquals(4, caminho[0][4]);
+
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 2);
+		assertEquals(5, caminho[0][3]);
+		assertEquals(2, caminho[0][4]);
+
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 3);
+		assertEquals(7, caminho[0][4]);
 	}
 
 	/**
@@ -218,26 +273,48 @@ class DijkstraTests {
 	 */
 	@Test
 	void testMenorCaminhoComFilaCaminho() {
-		int[][] caminho = dijkstra.menor_caminho_comFila(grafoMenor, 0);
+		int[][] caminho = dijkstra.dijkstra_comFila(grafoMenorD, 0);
 		assertEquals("0->1", dijkstra.printCaminho(caminho[1], 1));
 		assertEquals("0->2", dijkstra.printCaminho(caminho[1], 2));
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 0);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 0);
 		assertEquals("0->1", dijkstra.printCaminho(caminho[1], 1));
 		assertEquals("0->2", dijkstra.printCaminho(caminho[1], 2));
 		assertEquals("0->1->3", dijkstra.printCaminho(caminho[1], 3));
 		assertEquals("0->1->3->4", dijkstra.printCaminho(caminho[1], 4));
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 1);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 1);
 		assertEquals("1->2", dijkstra.printCaminho(caminho[1], 2));
 		assertEquals("1->3", dijkstra.printCaminho(caminho[1], 3));
 		assertEquals("1->3->4", dijkstra.printCaminho(caminho[1], 4));
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 2);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 2);
 		assertEquals("2->1->3", dijkstra.printCaminho(caminho[1], 3));
 		assertEquals("2->1->3->4", dijkstra.printCaminho(caminho[1], 4));
 
-		caminho = dijkstra.menor_caminho_comFila(grafoMaior, 3);
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorD, 3);
 		assertEquals("3->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_comFila(grafoMenorE, 0); 
+		assertEquals("0->1", dijkstra.printCaminho(caminho[1], 1));
+		assertEquals("0->1->2", dijkstra.printCaminho(caminho[1], 2));
+
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 0);
+		assertEquals("0->2->1", dijkstra.printCaminho(caminho[1], 1));
+		assertEquals("0->2", dijkstra.printCaminho(caminho[1], 2));
+		assertEquals("0->2->1->3", dijkstra.printCaminho(caminho[1], 3));
+		assertEquals("0->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 1);
+		assertEquals("1->2", dijkstra.printCaminho(caminho[1], 2));
+		assertEquals("1->3", dijkstra.printCaminho(caminho[1], 3));
+		assertEquals("1->2->0->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 2);
+		assertEquals("2->1->3", dijkstra.printCaminho(caminho[1], 3));
+		assertEquals("2->0->4", dijkstra.printCaminho(caminho[1], 4));
+		
+		caminho = dijkstra.dijkstra_comFila(grafoMaiorE, 3);
+		assertEquals("3->1->2->0->4", dijkstra.printCaminho(caminho[1], 4));
 	}
 }
