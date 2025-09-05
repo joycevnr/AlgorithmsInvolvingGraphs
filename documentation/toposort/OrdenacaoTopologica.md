@@ -51,8 +51,6 @@ O parte central deste algoritmo é a função recursiva `dfsUtil`. Para cada vé
       * Se o vizinho já foi visitado E está `noCaminhoAtual`, significa que encontramos uma aresta de volta (*back edge*). Isso forma um ciclo, e o algoritmo para.
 3.  Depois de visitar todos os vizinhos de `v` (ou seja, explorar todo o caminho a partir dele), `v` é removido de `noCaminhoAtual` e adicionado à `pilhaFinalizacao`.
 
-<!-- end list -->
-
 ```java
 private boolean dfsUtil(int v, boolean[] visitado, boolean[] noCaminhoAtual, 
                         Stack<Integer> pilhaFinalizacao) {
@@ -90,13 +88,21 @@ return resultado;
 
 #### **Análise de Complexidade**
 
-Sabe a eficiência do algoritmo é essencial, então abaixo destaco as suas grandes vantagens:
+Saber a eficiência do algoritmo é essencial, então abaixo destaco as suas grandes vantagens:
 
   * **Complexidade de Tempo: $O(V + E)$**
     O algoritmo DFS visita cada vértice (`V`) e cada aresta (`E`) exatamente uma vez em um grafo direcionado. Todas as outras operações (marcação em arrays, empilhar) são de tempo constante.
 
   * **Complexidade de Espaço: $O(V)$**
     O espaço é necessário para armazenar os arrays de controle (`visitado` e `noCaminhoAtual`), a pilha de finalização e a pilha de recursão do sistema, que no pior caso pode ter o tamanho de `V`.
+
+#### **Benchmark de Desempenho**
+
+A eficiência do algoritmo foi validada através de benchmarks utilizando a biblioteca JMH. Foram gerados grafos acíclicos direcionados (DAGs) de diferentes tamanhos (número de vértices) e densidades (proporção de arestas), e o tempo médio de execução foi medido. Os resultados confirmam a escalabilidade linear do algoritmo, alinhada com sua complexidade teórica de $O(V + E)$.
+
+--GRÁFICOS
+
+
 
 #### **Aplicações**
 
