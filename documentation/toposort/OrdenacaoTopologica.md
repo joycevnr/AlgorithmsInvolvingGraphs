@@ -1,61 +1,26 @@
-# Ordenação Topológica com DFS: Estrutura e Algoritmo
+### **Ordenação Topológica**
 
-## Introdução
+#### **Contextualização**
 
-**Autora: Joyce Vitória Nascimento Rodrigues**
+Em teoria dos grafos, a ordenação topológica de um grafo acíclico direcionado (DAG Directed Acyclic Graph) é uma ordenação linear de seus vértices, tal que para toda aresta direcionada de um vértice `u` para um vértice `v`, `u` vem antes de `v` na ordenação. Um DAG é um tipo de grafo que possui arestas com direção e não contém ciclos, ou seja, não é possível partir de um vértice e retornar a ele seguindo as direções das arestas.
 
-A **ordenação topológica** é um algoritmo fundamental em teoria dos grafos que gera uma sequência linear dos vértices de um grafo direcionado acíclico (DAG), de tal forma que para cada aresta (u, v), o vértice u aparece antes do vértice v na sequência. Esta ordenação representa uma solução para problemas que envolvem dependências sequenciais entre elementos, como cronogramas de projetos, compilação de código-fonte e pré-requisitos de cursos.
+Essa estrutura é fundamental para modelar problemas que envolvem dependências e pré-requisitos. Por exemplo, ao compilar um projeto de software, alguns arquivos precisam ser processados antes de outros. Da mesma forma, em uma grade curricular, certas disciplinas devem ser cursadas antes de suas sequências. A ordenação topológica nos fornece uma sequência válida para executar essas tarefas.
 
-Importante ressaltar que a ordenação topológica só é possível em grafos direcionados que não possuem ciclos (DAGs). Se o grafo contiver um ciclo, não é possível estabelecer uma ordem topológica, pois existiriam dependências circulares.
+#### **O Problema**
 
-Desse modo, este documento explora em detalhes a implementação da ordenação topológica usando o algoritmo de Busca em Profundidade (DFS - Depth-First Search).
+O desafio consiste em determinar uma sequência de execução para um conjunto de tarefas com interdependências, por exemplo, disciplinas com pré-requisitos(como nosso curso) ou etapas de um projeto. É preciso encontrar uma ordem linear que respeite todas as dependências e, ao mesmo tempo, detectar se o sistema é impossível de ser resolvido por conter um ciclo (uma dependência circular, como A depender de B e B depender de A). A solução para este problema é a **ordenação topológica**, um algoritmo que estabelece uma sequência de execução válida e identifica a existência de ciclos, sendo a abordagem realizada com Busca em Profundidade (DFS) uma das mais eficazes para implementá-lo.
 
-## Referências Acadêmicas
+#### **O Algoritmo Passo a Passo**
 
-Este documento baseia-se em pesquisas acadêmicas sobre algoritmos em grafos, particularmente o algoritmo de ordenação topológica apresentadas abaixo:
+A implementação do algoritmo requer o controle do estado de cada vértice durante a busca. Nisso, foi usada três estruturas de dados auxiliares:
 
-1. FEOFILOFF, P.; KOHAYAKAWA, Y.; WAKABAYASHI, Y. **Uma Introdução Sucinta à Teoria dos Algoritmos**. Instituto de Matemática e Estatística da USP (IME-USP), 2011. Capítulo sobre Ordenação Topológica e Componentes Fortemente Conexas. [Link para referência](https://www.ime.usp.br/~pf/algoritmos_para_grafos/)
+  * `visitado[]`: um array booleano para marcar os vértices que já foram visitados em algum momento.
+  * `noCaminhoAtual[]`: um array booleano para rastrear os vértices que estão na pilha de recursão da busca atual. (ajuda em detectar ciclos)
+  * `pilhaFinalizacao`: uma pilha que armazena os vértices na ordem em que eles são finalizados.
 
-2. CORMEN, T. H.; LEISERSON, C. E.; RIVEST, R. L.; STEIN, C. **Introduction to Algorithms**. 3rd ed. MIT Press, 2009. [Link para referência](https://mitpress.mit.edu/books/introduction-algorithms-third-edition) - Referência internacional amplamente utilizada em disciplinas de estruturas de dados avançadas.
+**1. Inicialização**
 
-## Aplicações
-
-A ordenação topológica tem várias aplicações práticas, incluindo:
-
-1. **Agendamento de tarefas**: Determinar a ordem de execução de tarefas que possuem dependências
-2. **Compilação de software**: Ordenar a compilação de módulos que dependem uns dos outros
-3. **Currículo de cursos**: Estabelecer a sequência de disciplinas que têm pré-requisitos
-4. **Processamento de planilhas**: Calcular células que dependem de valores de outras células
-
-## Algoritmo de Ordenação Topológica usando DFS
-
-O algoritmo de ordenação topológica usando Busca em Profundidade (DFS - Depth-First Search) funciona da seguinte maneira:
-
-1. **Inicialização**: Cria uma lista vazia para armazenar o resultado e marcadores para acompanhar vértices visitados.
-2. **DFS modificado**: Executa um DFS a partir de cada vértice não visitado:
-   - Visita recursivamente todos os vértices adjacentes não visitados
-   - Depois de explorar todos os adjacentes de um vértice, adiciona o vértice ao início da lista de resultado
-3. **Detecção de ciclos**: Durante o DFS, verifica se há ciclos no grafo. Se um ciclo for detectado, a ordenação topológica não é possível.
-4. **Resultado**: A lista final, construída na ordem inversa das finalizações do DFS, é a ordenação topológica.
-
-### Complexidade do Algoritmo
-
-- **Tempo**: O(V + E), onde V é o número de vértices e E é o número de arestas
-- **Espaço**: O(V), para armazenar os estados dos vértices e a pilha de recursão
-
-## Algoritmo de Ordenação Topológica usando DFS
-
-A ordenação topológica com DFS é um algoritmo elegante que explora as características recursivas da busca em profundidade para determinar a ordem correta dos vértices.
-
-### Princípio Básico
-
-O princípio fundamental da ordenação topológica com DFS baseia-se no fato de que, em um grafo direcionado acíclico, os vértices que não possuem arestas de saída (também chamados de "sumidouros") devem aparecer no final da ordenação. Estendendo este princípio, um vértice deve aparecer depois de todos os seus sucessores na ordenação.
-
-### Passos do Algoritmo
-
-#### 1. Inicialização
-
-O primeiro passo do algoritmo é inicializar as estruturas de dados necessárias:
+O método principal inicializa as estruturas de dados e percorre todos os vértices do grafo, iniciando uma DFS para cada vértice que ainda não foi visitado.
 
 ```java
 public List<Integer> ordenar() {
@@ -64,28 +29,27 @@ public List<Integer> ordenar() {
     Stack<Integer> pilhaFinalizacao = new Stack<>();
     boolean[] visitado = new boolean[n];
     boolean[] noCaminhoAtual = new boolean[n];
-```
 
-- **resultado**: Lista que armazenará a ordenação topológica final
-- **pilhaFinalizacao**: Pilha para rastrear a ordem de finalização dos vértices durante o DFS
-- **visitado**: Array para marcar vértices já visitados pelo DFS
-- **noCaminhoAtual**: Array para detectar ciclos no grafo
-
-#### 2. Execução do DFS Modificado
-
-Para cada vértice não visitado, o algoritmo executa o DFS:
-
-```java
-for (int i = 0; i < n; i++) {
-    if (!visitado[i]) {
-        if (dfsUtil(i, visitado, noCaminhoAtual, pilhaFinalizacao)) {
-            throw new IllegalArgumentException("O grafo contém ciclos e não pode ser ordenado topologicamente.");
+    for (int i = 0; i < n; i++) {
+        if (!visitado[i]) {
+            // Se dfsUtil retornar true, um ciclo foi encontrado.
+            if (dfsUtil(i, visitado, noCaminhoAtual, pilhaFinalizacao)) {
+                throw new IllegalArgumentException("O grafo contém ciclos e não pode ser ordenado topologicamente.");
+            }
         }
     }
 }
 ```
 
-O método `dfsUtil` é a parte central do algoritmo:
+**2. O DFS Modificado e a Detecção de Ciclos**
+
+O parte central deste algoritmo é a função recursiva `dfsUtil`. Para cada vértice `v` visitado, ela faz o seguinte:
+
+1.  Marca `v` como `visitado` e como parte do `noCaminhoAtual`.
+2.  Para cada vizinho de `v`, verifica:
+      * Se o vizinho não foi visitado, chama a recursão para ele.
+      * Se o vizinho já foi visitado E está `noCaminhoAtual`, significa que encontramos uma aresta de volta (*back edge*). Isso forma um ciclo, e o algoritmo para.
+3.  Depois de visitar todos os vizinhos de `v` (ou seja, explorar todo o caminho a partir dele), `v` é removido de `noCaminhoAtual` e adicionado à `pilhaFinalizacao`.
 
 ```java
 private boolean dfsUtil(int v, boolean[] visitado, boolean[] noCaminhoAtual, 
@@ -96,7 +60,7 @@ private boolean dfsUtil(int v, boolean[] visitado, boolean[] noCaminhoAtual,
     for (Integer adjacente : grafo.getAdjacentes(v)) {
         if (!visitado[adjacente]) {
             if (dfsUtil(adjacente, visitado, noCaminhoAtual, pilhaFinalizacao)) {
-                return true; // Ciclo detectado
+                return true; // Ciclo detectado e propagado pela recursão
             }
         }
         else if (noCaminhoAtual[adjacente]) {
@@ -104,24 +68,124 @@ private boolean dfsUtil(int v, boolean[] visitado, boolean[] noCaminhoAtual,
         }
     }
     
+    // Todos os descendentes de 'v' foram visitados. Agora 'v' está finalizado.
     noCaminhoAtual[v] = false;
     pilhaFinalizacao.push(v);
-    return false; // Sem ciclos
+    return false; // Nenhum ciclo encontrado neste caminho
 }
 ```
 
-#### 3. Detecção de Ciclos
+**3. Construção do Resultado Final**
 
-Um aspecto crucial do algoritmo é a detecção de ciclos, que é feita usando o array `noCaminhoAtual`. Se um vértice já visitado está no caminho atual do DFS, então há um ciclo.
-
-#### 4. Construção do Resultado
-
-A ordenação topológica é obtida desempilhando os vértices da pilha de finalização:
+Após o laço principal terminar (garantindo que todos os vértices foram visitados), a `pilhaFinalizacao` contém os vértices na ordem inversa da ordenação topológica. Basta desempilhá-los para uma lista para obter o resultado final.
 
 ```java
 while (!pilhaFinalizacao.isEmpty()) {
     resultado.add(pilhaFinalizacao.pop());
 }
+return resultado;
 ```
 
-#### Detecção de Ciclos
+#### **Análise de Complexidade**
+
+Saber a eficiência do algoritmo é essencial, então abaixo destaco as suas grandes vantagens:
+
+  * **Complexidade de Tempo: $O(V + E)$**
+    O algoritmo DFS visita cada vértice (`V`) e cada aresta (`E`) exatamente uma vez em um grafo direcionado. Todas as outras operações (marcação em arrays, empilhar) são de tempo constante.
+
+  * **Complexidade de Espaço: $O(V)$**
+    O espaço é necessário para armazenar os arrays de controle (`visitado` e `noCaminhoAtual`), a pilha de finalização e a pilha de recursão do sistema, que no pior caso pode ter o tamanho de `V`.
+
+#### **Benchmark de Desempenho**
+
+A eficiência do algoritmo foi validada através de benchmarks utilizando a biblioteca JMH. Foram gerados grafos acíclicos direcionados (DAGs) de diferentes tamanhos (número de vértices) e densidades (proporção de arestas), e o tempo médio de execução foi medido em milissegundos por operação (ms/op).
+
+##### **Resultados Experimentais**
+
+Os benchmarks foram realizados com as seguintes configurações:
+- **Número de vértices:** 10, 100, 500 e 1000
+- **Densidades de grafo:** 0.1, 0.3 e 0.5
+- **Métrica:** Tempo médio por operação (ms/op)
+
+| Densidade | Vértices | Tempo (ms/op) | Erro |
+|-----------|----------|---------------|------|
+| 0.1       | 10       | 0.00021       | 0.00002 |
+| 0.1       | 100      | 0.00254       | 0.00032 |
+| 0.1       | 500      | 0.0382        | 0.0045 |
+| 0.1       | 1000     | 0.1321        | 0.0128 |
+| 0.3       | 10       | 0.00025       | 0.00003 |
+| 0.3       | 100      | 0.0042        | 0.0005 |
+| 0.3       | 500      | 0.0841        | 0.0054 |
+| 0.3       | 1000     | 0.3501        | 0.0214 |
+| 0.5       | 10       | 0.00029       | 0.00004 |
+| 0.5       | 100      | 0.0053        | 0.0008 |
+| 0.5       | 500      | 0.1269        | 0.0068 |
+| 0.5       | 1000     | 0.4961        | 0.0246 |
+
+##### **Análise do Crescimento com Número de Vértices**
+
+Quando observamos o comportamento do algoritmo mantendo uma densidade constante (por exemplo, 0.1) e aumentando o número de vértices:
+- De 10 para 100 vértices (10x): o tempo aumenta de 0.00021 para 0.00254 ms/op (~12x)
+- De 100 para 500 vértices (5x): o tempo aumenta de 0.00254 para 0.0382 ms/op (~15x)
+- De 500 para 1000 vértices (2x): o tempo aumenta de 0.0382 para 0.1321 ms/op (~3.5x)
+
+Este crescimento não é perfeitamente linear, mas está próximo do esperado para um algoritmo de complexidade O(V + E), especialmente considerando que o número de arestas E também aumenta com o número de vértices V e a densidade fixa.
+
+##### **Impacto da Densidade**
+
+Observando os resultados para um número fixo de vértices (1000) com densidades crescentes:
+- Densidade 0.1: 0.1321 ms/op
+- Densidade 0.3: 0.3501 ms/op (~2.65x mais lento)
+- Densidade 0.5: 0.4961 ms/op (~3.75x mais lento que 0.1)
+
+O aumento da densidade tem um impacto significativo no desempenho, o que é esperado, já que mais arestas (E) significam mais trabalho para o algoritmo. Este comportamento confirma a complexidade O(V + E), onde E cresce com a densidade.
+
+##### **Visualização Gráfica dos Resultados**
+
+Os gráficos a seguir ilustram visualmente o comportamento do algoritmo de ordenação topológica sob diferentes condições:
+
+**1. Desempenho por Número de Vértices (Densidade = 0.1)**
+
+Este gráfico mostra como o tempo de execução aumenta à medida que o número de vértices cresce, mantendo a densidade constante em 0.1.
+
+![Desempenho por Número de Vértices](assets/numeroVerticeOrdenTopo.png)
+
+Como pode ser observado, o crescimento do tempo de execução acompanha o aumento do número de vértices de forma quase linear, confirmando a complexidade teórica O(V + E).
+
+**2. Desempenho por Densidade (1000 Vértices)**
+
+Este gráfico demonstra como o aumento da densidade do grafo afeta o tempo de execução para um grafo com 1000 vértices.
+
+![Desempenho por Densidade](assets/densidadeOrdenTopo.png)
+
+É possível observar que o aumento da densidade tem um impacto significativo no desempenho, pois um grafo mais denso significa mais arestas para processar.
+
+##### **Verificação da Complexidade Teórica**
+
+Para um grafo direcionado com V vértices e densidade d, o número esperado de arestas é aproximadamente E = d × V × (V-1). Ao aumentar V de 500 para 1000 com densidade 0.3:
+- Para V=500: E ≈ 0.3 × 500 × 499 ≈ 74,850 arestas
+- Para V=1000: E ≈ 0.3 × 1000 × 999 ≈ 299,700 arestas
+
+O aumento de E é aproximadamente 4x, enquanto o aumento no tempo de execução foi de aproximadamente 4.16x (de 0.0841 para 0.3501 ms/op). Esta correspondência confirma que o algoritmo está se comportando conforme a complexidade teórica esperada O(V + E).
+
+OBS.: Pode-se ainda consultar o arquivo HTML de análise dos benchmarks que é gerado a (`toposort-resultados.html`).
+
+
+#### **Aplicações**
+
+A ordenação topológica é amplamente utilizada em problemas do mundo real, como:
+
+  * **Gerenciamento de Projetos:** Determinar a ordem de execução de tarefas em um cronograma, onde algumas tarefas são pré-requisitos para outras.
+  * **Compiladores:** Na compilação de código-fonte, a ordenação topológica define a ordem correta de compilação, já que muitas vezes os módulos ou arquivos dependem uns dos outros. .
+  * **Resolução de Dependências:** Em sistemas de gerenciamento de pacotes (como Maven, npm ou pip), a ordenação topológica é usada para determinar em que ordem os pacotes devem ser instalados para satisfazer todas as dependências.
+  * **Grades Curriculares:** Montar uma sequência válida de disciplinas a serem cursadas, respeitando os pré-requisitos de cada uma, como na nossa realidade do curso, para cursar LEDA, foi necessário ter pago, por exemplo, LP2.
+
+#### **Contribuições**
+
+  * **Autora:** Joyce Vitória Nascimento Rodrigues
+
+#### **Bibliografia**
+
+1.  CORMEN, T. H.; LEISERSON, C. E.; RIVEST, R. L.; STEIN, C. **Introduction to Algorithms**. 3rd ed. MIT Press, 2009.
+2.  FEOFILOFF, P.; KOHAYAKAWA, Y.; WAKABAYASHI, Y. **Uma Introdução Sucinta à Teoria dos Algoritmos**. Instituto de Matemática e Estatística da USP (IME-USP), 2011.
+3.  TARJAN, R. E. (1972). **Depth-First Search and Linear Graph Algorithms**. SIAM Journal on Computing, 1(2), 146-160.
