@@ -1,141 +1,123 @@
 # Análise Comparativa de Algoritmos em Grafos
 
-## Índices
+Este projeto contém implementações de cinco algoritmos de grafos e um sistema integrado para benchmarking e visualização dos resultados.
 
-1.  [Introdução](#introdução)
-    -   Visão geral e objetivo do projeto.
-2.  [Estrutura do Projeto](#estrutura-do-projeto)
-    -   Organização de arquivos e pacotes.
-    -   Algoritmos e responsáveis.
-3.  [Geração de Dados](#geração-de-dados)
-    -   Metodologia para criação dos grafos de teste.
-4.  [Análise de Desempenho](#análise-de-desempenho)
-    -   [Algoritmo de Dijkstra](#análise-dijkstra)
-    -   [Busca em Largura (BFS)](#análise-bfs)
-    -   [Ordenação Topológica (DFS)](#análise-ordenação-topológica)
-    -   [Disjoint Set Union (DSU)](#análise-dsu)
-    -   [Algoritmo de Floyd-Warshall](#análise-floyd-warshall)
-    -   [Conclusão da Análise](#conclusão-da-análise)
-5.  [Como Executar o Projeto](#como-executar-o-projeto)
-6.  [Colaboradores](#colaboradores)
+## Índice
+- [Análise Comparativa de Algoritmos em Grafos](#análise-comparativa-de-algoritmos-em-grafos)
+  - [Índice](#índice)
+  - [Algoritmos Implementados](#algoritmos-implementados)
+  - [Estrutura do Projeto](#estrutura-do-projeto)
+  - [Configuração Inicial](#configuração-inicial)
+    - [Requisitos de Sistema](#requisitos-de-sistema)
+    - [Clonando o Repositório](#clonando-o-repositório)
+  - [Executando Testes](#executando-testes)
+    - [Executar todos os testes](#executar-todos-os-testes)
+    - [Executar testes de uma classe específica](#executar-testes-de-uma-classe-específica)
+  - [Executando Benchmarks](#executando-benchmarks)
+  - [Visualização dos Resultados](#visualização-dos-resultados)
+    - [Análises Disponíveis](#análises-disponíveis)
+  - [Licença](#licença)
 
----
+## Algoritmos Implementados
 
-## Introdução
-
---- criar introdução.
-
-Este trabalho, desenvolvido para a disciplina de Laboratório de Estrutura de Dados, tem como objetivo implementar e analisar o desempenho de cinco algoritmos clássicos em grafos. Buscamos compreender suas características, limitações e cenários de aplicação ideais, mensurando sua performance em tempo de execução e uso de memória através de benchmarks com diferentes cargas de dados (tamanho e densidade dos grafos). (rever)
-
----
+1. **Ordenação Topológica com DFS**: Ordenação dos vértices em um grafo direcionado acíclico.
+2. **Algoritmo de Dijkstra**
+3. **Busca em Largura (BFS)**:
+4. **Union-Find (DSU)**
+5. **Floyd-Warshall**
 
 ## Estrutura do Projeto
+Este trabalho, desenvolvido para a disciplina de Laboratório de Estrutura de Dados, tem como objetivo implementar e analisar o desempenho de cinco algoritmos clássicos em grafos. Buscamos compreender suas características, limitações e cenários de aplicação ideais, mensurando sua performance em tempo de execução e uso de memória através de benchmarks com diferentes cargas de dados (tamanho e densidade dos grafos). (rever)
 
-O projeto foi organizado em uma estrutura monolítica com Gradle, centralizando todo o código-fonte na pasta `src` e separando os diferentes componentes em pacotes Java. Pastas adicionais foram criadas para organizar a documentação, os dados de teste e os resultados dos benchmarks.
-
-#### Estrutura de Arquivos
 ```
-AlgorithmsInvolvingGraphs/
-│
-├── build.gradle              
-├── settings.gradle             
-├── README.md                    
-│
-├── documentation/            
-├── data-generator/              # Scripts para criar os grafos de teste
-├── results/                     # Resultados dos benchmarks (CSVs, gráficos)
-│
-└── src/
-    ├── main/java/br/ufcg/computacao/
-    │   ├── graph/                 # Estrutura de Grafo, comum a todos
-    │   ├── dijkstra/              # (Maria Eduarda)
-    │   ├── bfs/                   # (Gustavo)
-    │   ├── toposort/              # (Joyce)
-    │   ├── dsu/                   # (Augusto)
-    │   ├── floydwarshall/         # (Gleydson)
-    │   └── benchmark/             # Código para executar os testes de performance
-    │
-    └── test/java/br/ufcg/computacao/
-        └── ...                    # Testes unitários para cada algoritmo
+.
+├── src/
+│   ├── main/java/        # Implementações dos algoritmos
+│   ├── test/java/        # Testes unitários
+│   └── jmh/java/         # Benchmarks JMH
+├── documentation/        # Documentação detalhada de cada algoritmo
+├── benchmark.sh          # Script unificado para todos os benchmarks
+└── *-resultados.html     # Visualizações geradas pelos benchmarks
 ```
 
-#### Algoritmos e Responsáveis
+## Configuração Inicial
 
-| Algoritmo | Responsável |
-| :--- | :--- |
-| **Dijkstra** (Menor Caminho) | Maria Eduarda |
-| **Busca em Largura (BFS)** | Gustavo |
-| **Ordenação Topológica (DFS)** | Joyce |
-| **Disjoint Set Union (DSU)** | Augusto |
-| **Algoritmo de Floyd-Warshall** | Gleydson |
+### Requisitos de Sistema
+- JDK 11 ou superior
+- Gradle 7.0+ (ou use o wrapper incluído: `./gradlew`)
+- Git
 
----
-
-## Geração de Dados
-
-
----
-
-## Análise de Desempenho
-
-Nesta seção, analisamos o comportamento de cada algoritmo ao ser submetido a grafos de tamanhos crescentes. As métricas foram coletadas através do módulo `benchmark` e os gráficos foram gerados para visualização.
-
-### Análise: Algoritmo de Dijkstra
-*( gráfico de desempenho do Dijkstra)*
-
-**Discussão:**
-
-
-### Análise: Busca em Largura (BFS)
-*(gráfico de desempenho do BFS)*
-
-**Discussão:**
-
-
-### Análise: Ordenação Topológica
-*(gráfico de desempenho da Ordenação Topológica)*
-
-**Discussão:**
-
-
-.....
-
-### Análise: Disjoint Set Union (DSU)
-...
-
-### Análise: Algoritmo de Floyd-Warshall
-...
-
-### Conclusão da Análise
-----
-
----
-
-## Como Executar o Projeto
-
-**Pré-requisitos:** JDK 17+ e Git instalados. O Gradle Wrapper está incluído no projeto.
-
-**1. Clonar o Repositório:**
+### Clonando o Repositório
 ```bash
-git clone [https://github.com/joycevnr/AlgorithmsInvolvingGraphs.git](https://github.com/joycevnr/AlgorithmsInvolvingGraphs.git)
+git clone https://github.com/joycevnr/AlgorithmsInvolvingGraphs.git
 cd AlgorithmsInvolvingGraphs
 ```
 
-**2. Executar os Testes Unitários:**
-Para validar a corretude de um algoritmo específico (ex: Ordenação Topológica):
+## Executando Testes
+
+### Executar todos os testes
 ```bash
-./gradlew test --tests "*OrdenacaoTopologicaTest"
+./gradlew test
 ```
 
-**3. Executar o Benchmark de Performance:**
-Para rodar a análise de desempenho de todos os algoritmos:
+### Executar testes de uma classe específica
 ```bash
-./gradlew run
+./gradlew test --tests "br.ufcg.computacao.toposort.OrdenacaoTopologicaTest"
 ```
 
----
+## Executando Benchmarks
 
-## Colaboradores
+O sistema de benchmark foi simplificado em um único script que executa os testes e gera visualizações HTML dos resultados.
 
-Este projeto foi desenvolvido por estudantes do curso de Ciência da Computação da Universidade Federal de Campina Grande (UFCG):
+```bash
+# Tornar o script executável
+chmod +x benchmark.sh
+
+# Executar o benchmark para um algoritmo específico
+./benchmark.sh --toposort    # Ordenação Topológica
+./benchmark.sh --dijkstra    # Algoritmo de Dijkstra
+./benchmark.sh --bfs         # Busca em Largura (BFS)
+./benchmark.sh --dsu         # Union-Find (DSU)
+./benchmark.sh --floyd       # Floyd-Warshall
+
+# Executar o benchmark em modo rápido (menos iterações)
+./benchmark.sh --toposort --quick
+
+# Executar todos os benchmarks sequencialmente
+./benchmark.sh --all
+
+# Executar todos em modo rápido
+./benchmark.sh --all --quick
+
+# Ver resultados existentes sem executar benchmarks
+./benchmark.sh --results
+
+# Ver ajuda
+./benchmark.sh --help
+```
+
+## Visualização dos Resultados
+
+Após a execução, os resultados serão salvos em arquivos JSON e visualizações HTML serão geradas:
+
+- `toposort-resultados.html`: Resultados de Ordenação Topológica
+- `dijkstra-resultados.html`: Resultados de Dijkstra
+- `bfs-resultados.html`: Resultados de Busca em Largura
+- `dsu-resultados.html`: Resultados de Union-Find
+- `floyd-resultados.html`: Resultados de Floyd-Warshall
+
+Abra estes arquivos HTML em um navegador para visualizar tabelas de resultados e gráficos comparativos.
+
+### Análises Disponíveis
+
+As visualizações incluem diversos tipos de análise:
+
+1. **Tempo de execução por número de vértices**: Como o algoritmo se comporta com o crescimento do número de vértices.
+2. **Tempo de execução por densidade do grafo**: Como o algoritmo se comporta com grafos mais densos ou esparsos.
+3. **Comparação entre algoritmos**: Para algoritmos com diferentes implementações ou variantes.
+
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
