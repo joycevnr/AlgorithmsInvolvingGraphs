@@ -19,6 +19,9 @@ import java.util.List;
  * O tempo de execução do algoritmo é $O(V^3)$, onde <i>V</i> é o número de vértices,
  * tornando-o adequado quando é necessário calcular todas as distâncias entre pares de vértices.
  * </p>
+ * 
+ * @author Gleydson Fabricio Rodrigues de Moura
+ * 
  */
 public class FloydWarshall {
 
