@@ -36,7 +36,7 @@ class FloydWarshallTests {
      * Verifica se caminhos indiretos mais curtos são encontrados corretamente.
      */
     @Test
-    void testGrafo4x4DiagonalSuperior() {
+    void testInicializacaoManual() {
         int[][] matriz = {
             {0,   3,  10, INF},
             {INF, 0,   1,  7},
@@ -50,8 +50,18 @@ class FloydWarshallTests {
             {INF, INF,   0, 2},
             {INF, INF, INF, 0}
         };
+        
+        //teste se inicializou corretamente
+        FloydWarshall fw = new FloydWarshall();
+        fw.inicializar(matriz);
+        assertEquals(0, fw.getDistancia(3, 3));
+        assertEquals(7, fw.getDistancia(1, 3));
+        assertEquals(INF, fw.getDistancia(3, 0));
 
-        FloydWarshall fw = new FloydWarshall(matriz);
+        //executando o algoritmo
+        fw.calcularDistancias();
+
+        //verificação do algoritmo
         int[][] resultado = fw.getDistancias();
 
         for (int i = 0; i < 4; i++)
