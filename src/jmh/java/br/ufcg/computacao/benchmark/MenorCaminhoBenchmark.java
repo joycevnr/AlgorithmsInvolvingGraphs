@@ -1,6 +1,7 @@
 package br.ufcg.computacao.benchmark;
 
 import java.util.Random;
+
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Benchmark;
@@ -17,9 +18,9 @@ import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 import br.ufcg.computacao.dijkstra.Dijkstra;
-
+import br.ufcg.computacao.floyd-warshall.FloydWarshall;
 /**
- * Benchmark para avaliar o desempenho do algoritmo e Dijkstra para encontrar o menor caminho entre dois pontos,
+ * Benchmark para avaliar o desempenho do algoritmo e Dijkstra e de Floyd-Warshall para encontrar o menor caminho entre dois pontos,
  * com diferentes tamanhos e densidades de grafos.
  *
  * @author Maria Eduarda Capela Cabral Pinheiro da Silva
@@ -30,7 +31,7 @@ import br.ufcg.computacao.dijkstra.Dijkstra;
 @Fork(value = 1)
 @Warmup(iterations = 1, time = 1)
 @Measurement(iterations = 2, time = 1)
-public class DijkstraBenchmark {
+public class MenorCaminhoBenchmark {
 	@Param({"10", "100", "500", "1000", "1500", "2000", "2500", "3000"})
     private int numVertices;
 
@@ -39,6 +40,7 @@ public class DijkstraBenchmark {
 
     private int[][] grafo;
     private Dijkstra dijkstra;
+    private FloydWarshall floydwarshall;
     private Random random;
 
     @Setup
@@ -73,6 +75,12 @@ public class DijkstraBenchmark {
     @Benchmark
     public void dijkstraComFila(Blackhole blackhole) {
         int[][] resultado = dijkstra.dijkstra_comFila(grafo, 0);
+        blackhole.consume(resultado);
+    }
+    @Benchmark
+    public void floydWarshall(Blackhole blackhole) {
+        this.floydwarshall = new FloydWarshall(grafo);
+        int[][] resultado = floydwarshall.getdistancias();
         blackhole.consume(resultado);
     }
 }
