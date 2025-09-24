@@ -1,0 +1,842 @@
+[
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.1",
+      "numVertices": "100"
+    },
+    "primaryMetric": {
+      "score": 0.002172482484515416,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.0021656517749326495,
+        "50.0": 0.002172482484515416,
+        "90.0": 0.0021793131940981824,
+        "95.0": 0.0021793131940981824,
+        "99.0": 0.0021793131940981824,
+        "99.9": 0.0021793131940981824,
+        "99.99": 0.0021793131940981824,
+        "99.999": 0.0021793131940981824,
+        "99.9999": 0.0021793131940981824,
+        "100.0": 0.0021793131940981824
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.0021656517749326495,
+          0.0021793131940981824
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.1",
+      "numVertices": "500"
+    },
+    "primaryMetric": {
+      "score": 0.03602750190362736,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.035553632931824,
+        "50.0": 0.03602750190362736,
+        "90.0": 0.036501370875430705,
+        "95.0": 0.036501370875430705,
+        "99.0": 0.036501370875430705,
+        "99.9": 0.036501370875430705,
+        "99.99": 0.036501370875430705,
+        "99.999": 0.036501370875430705,
+        "99.9999": 0.036501370875430705,
+        "100.0": 0.036501370875430705
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.036501370875430705,
+          0.035553632931824
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.1",
+      "numVertices": "1000"
+    },
+    "primaryMetric": {
+      "score": 0.1340861682468482,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.1318983890105252,
+        "50.0": 0.1340861682468482,
+        "90.0": 0.13627394748317118,
+        "95.0": 0.13627394748317118,
+        "99.0": 0.13627394748317118,
+        "99.9": 0.13627394748317118,
+        "99.99": 0.13627394748317118,
+        "99.999": 0.13627394748317118,
+        "99.9999": 0.13627394748317118,
+        "100.0": 0.13627394748317118
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.1318983890105252,
+          0.13627394748317118
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.1",
+      "numVertices": "5000"
+    },
+    "primaryMetric": {
+      "score": 5.563544325106213,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 5.280110751847941,
+        "50.0": 5.563544325106213,
+        "90.0": 5.846977898364486,
+        "95.0": 5.846977898364486,
+        "99.0": 5.846977898364486,
+        "99.9": 5.846977898364486,
+        "99.99": 5.846977898364486,
+        "99.999": 5.846977898364486,
+        "99.9999": 5.846977898364486,
+        "100.0": 5.846977898364486
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          5.846977898364486,
+          5.280110751847941
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.1",
+      "numVertices": "10000"
+    },
+    "primaryMetric": {
+      "score": 26.136749161055803,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 26.00654423834197,
+        "50.0": 26.136749161055803,
+        "90.0": 26.266954083769633,
+        "95.0": 26.266954083769633,
+        "99.0": 26.266954083769633,
+        "99.9": 26.266954083769633,
+        "99.99": 26.266954083769633,
+        "99.999": 26.266954083769633,
+        "99.9999": 26.266954083769633,
+        "100.0": 26.266954083769633
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          26.266954083769633,
+          26.00654423834197
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.3",
+      "numVertices": "100"
+    },
+    "primaryMetric": {
+      "score": 0.0036882046598842775,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.0036706960780931,
+        "50.0": 0.0036882046598842775,
+        "90.0": 0.003705713241675455,
+        "95.0": 0.003705713241675455,
+        "99.0": 0.003705713241675455,
+        "99.9": 0.003705713241675455,
+        "99.99": 0.003705713241675455,
+        "99.999": 0.003705713241675455,
+        "99.9999": 0.003705713241675455,
+        "100.0": 0.003705713241675455
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.003705713241675455,
+          0.0036706960780931
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.3",
+      "numVertices": "500"
+    },
+    "primaryMetric": {
+      "score": 0.0844599390667686,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.08438501218483141,
+        "50.0": 0.0844599390667686,
+        "90.0": 0.08453486594870581,
+        "95.0": 0.08453486594870581,
+        "99.0": 0.08453486594870581,
+        "99.9": 0.08453486594870581,
+        "99.99": 0.08453486594870581,
+        "99.999": 0.08453486594870581,
+        "99.9999": 0.08453486594870581,
+        "100.0": 0.08453486594870581
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.08438501218483141,
+          0.08453486594870581
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.3",
+      "numVertices": "1000"
+    },
+    "primaryMetric": {
+      "score": 0.342080876143095,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.3412020622313204,
+        "50.0": 0.342080876143095,
+        "90.0": 0.3429596900548697,
+        "95.0": 0.3429596900548697,
+        "99.0": 0.3429596900548697,
+        "99.9": 0.3429596900548697,
+        "99.99": 0.3429596900548697,
+        "99.999": 0.3429596900548697,
+        "99.9999": 0.3429596900548697,
+        "100.0": 0.3429596900548697
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.3412020622313204,
+          0.3429596900548697
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.3",
+      "numVertices": "5000"
+    },
+    "primaryMetric": {
+      "score": 16.879593813131315,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 16.878669845117845,
+        "50.0": 16.879593813131315,
+        "90.0": 16.880517781144782,
+        "95.0": 16.880517781144782,
+        "99.0": 16.880517781144782,
+        "99.9": 16.880517781144782,
+        "99.99": 16.880517781144782,
+        "99.999": 16.880517781144782,
+        "99.9999": 16.880517781144782,
+        "100.0": 16.880517781144782
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          16.880517781144782,
+          16.878669845117845
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.3",
+      "numVertices": "10000"
+    },
+    "primaryMetric": {
+      "score": 61.73615632612952,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 60.50559993975904,
+        "50.0": 61.73615632612952,
+        "90.0": 62.9667127125,
+        "95.0": 62.9667127125,
+        "99.0": 62.9667127125,
+        "99.9": 62.9667127125,
+        "99.99": 62.9667127125,
+        "99.999": 62.9667127125,
+        "99.9999": 62.9667127125,
+        "100.0": 62.9667127125
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          62.9667127125,
+          60.50559993975904
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.5",
+      "numVertices": "100"
+    },
+    "primaryMetric": {
+      "score": 0.004983909869970841,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.004962485276092495,
+        "50.0": 0.004983909869970841,
+        "90.0": 0.005005334463849187,
+        "95.0": 0.005005334463849187,
+        "99.0": 0.005005334463849187,
+        "99.9": 0.005005334463849187,
+        "99.99": 0.005005334463849187,
+        "99.999": 0.005005334463849187,
+        "99.9999": 0.005005334463849187,
+        "100.0": 0.005005334463849187
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.004962485276092495,
+          0.005005334463849187
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.5",
+      "numVertices": "500"
+    },
+    "primaryMetric": {
+      "score": 0.12558071556609268,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.1250304201340268,
+        "50.0": 0.12558071556609268,
+        "90.0": 0.12613101099815857,
+        "95.0": 0.12613101099815857,
+        "99.0": 0.12613101099815857,
+        "99.9": 0.12613101099815857,
+        "99.99": 0.12613101099815857,
+        "99.999": 0.12613101099815857,
+        "99.9999": 0.12613101099815857,
+        "100.0": 0.12613101099815857
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.1250304201340268,
+          0.12613101099815857
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.5",
+      "numVertices": "1000"
+    },
+    "primaryMetric": {
+      "score": 0.49039086144607114,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 0.48770784063201017,
+        "50.0": 0.49039086144607114,
+        "90.0": 0.49307388226013216,
+        "95.0": 0.49307388226013216,
+        "99.0": 0.49307388226013216,
+        "99.9": 0.49307388226013216,
+        "99.99": 0.49307388226013216,
+        "99.999": 0.49307388226013216,
+        "99.9999": 0.49307388226013216,
+        "100.0": 0.49307388226013216
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          0.49307388226013216,
+          0.48770784063201017
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.5",
+      "numVertices": "5000"
+    },
+    "primaryMetric": {
+      "score": 26.75496452875,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 25.004099995,
+        "50.0": 26.75496452875,
+        "90.0": 28.5058290625,
+        "95.0": 28.5058290625,
+        "99.0": 28.5058290625,
+        "99.9": 28.5058290625,
+        "99.99": 28.5058290625,
+        "99.999": 28.5058290625,
+        "99.9999": 28.5058290625,
+        "100.0": 28.5058290625
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          28.5058290625,
+          25.004099995
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  },
+  {
+    "jmhVersion": "1.36",
+    "benchmark": "br.ufcg.computacao.benchmark.OrdenacaoTopologicaBenchmark.ordenacaoTopologica",
+    "mode": "avgt",
+    "threads": 1,
+    "forks": 1,
+    "jvm": "/home/joyce/.sdkman/candidates/java/21.0.6-ms/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Djava.io.tmpdir=/home/joyce/Documents/gitHub/p3/AlgorithmsInvolvingGraphs/build/tmp/jmh",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "21.0.6",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "21.0.6+7-LTS",
+    "warmupIterations": 1,
+    "warmupTime": "3 s",
+    "warmupBatchSize": 1,
+    "measurementIterations": 2,
+    "measurementTime": "5 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "densidade": "0.5",
+      "numVertices": "10000"
+    },
+    "primaryMetric": {
+      "score": 75.23792285784313,
+      "scoreError": "NaN",
+      "scoreConfidence": [
+        "NaN",
+        "NaN"
+      ],
+      "scorePercentiles": {
+        "0.0": 74.30648788235294,
+        "50.0": 75.23792285784313,
+        "90.0": 76.16935783333334,
+        "95.0": 76.16935783333334,
+        "99.0": 76.16935783333334,
+        "99.9": 76.16935783333334,
+        "99.99": 76.16935783333334,
+        "99.999": 76.16935783333334,
+        "99.9999": 76.16935783333334,
+        "100.0": 76.16935783333334
+      },
+      "scoreUnit": "ms/op",
+      "rawData": [
+        [
+          76.16935783333334,
+          74.30648788235294
+        ]
+      ]
+    },
+    "secondaryMetrics": {}
+  }
+]

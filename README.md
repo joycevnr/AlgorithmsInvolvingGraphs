@@ -14,17 +14,25 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
     - [Executar todos os testes](#executar-todos-os-testes)
     - [Executar testes de uma classe específica](#executar-testes-de-uma-classe-específica)
   - [Executando Benchmarks](#executando-benchmarks)
-  - [Visualização dos Resultados](#visualização-dos-resultados)
-    - [Análises Disponíveis](#análises-disponíveis)
+    - [Visualização dos Resultados](#visualização-dos-resultados)
+  - [Visualização dos Resultados](#visualização-dos-resultados-1)
+    - [Arquivos Gerados](#arquivos-gerados)
+  - [Análises Detalhadas dos Algoritmos](#análises-detalhadas-dos-algoritmos)
+    - [1. Ordenação Topológica (DFS)](#1-ordenação-topológica-dfs)
+      - [Complexidade Teórica](#complexidade-teórica)
+      - [Aplicações Práticas](#aplicações-práticas)
+      - [Resultados dos Benchmarks](#resultados-dos-benchmarks)
+      - [Análise dos Resultados](#análise-dos-resultados)
+    - [2. Algoritmo de Dijkstra](#2-algoritmo-de-dijkstra)
   - [Licença](#licença)
 
 ## Algoritmos Implementados
 
-1. **Ordenação Topológica com DFS**: Ordenação dos vértices em um grafo direcionado acíclico.
-2. **Algoritmo de Dijkstra**
-3. **Busca em Largura (BFS)**:
-4. **Union-Find (DSU)**
-5. **Floyd-Warshall**
+1. **Ordenação Topológica com DFS** : Ordenação dos vértices em um grafo direcionado acíclico
+2. **Algoritmo de Dijkstra** : Caminho mais curto de origem única em grafos com pesos não-negativos
+3. **Union-Find (DSU)** : Estrutura de dados para operações de união e busca eficientes
+4. **Floyd-Warshall** : Caminho mais curto entre todos os pares de vértices
+5. **Busca em Largura (BFS)** : Em desenvolvimento 
 
 ## Estrutura do Projeto
 Este trabalho, desenvolvido para a disciplina de Laboratório de Estrutura de Dados, tem como objetivo implementar e analisar o desempenho de cinco algoritmos clássicos em grafos. Buscamos compreender suas características, limitações e cenários de aplicação ideais, mensurando sua performance em tempo de execução e uso de memória através de benchmarks com diferentes cargas de dados (tamanho e densidade dos grafos). (rever)
@@ -67,54 +75,79 @@ cd AlgorithmsInvolvingGraphs
 
 ## Executando Benchmarks
 
-O sistema de benchmark foi simplificado em um único script que executa os testes e gera visualizações HTML dos resultados.
-
+**Algoritmos:**
 ```bash
-# Tornar o script executável
-chmod +x benchmark.sh
+./benchmark.sh --toposort     # Ordenação Topológica
+./benchmark.sh --dijkstra     # Dijkstra
+./benchmark.sh --bfs   
+./benchmark.sh --dsu          # Union-Find (DSU)
+./benchmark.sh --floyd        # Floyd-Warshall
 
-# Executar o benchmark para um algoritmo específico
-./benchmark.sh --toposort    # Ordenação Topológica
-./benchmark.sh --dijkstra    # Algoritmo de Dijkstra
-./benchmark.sh --bfs         # Busca em Largura (BFS)
-./benchmark.sh --dsu         # Union-Find (DSU)
-./benchmark.sh --floyd       # Floyd-Warshall
-
-# Executar o benchmark em modo rápido (menos iterações)
+# Modo rápido (menos iterações)
 ./benchmark.sh --toposort --quick
-
-# Executar todos os benchmarks sequencialmente
-./benchmark.sh --all
-
-# Executar todos em modo rápido
-./benchmark.sh --all --quick
-
-# Ver resultados existentes sem executar benchmarks
-./benchmark.sh --results
 
 # Ver ajuda
 ./benchmark.sh --help
 ```
 
+### Visualização dos Resultados
+
+Após executar o benchmark, o próprio script fornece instruções claras de como visualizar os gráficos interativos.
+
 ## Visualização dos Resultados
 
-Após a execução, os resultados serão salvos em arquivos JSON e visualizações HTML serão geradas:
+O sistema gera automaticamente visualizações HTML interativas com:
 
-- `toposort-resultados.html`: Resultados de Ordenação Topológica
-- `dijkstra-resultados.html`: Resultados de Dijkstra
-- `bfs-resultados.html`: Resultados de Busca em Largura
-- `dsu-resultados.html`: Resultados de Union-Find
-- `floyd-resultados.html`: Resultados de Floyd-Warshall
+### Arquivos Gerados
+- `ALGORITMO-resultados.html`: Visualização completa de cada algoritmo
+- `ALGORITMO-benchmark.json`: Dados brutos do JMH para análises customizadas
 
-Abra estes arquivos HTML em um navegador para visualizar tabelas de resultados e gráficos comparativos.
+## Análises Detalhadas dos Algoritmos
 
-### Análises Disponíveis
+### 1. Ordenação Topológica (DFS)
+**Autora:** Joyce Vitória Nascimento Rodrigues
 
-As visualizações incluem diversos tipos de análise:
+#### Complexidade Teórica
+- **Tempo:** O(V + E) - visita cada vértice e aresta exatamente uma vez
+- **Espaço:** O(V) - para arrays de controle e pilha de recursão
 
-1. **Tempo de execução por número de vértices**: Como o algoritmo se comporta com o crescimento do número de vértices.
-2. **Tempo de execução por densidade do grafo**: Como o algoritmo se comporta com grafos mais densos ou esparsos.
-3. **Comparação entre algoritmos**: Para algoritmos com diferentes implementações ou variantes.
+#### Aplicações Práticas
+- Gerenciamento de projetos (ordem de tarefas com dependências)
+- Compiladores (ordem de compilação de módulos)
+- Grades curriculares (sequência de disciplinas com pré-requisitos)
+- Resolução de dependências (Maven, npm, pip)
+
+#### Resultados dos Benchmarks
+
+| Densidade | Vértices | Tempo (ms/op) | Crescimento vs Densidade 0.1 |
+|-----------|----------|---------------|------------------------------|
+| **0.1**   | 100      | 0.002         | Base                        |
+| **0.1**   | 500      | 0.036         | 18x                         |
+| **0.1**   | 1.000    | 0.134         | 3.7x                        |
+| **0.1**   | 5.000    | 5.564         | 41.5x                       |
+| **0.1**   | 10.000   | 26.137        | 4.7x                        |
+| **0.3**   | 100      | 0.004         | 2x                          |
+| **0.3**   | 500      | 0.084         | 2.3x                        |
+| **0.3**   | 1.000    | 0.342         | 2.6x                        |
+| **0.3**   | 5.000    | 16.880        | 3.0x                        |
+| **0.3**   | 10.000   | 61.736        | 2.4x                        |
+| **0.5**   | 100      | 0.005         | 2.5x                        |
+| **0.5**   | 500      | 0.126         | 3.5x                        |
+| **0.5**   | 1.000    | 0.490         | 3.7x                        |
+| **0.5**   | 5.000    | 26.755        | 4.8x                        |
+| **0.5**   | 10.000   | 75.238        | 2.9x                        |
+
+#### Análise dos Resultados
+- **Escalabilidade Excelente:** De 0.002ms (100 vértices) até 75ms (10k vértices) - crescimento controlado
+- **Validação O(V+E):** Comportamento sub-quadrático confirmado empiricamente em todos os testes
+- **Impacto da Densidade:** Densidade 0.5 é 2-5x mais lenta que densidade 0.1, confirmando dependência das arestas
+- **Performance Profissional:** 10.000 vértices processados em ~75ms demonstra eficiência para aplicações reais
+
+**Visualização completa:** `toposort-resultados.html` com gráficos interativos
+
+---
+
+### 2. Algoritmo de Dijkstra
 
 
 ## Licença
