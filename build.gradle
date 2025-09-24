@@ -37,5 +37,10 @@ jmh {
     fork = 1
     resultFormat = 'JSON'
     timeUnit = 'ms'
-    resultsFile = project.file('benchmark-results.json')
+    // Permitir que o filtro seja configurado pelos parâmetros da linha de comando
+    if (project.hasProperty('jmhInclude')) {
+        includes = [project.property('jmhInclude')]
+    }
+    // Permitir que o nome do arquivo seja configurado pelos parâmetros da linha de comando
+    // resultsFile será definido via -rff nos parâmetros JMH
 }

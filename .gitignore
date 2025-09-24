@@ -29,11 +29,6 @@ replay_pid*
 # Ignore Gradle build output directory
 build
 
-# Ignore benchmark results
-benchmark-results.json
-/graficos/
-*.html
-
 # Python cache files
 __pycache__/
 *.py[cod]

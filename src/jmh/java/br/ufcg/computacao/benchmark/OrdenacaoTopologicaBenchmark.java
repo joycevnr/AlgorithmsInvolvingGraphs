@@ -30,11 +30,11 @@ import br.ufcg.computacao.toposort.OrdenacaoTopologica;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 @Fork(value = 1)
-@Warmup(iterations = 1, time = 1)
-@Measurement(iterations = 2, time = 1)
+@Warmup(iterations = 2, time = 3)
+@Measurement(iterations = 3, time = 5)
 public class OrdenacaoTopologicaBenchmark {
 
-    @Param({"10", "100", "500", "1000"})
+    @Param({"100", "500", "1000", "5000", "10000"})
     private int numVertices;
 
     @Param({"0.1", "0.3", "0.5"})
