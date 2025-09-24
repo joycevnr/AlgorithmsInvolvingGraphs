@@ -14,17 +14,18 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
     - [Executar todos os testes](#executar-todos-os-testes)
     - [Executar testes de uma classe específica](#executar-testes-de-uma-classe-específica)
   - [Executando Benchmarks](#executando-benchmarks)
-  - [Visualização dos Resultados](#visualização-dos-resultados)
-    - [Análises Disponíveis](#análises-disponíveis)
+    - [Visualização dos Resultados](#visualização-dos-resultados)
+  - [Visualização dos Resultados](#visualização-dos-resultados-1)
+    - [Arquivos Gerados](#arquivos-gerados)
   - [Licença](#licença)
 
 ## Algoritmos Implementados
 
-1. **Ordenação Topológica com DFS**: Ordenação dos vértices em um grafo direcionado acíclico.
-2. **Algoritmo de Dijkstra**
-3. **Busca em Largura (BFS)**:
-4. **Union-Find (DSU)**
-5. **Floyd-Warshall**
+1. **Ordenação Topológica com DFS** : Ordenação dos vértices em um grafo direcionado acíclico.
+2. **Algoritmo de Dijkstra** 
+3. **Union-Find (DSU)** 
+4. **Floyd-Warshall** 
+5. **Busca em Largura (BFS)** 
 
 ## Estrutura do Projeto
 Este trabalho, desenvolvido para a disciplina de Laboratório de Estrutura de Dados, tem como objetivo implementar e analisar o desempenho de cinco algoritmos clássicos em grafos. Buscamos compreender suas características, limitações e cenários de aplicação ideais, mensurando sua performance em tempo de execução e uso de memória através de benchmarks com diferentes cargas de dados (tamanho e densidade dos grafos). (rever)
@@ -67,55 +68,32 @@ cd AlgorithmsInvolvingGraphs
 
 ## Executando Benchmarks
 
-O sistema de benchmark foi simplificado em um único script que executa os testes e gera visualizações HTML dos resultados.
-
+**Algoritmos:**
 ```bash
-# Tornar o script executável
-chmod +x benchmark.sh
+./benchmark.sh --toposort     # Ordenação Topológica
+./benchmark.sh --dijkstra     # Dijkstra
+./benchmark.sh --bfs   
+./benchmark.sh --dsu          # Union-Find (DSU)
+./benchmark.sh --floyd        # Floyd-Warshall
 
-# Executar o benchmark para um algoritmo específico
-./benchmark.sh --toposort    # Ordenação Topológica
-./benchmark.sh --dijkstra    # Algoritmo de Dijkstra
-./benchmark.sh --bfs         # Busca em Largura (BFS)
-./benchmark.sh --dsu         # Union-Find (DSU)
-./benchmark.sh --floyd       # Floyd-Warshall
-
-# Executar o benchmark em modo rápido (menos iterações)
+# Modo rápido (menos iterações)
 ./benchmark.sh --toposort --quick
-
-# Executar todos os benchmarks sequencialmente
-./benchmark.sh --all
-
-# Executar todos em modo rápido
-./benchmark.sh --all --quick
-
-# Ver resultados existentes sem executar benchmarks
-./benchmark.sh --results
 
 # Ver ajuda
 ./benchmark.sh --help
 ```
 
+### Visualização dos Resultados
+
+Após executar o benchmark, o próprio script fornece instruções claras de como visualizar os gráficos interativos.
+
 ## Visualização dos Resultados
 
-Após a execução, os resultados serão salvos em arquivos JSON e visualizações HTML serão geradas:
+O sistema gera automaticamente visualizações HTML interativas com:
 
-- `toposort-resultados.html`: Resultados de Ordenação Topológica
-- `dijkstra-resultados.html`: Resultados de Dijkstra
-- `bfs-resultados.html`: Resultados de Busca em Largura
-- `dsu-resultados.html`: Resultados de Union-Find
-- `floyd-resultados.html`: Resultados de Floyd-Warshall
-
-Abra estes arquivos HTML em um navegador para visualizar tabelas de resultados e gráficos comparativos.
-
-### Análises Disponíveis
-
-As visualizações incluem diversos tipos de análise:
-
-1. **Tempo de execução por número de vértices**: Como o algoritmo se comporta com o crescimento do número de vértices.
-2. **Tempo de execução por densidade do grafo**: Como o algoritmo se comporta com grafos mais densos ou esparsos.
-3. **Comparação entre algoritmos**: Para algoritmos com diferentes implementações ou variantes.
-
+### Arquivos Gerados
+- `ALGORITMO-resultados.html`: Visualização completa da Ordenação Topológica
+- `ALGORITMO-benchmark.json`: Dados brutos do JMH para análises customizadas
 
 ## Licença
 
