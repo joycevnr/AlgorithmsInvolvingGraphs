@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Benchmark: Ordenação Topológica</title>
+  <style>
+    body {font-family:Arial,sans-serif; max-width:1200px; margin:0 auto; padding:20px; background:#f8f9fa;}
+    .container {background:white; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1); padding:20px;}
+    h1 {text-align:center; border-bottom:2px solid #3498db; padding-bottom:10px; color:#2c3e50;}
+    .card {background:white; border-radius:8px; padding:20px; margin:20px 0; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+    table {width:100%; border-collapse:collapse; margin-bottom:20px;}
+    table, th, td {border:1px solid #ddd;}
+    th, td {padding:12px; text-align:left;}
+    th {background-color:#f2f2f2;}
+    .chart-container {height:400px; margin:20px 0;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Benchmark: Ordenação Topológica</h1>
+    
+    <div class="card">
+      <h2>Resultados</h2>
+      <div id="results-table">Carregando...</div>
+    </div>
+    
+    <div class="card">
+      <h2>Desempenho por Vértices</h2>
+      <div class="chart-container">
+        <canvas id="verticesChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Desempenho por Densidade</h2>
+      <div class="chart-container">
+        <canvas id="densidadeChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function formatNumber(num) {
+      if (typeof num !== 'number' || isNaN(num)) return 'N/A';
+      if (num < 0.001) return num.toExponential(2);
+      return num.toFixed(6);
+    }
+
+    async function loadResults() {
+      try {
+        const response = await fetch('toposort-benchmark.json');
+        if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
+        
+        const data = await response.json();
+        if (!data || data.length === 0) throw new Error('Arquivo vazio');
+        
+        processResults(data);
+      } catch (error) {
+        document.getElementById('results-table').innerHTML = 
+          '<p>Para ver os gráficos, execute: <code>python3 -m http.server 8080</code> e acesse <a href="http://localhost:8080/toposort-resultados.html">http://localhost:8080/toposort-resultados.html</a></p>';
+      }
+    }
+
+    function processResults(data) {
+      const results = [];
+      
+      data.forEach(item => {
+        results.push({
+          densidade: parseFloat(item.params.densidade),
+          numVertices: parseInt(item.params.numVertices),
+          score: item.primaryMetric.score,
+          error: item.primaryMetric.scoreError === "NaN" ? null : item.primaryMetric.scoreError,
+          unit: item.primaryMetric.scoreUnit
+        });
+      });
+      
+      createTable(results);
+      createCharts(results);
+    }
+
+    function createTable(results) {
+      const sorted = results.sort((a, b) => a.densidade - b.densidade || a.numVertices - b.numVertices);
+      
+      let html = '<table><thead><tr><th>Densidade</th><th>Vértices</th><th>Tempo (' + sorted[0].unit + ')</th><th>Erro</th></tr></thead><tbody>';
+      
+      sorted.forEach(r => {
+        html += `<tr><td>${r.densidade}</td><td>${r.numVertices}</td><td>${formatNumber(r.score)}</td><td>${r.error ? formatNumber(r.error) : 'N/A'}</td></tr>`;
+      });
+      
+      html += '</tbody></table>';
+      document.getElementById('results-table').innerHTML = html;
+    }
+
+    function createCharts(results) {
+      const densidades = [...new Set(results.map(r => r.densidade))].sort();
+      const vertices = [...new Set(results.map(r => r.numVertices))].sort();
+      
+      // Gráfico por vértices (densidade = 0.1)
+      const verticesData = vertices.map(v => {
+        const item = results.find(r => r.numVertices === v && r.densidade === 0.1);
+        return item ? item.score : null;
+      });
+      
+      new Chart(document.getElementById('verticesChart'), {
+        type: 'line',
+        data: {
+          labels: vertices,
+          datasets: [{
+            label: 'Tempo (ms/op)',
+            data: verticesData,
+            borderColor: '#4e73df',
+            backgroundColor: 'transparent',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { title: { display: true, text: 'Número de Vértices' } },
+            y: { title: { display: true, text: 'Tempo (ms/op)' }, beginAtZero: true }
+          }
+        }
+      });
+      
+      // Gráfico por densidade (vértices = 1000)
+      const densidadeData = densidades.map(d => {
+        const item = results.find(r => r.densidade === d && r.numVertices === 1000);
+        return item ? item.score : null;
+      });
+      
+      new Chart(document.getElementById('densidadeChart'), {
+        type: 'line',
+        data: {
+          labels: densidades,
+          datasets: [{
+            label: 'Tempo (ms/op)',
+            data: densidadeData,
+            borderColor: '#1cc88a',
+            backgroundColor: 'transparent',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { title: { display: true, text: 'Densidade' } },
+            y: { title: { display: true, text: 'Tempo (ms/op)' }, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', loadResults);
+  </script>
+</body>
+</html>
