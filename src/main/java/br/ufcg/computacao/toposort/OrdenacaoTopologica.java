@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import br.ufcg.computacao.graph.Grafo;
+import br.ufcg.computacao.toposort.graph.Grafo;
 
 /**
  * Implementação do algoritmo de ordenação topológica usando busca em profundidade (DFS).

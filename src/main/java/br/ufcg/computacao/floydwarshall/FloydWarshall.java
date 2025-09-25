@@ -1,3 +1,5 @@
+package br.ufcg.computacao.floydwarshall;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,9 @@ import java.util.List;
  * O tempo de execução do algoritmo é $O(V^3)$, onde <i>V</i> é o número de vértices,
  * tornando-o adequado quando é necessário calcular todas as distâncias entre pares de vértices.
  * </p>
+ * 
+ * @author Gleydson Fabricio Rodrigues de Moura
+ * 
  */
 public class FloydWarshall {
 
@@ -32,26 +37,31 @@ public class FloydWarshall {
     private int[][] distancias; 
 
     // Matriz para reconstrução dos caminhos mais curtos.
-    private int[][] sucessores; 
-
+    private int[][] sucessores;
+    
     /**
      * Construtor que inicializa e executa o algoritmo de Floyd-Warshall.
      *
      * @param matrizAdjacencia A matriz de adjacência que representa o grafo.
      */
-    public FloydWarshall(int[][] matrizAdjacencia){
 
+    public FloydWarshall(int[][] matrizAdjacencia){
         inicializar(matrizAdjacencia);
         calcularDistancias();
-
     }
+
+
+    /**
+     * Construtor vazio, útil em testes de desempenho, inicialização e algoritmo iniciados individualmente
+     */
+    public FloydWarshall(){}
 
     /**
      * Inicializa as matrizes de distâncias e de sucessores com base na matriz de adjacência fornecida.
      *
      * @param grafo A matriz de adjacência original do grafo.
      */
-    private void inicializar(int[][] grafo){
+    public void inicializar(int[][] grafo){
 
         int n = grafo.length;
         this.distancias = new int[n][n];
@@ -80,7 +90,7 @@ public class FloydWarshall {
      * permitindo a reconstrução completa dos caminhos após a execução.
      * </p>
      */
-    private void calcularDistancias(){
+    public void calcularDistancias(){
 
         int n = distancias.length;
         for (int k = 0; k < n; k++)// nó intermediário

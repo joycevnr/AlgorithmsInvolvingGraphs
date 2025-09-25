@@ -99,7 +99,7 @@ class DijkstraTests {
 	}
 
 	/**
-	 * Testa se o método {@code menor_caminho_semFila} retorna as menores distâncias
+	 * Testa se o método {@code dijkstra_semFila} retorna as menores distâncias
 	 * corretas
 	 * entre a origem e os demais vértices para diferentes grafos.
 	 */
@@ -210,7 +210,7 @@ class DijkstraTests {
 	}
 
 	/**
-	 * Testa se o método {@code menor_caminho_comFila} retorna as menores distâncias
+	 * Testa se o método {@code dijkstra_comFila} retorna as menores distâncias
 	 * corretas
 	 * entre a origem e os demais vértices para diferentes grafos.
 	 */
