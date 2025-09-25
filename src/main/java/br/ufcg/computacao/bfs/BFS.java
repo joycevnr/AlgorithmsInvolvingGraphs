@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-import br.ufcg.computacao.toposort.graph.Grafo;
-
 /**
  * Implementação do algoritmo de Busca em Largura (BFS).
  *
