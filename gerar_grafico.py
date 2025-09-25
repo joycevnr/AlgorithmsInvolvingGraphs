@@ -29,7 +29,12 @@ def create_charts(results, output_prefix):
     colors = plt.cm.viridis_r([i / len(algorithms) for i in range(len(algorithms))])
 
     # --- Gráfico 1: Desempenho por Vértices (Densidade fixa em 0.1) ---
-    plt.figure(figsize=(12, 7))
+    plt.figure(figsize=(14, 8))
+    
+    # Separar algoritmos por categoria de desempenho
+    dijkstra_algorithms = [algo for algo in algorithms if 'dijkstra' in algo.lower()]
+    other_algorithms = [algo for algo in algorithms if 'dijkstra' not in algo.lower()]
+    
     # Para cada algoritmo encontrado, desenha uma linha no gráfico
     for i, algo in enumerate(algorithms):
         # Filtra os pontos de dados para este algoritmo e densidade fixa
@@ -43,18 +48,58 @@ def create_charts(results, output_prefix):
         sorted_points = sorted(zip(x_vals, y_vals))
         if sorted_points:
             x_sorted, y_sorted = zip(*sorted_points)
-            plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', label=algo, color=colors[i])
+            
+            # Usar estilo de linha diferente para Floyd-Warshall
+            if 'floyd' in algo.lower():
+                plt.plot(x_sorted, y_sorted, marker='s', linestyle='--', linewidth=2, 
+                        label=f'{algo} (O(n³))', color='red', alpha=0.8)
+            else:
+                plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', linewidth=2, 
+                        label=f'{algo} (O((V+E)logV))', color=colors[i], alpha=0.9)
 
-    plt.title('Desempenho por Número de Vértices (Densidade de Arestas = 0.1)')
-    plt.xlabel('Número de Vértices')
-    plt.ylabel(f'Tempo ({unit})')
-    plt.legend()
-    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.title('Desempenho dos Algoritmos por Número de Vértices\n(Densidade de Arestas = 0.1)', fontsize=14)
+    plt.xlabel('Número de Vértices', fontsize=12)
+    plt.ylabel(f'Tempo ({unit}) - Escala Logarítmica', fontsize=12)
+    
+    # Usar escala logarítmica no eixo Y para melhor visualização
+    plt.yscale('log')
+    
+    plt.legend(fontsize=10)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
     plt.tight_layout()
     vertices_filename = f'{output_prefix}_por_vertices.png'
-    plt.savefig(vertices_filename)
+    plt.savefig(vertices_filename, dpi=300, bbox_inches='tight')
     print(f"[*] Gráfico salvo como: {vertices_filename}")
     plt.close()
+    
+    # --- Gráfico 1b: Apenas algoritmos Dijkstra (escala linear) ---
+    if dijkstra_algorithms:
+        plt.figure(figsize=(12, 7))
+        dijkstra_colors = plt.cm.Set1([i / len(dijkstra_algorithms) for i in range(len(dijkstra_algorithms))])
+        
+        for i, algo in enumerate(dijkstra_algorithms):
+            data_points = [r for r in results if r['algorithm'] == algo and r['densidade'] == 0.1]
+            if not data_points: continue
+            
+            x_vals = [r['numVertices'] for r in data_points]
+            y_vals = [r['score'] for r in data_points]
+            
+            sorted_points = sorted(zip(x_vals, y_vals))
+            if sorted_points:
+                x_sorted, y_sorted = zip(*sorted_points)
+                plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', linewidth=2, 
+                        label=algo, color=dijkstra_colors[i])
+
+        plt.title('Comparação dos Algoritmos Dijkstra por Número de Vértices\n(Densidade de Arestas = 0.1)', fontsize=14)
+        plt.xlabel('Número de Vértices', fontsize=12)
+        plt.ylabel(f'Tempo ({unit})', fontsize=12)
+        plt.legend(fontsize=10)
+        plt.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
+        plt.tight_layout()
+        dijkstra_filename = f'{output_prefix}_dijkstra_por_vertices.png'
+        plt.savefig(dijkstra_filename, dpi=300, bbox_inches='tight')
+        print(f"[*] Gráfico Dijkstra salvo como: {dijkstra_filename}")
+        plt.close()
 
     # --- Gráfico 2: Desempenho por Densidade (Vértices fixos em 1000) ---
     # Este gráfico só será gerado se houver dados para 1000 vértices
@@ -71,16 +116,23 @@ def create_charts(results, output_prefix):
             sorted_points = sorted(zip(x_vals, y_vals))
             if sorted_points:
                 x_sorted, y_sorted = zip(*sorted_points)
-                plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', label=algo, color=colors[i])
+                
+                # Usar estilo diferente para Floyd-Warshall
+                if 'floyd' in algo.lower():
+                    plt.plot(x_sorted, y_sorted, marker='s', linestyle='--', linewidth=2, 
+                            label=f'{algo} (O(n³))', color='red', alpha=0.8)
+                else:
+                    plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', linewidth=2, 
+                            label=algo, color=colors[i], alpha=0.9)
 
-        plt.title('Desempenho por Densidade de Arestas (Número de Vértices = 1000)')
-        plt.xlabel('Densidade de Arestas')
-        plt.ylabel(f'Tempo ({unit})')
-        plt.legend()
-        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.title('Desempenho por Densidade de Arestas (Número de Vértices = 1000)', fontsize=14)
+        plt.xlabel('Densidade de Arestas', fontsize=12)
+        plt.ylabel(f'Tempo ({unit})', fontsize=12)
+        plt.legend(fontsize=10)
+        plt.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
         plt.tight_layout()
         densidade_filename = f'{output_prefix}_por_densidade.png'
-        plt.savefig(densidade_filename)
+        plt.savefig(densidade_filename, dpi=300, bbox_inches='tight')
         print(f"[*] Gráfico salvo como: {densidade_filename}")
         plt.close()
 
