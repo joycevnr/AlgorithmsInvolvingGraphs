@@ -31,10 +31,10 @@ import br.ufcg.computacao.floydwarshall.FloydWarshall;
 @Warmup(iterations = 1, time = 1)
 @Measurement(iterations = 2, time = 1)
 public class MenorCaminhoBenchmark {
-	@Param({"100", "50", "200"})
+	@Param({"100", "500", "1000", "5000"})
     private int numVertices;
 
-    @Param({"0.1", "0.3", "0.5"})
+    @Param({"0.1", "0.3", "0.5", "1.0"})
     private double densidade;
 
     private int[][] grafo;
