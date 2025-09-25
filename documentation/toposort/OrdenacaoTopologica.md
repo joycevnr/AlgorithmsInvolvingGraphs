@@ -98,136 +98,113 @@ Saber a eficiência do algoritmo é essencial, então abaixo destaco as suas gra
 
 #### **Benchmark de Desempenho**
 
-A eficiência do algoritmo foi validada através de benchmarks utilizando a biblioteca JMH. Foram gerados grafos acíclicos direcionados (DAGs) de diferentes tamanhos (número de vértices) e densidades (proporção de arestas), e o tempo médio de execução foi medido em milissegundos por operação (ms/op).
+A eficiência do algoritmo foi validada através de benchmarks utilizando o framework Java Microbenchmark Harness (JMH), conhecido por sua precisão na medição de performance de código Java. Foram gerados grafos acíclicos direcionados (DAGs) de diferentes tamanhos e densidades para medir o tempo médio de execução.
+
+##### **Configuração dos Testes**
+
+Os benchmarks foram organizados com os seguintes parâmetros:
+- **Número de vértices (V):** 100, 500, 1.000 e 5.000 vértices
+- **Densidade de arestas (d):** 0.1 (esparso), 0.3 (médio) e 0.5 (denso)
+- **Framework:** JMH (Java Microbenchmark Harness) v1.36
+- **JVM:** OpenJDK 21.0.6, 64-Bit Server VM
+- **Métrica:** Tempo médio por operação (ms/op)
+- **Iterações:** Múltiplas execuções para garantir confiabilidade estatística
+
+A densidade é calculada como a proporção de arestas presentes em relação ao número máximo possível de arestas em um grafo direcionado completo.
 
 ##### **Resultados Experimentais**
 
-Os benchmarks foram realizados com as seguintes configurações:
-- **Número de vértices:** 100, 500, 1.000, 5.000 e 10.000
-- **Densidades de grafo:** 0.1, 0.3 e 0.5  
-- **Métrica:** Tempo médio por operação (ms/op)
-- **Ambiente:** JMH 1.36, JDK 21.0.6, OpenJDK 64-Bit Server VM
+**Tabela Completa de Resultados:**
 
-| Densidade | Vértices | Tempo (ms/op) | Crescimento |
-|-----------|----------|---------------|-------------|
-| **0.1**   | 100      | 0.002         | Base        |
-| **0.1**   | 500      | 0.036         | 18x         |
-| **0.1**   | 1.000    | 0.134         | 3.7x        |
-| **0.1**   | 5.000    | 5.564         | 41.5x       |
-| **0.1**   | 10.000   | 26.137        | 4.7x        |
-| **0.3**   | 100      | 0.004         | Base        |
-| **0.3**   | 500      | 0.084         | 21x         |
-| **0.3**   | 1.000    | 0.342         | 4.1x        |
-| **0.3**   | 5.000    | 16.880        | 49.4x       |
-| **0.3**   | 10.000   | 61.736        | 3.7x        |
-| **0.5**   | 100      | 0.005         | Base        |
-| **0.5**   | 500      | 0.126         | 25.2x       |
-| **0.5**   | 1.000    | 0.490         | 3.9x        |
-| **0.5**   | 5.000    | 26.755        | 54.6x       |
-| **0.5**   | 10.000   | 75.238        | 2.8x        |
+| Densidade | Vértices | Tempo (ms/op) | Arestas Aprox. | Crescimento |
+|-----------|----------|---------------|----------------|-------------|
+| **0.1**   | 100      | 0.002         | ~500           | Base        |
+| **0.1**   | 500      | 0.037         | ~12.5k         | 18.5x       |
+| **0.1**   | 1.000    | 0.129         | ~50k           | 3.5x        |
+| **0.1**   | 5.000    | 4.859         | ~1.25M         | 37.7x       |
+| **0.3**   | 100      | 0.004         | ~1.5k          | Base        |
+| **0.3**   | 500      | 0.087         | ~37.5k         | 21.8x       |
+| **0.3**   | 1.000    | 0.352         | ~150k          | 4.0x        |
+| **0.3**   | 5.000    | 16.606        | ~3.75M         | 47.2x       |
+| **0.5**   | 100      | 0.005         | ~2.5k          | Base        |
+| **0.5**   | 500      | 0.128         | ~62.5k         | 25.6x       |
+| **0.5**   | 1.000    | 0.507         | ~250k          | 4.0x        |
+| **0.5**   | 5.000    | 27.736        | ~6.25M         | 54.7x       |
 
-##### **Análise do Crescimento com Escala Profissional**
+##### **Análise de Performance**
 
-O algoritmo demonstra excelente escalabilidade até tamanhos significativos:
+**Confirmação da Complexidade O(V + E):**
 
-**Performance por Densidade (10.000 vértices):**
-- **Densidade 0.1:** 26.137ms - Excelente para grafos esparsos
-- **Densidade 0.3:** 61.736ms - 2.4x mais lento (impacto controlado)  
-- **Densidade 0.5:** 75.238ms - 2.9x mais lento (ainda muito eficiente)
+Os benchmarks validam empiricamente a complexidade teórica:
 
-**Escalabilidade Empírica:**
-- De 100 para 10.000 vértices (100x): tempo aumenta ~5.000-15.000x
-- Crescimento sub-quadrático confirmado em toda a faixa testada
-- Performance O(V + E) validada até cargas profissionais
+1. **Crescimento Linear com V:** Para densidade constante, tempo cresce aproximadamente linear
+2. **Crescimento Linear com E:** Para vértices fixos, tempo aumenta com a densidade
+3. **Performance Excelente:** Mesmo grafos grandes mantêm tempos muito eficientes
 
-##### **Impacto da Densidade em Escala Real**
+**Performance por Tamanho:**
+- **Grafos pequenos (100v):** ~0.002-0.005ms - Tempo desprezível
+- **Grafos médios (1000v):** ~0.129-0.507ms - Performance excelente  
+- **Grafos grandes (5000v):** ~4.859-27.736ms - Ainda muito eficiente
 
-**Comparação de Densidades (10.000 vértices):**
-- Densidade 0.1 → 0.3: aumento de 2.4x (controlado)
-- Densidade 0.1 → 0.5: aumento de 2.9x (excelente)
-- Densidade 0.3 → 0.5: aumento de 1.2x (marginal)
-
-**Insight Importante:** O impacto da densidade diminui proporcionalmente com o aumento do tamanho, demonstrando que o algoritmo é altamente eficiente para grafos grandes e densos.
+**Impacto da Densidade (Vértices fixos em 1.000):**
+- **Densidade 0.1:** 0.129ms (≈50k arestas)
+- **Densidade 0.3:** 0.352ms (≈150k arestas) - 2.7x mais lento
+- **Densidade 0.5:** 0.507ms (≈250k arestas) - 1.4x mais lento
 
 ##### **Visualização Gráfica dos Resultados**
 
-Para facilitar a compreensão dos resultados, os gráficos a seguir ilustram o comportamento do algoritmo de ordenação topológica. Estes dados foram extraídos diretamente dos benchmarks executados e mostram padrões muito interessantes.
-
 **1. Desempenho por Número de Vértices**
 
-O primeiro gráfico mostra como o tempo de execução varia conforme aumentamos o número de vértices no grafo.
+![Desempenho por Número de Vértices](assets/toposort-benchmark_por_vertices.png)
 
-![Desempenho por Número de Vértices](assets/numeroVerticeOrdenTopo.png)
+Este gráfico mostra como o tempo de execução evolui conforme aumentamos o tamanho do grafo. O que observei é bastante interessante, pois embora o tempo cresça com mais vértices, ele mantém um padrão linear e previsível. As três curvas representam diferentes densidades de arestas, e se ver claramente que grafos mais densos (densidade 0.5) demandam mais tempo que grafos esparsos (densidade 0.1), mas ainda assim o algoritmo se mantém muito eficiente, processando até 5.000 vértices em menos de 30 milissegundos.
 
-**O que observamos neste gráfico:**
-- **Crescimento até 10.000 vértices:** O tempo sobe de quase 0ms para ~26ms, mostrando o aumento esperado
-- **Pico em 10.000 vértices:** Este é o ponto de maior tempo de execução nos nossos testes
-- **Comportamento interessante:** Após o pico, há uma redução (500 e 5000 vértices têm tempos menores)
-- **Padrão realista:** Este comportamento reflete a realidade dos benchmarks, onde diferentes tamanhos de grafo podem ter complexidades ligeiramente diferentes
+**2. Desempenho por Densidade de Arestas**
 
-**Por que isso acontece?** 
-O gráfico mostra dados de **densidade média** entre nossos testes. O pico em 10.000 vértices representa o maior desafio computacional, enquanto os valores menores em 500-5000 vértices mostram que o algoritmo tem performance excelente nessa faixa. Isso é típico em benchmarks reais, onde a JVM otimiza diferentemente conforme o tamanho dos dados.
+![Desempenho por Densidade](assets/toposort-benchmark_por_densidade.png)
 
-**2. Desempenho por Densidade**
+Este segundo gráfico mostra como o número de conexões (arestas) afeta diretamente a performance. Quando temos mais arestas para processar, naturalmente o algoritmo precisa fazer mais trabalho, mas o crescimento permanece controlado e linear. Isso confirma perfeitamente nossa complexidade O(V + E) - o algoritmo visita cada vértice e cada aresta exatamente uma vez, sem redundâncias.
 
-O segundo gráfico demonstra como diferentes densidades de grafo afetam o tempo de execução, usando dados médios dos nossos testes.
+##### **Validação da Complexidade Teórica**
 
-![Desempenho por Densidade](assets/densidadeOrdenTopo.png) TODO
+Os números já se pode tirar a conclusão adequada. Quando comparamos grafos de 5.000 vértices com diferentes densidades, vemos que aumentar 5 vezes o número de arestas (de densidade 0.1 para 0.5) resulta em apenas 5.7 vezes mais tempo de execução. Isso é exatamente o comportamento que esperamos de um algoritmo O(V + E) - linear e previsível.
 
-**O que observamos neste gráfico:**
-- **Crescimento Linear Claro:** Conforme a densidade aumenta de 0.1 para 0.5, o tempo cresce de ~0.134ms para ~0.49ms
-- **Relação Proporcional:** Densidade 0.5 é aproximadamente 3.6x mais lenta que densidade 0.1
-- **Crescimento Controlado:** Mesmo dobrando a densidade (0.1 → 0.3), o tempo não dobra, mostra eficiência
-- **Comportamento Previsível:** A curva é suave e previsível, sem "surpresas" ou explosões de tempo
+Outro ponto interessante é a escalabilidade por tamanho. Quando passamos de 100 para 1.000 vértices (10x mais vértices), o tempo aumenta cerca de 64 vezes, mas isso inclui tanto o crescimento dos vértices quanto das arestas. O importante é que mesmo nos maiores grafos testados, a performance se mantém excelente para aplicações práticas.
+Mas o que isso significa na prática? Significa que esses resultados têm implicações diretas para o uso real do algoritmo, como:
 
-**Por que isso faz sentido?**
-Este gráfico confirma perfeitamente nossa complexidade O(V + E). Maior densidade = mais arestas (E) = mais trabalho para o algoritmo. Porém, como cada aresta é visitada apenas uma vez, o crescimento é linear e controlado, não exponencial.
+**Para Desenvolvedores:** Se você está construindo um sistema que precisa analisar dependências - seja um gerenciador de pacotes, um compilador, ou um sistema de build - estes números mostram que você pode confiar na ordenação topológica para processar milhares de componentes em tempo real.
 
-**3. Interpretação Prática dos Resultados**
+**Para Sistemas de Produção:** Um tempo de execução inferior a 30ms para 5.000 elementos significa que o algoritmo pode ser usado em aplicações interativas sem impacto perceptível na experiência do usuário.
 
-**O que estes gráficos nos ensinam:**
+**Para Projetos Escaláveis:** O comportamento linear garante que conforme seu sistema cresce, a performance degradará de forma previsível, não exponencial.
 
-**Para Performance:**
-- Grafos de até 5.000 vértices são processados em poucos milissegundos
-- A densidade afeta mais o desempenho que o número absoluto de vértices pequenos
-- 10.000 vértices representam um "ponto alto" de complexidade, mas ainda muito gerenciável
+##### **Conclusões dos Benchmarks**
 
-**Para Aplicações Reais:**
-- **Sistemas de Build:** Maven/Gradle com milhares de dependências → performance excelente
-- **Compiladores:** Ordem de compilação de grandes projetos → processamento instantâneo  
-- **Planificação:** Cronogramas com milhares de tarefas → resposta imediata
+Os testes executados confirmam que nossa implementação da ordenação topológica não apenas funciona corretamente, mas também oferece performance excepcional para aplicações do mundo real.
 
-**Para Validação Teórica:**
-- **Complexidade O(V+E) confirmada:** Os gráficos mostram crescimento linear, não exponencial
-- **Escalabilidade comprovada:** Mesmo com 10k vértices, tempo ainda na casa dos milissegundos
-- **Robustez validada:** Algoritmo mantém performance previsível em diferentes cenários
+**Performance Validada em Diferentes Escalas:**
+- **Grafos pequenos (100-500 vértices):** Processamento praticamente instantâneo (< 0.1ms), ideal para sistemas que precisam de resposta imediata
+- **Grafos médios (1.000 vértices):** Execução muito rápida (< 0.6ms), perfeito para análises em tempo real  
+- **Grafos grandes (5.000 vértices):** Processamento eficiente (< 30ms), adequado para sistemas batch e análises periódicas
 
-##### **Verificação da Complexidade Teórica com Dados Atualizados**
+Esses números importam pois quando fala-se de milissegundos, pode parecer que as diferenças são insignificantes. Mas na prática, esses números representam a diferença entre um sistema que responde instantaneamente e um que deixa o usuário esperando. Para um desenvolvedor construindo um IDE que precisa analisar dependências de código em tempo real, ou para um sistema de CI/CD que processa milhares de builds por dia, essa eficiência se traduz diretamente em produtividade.
 
-**Validação Empírica O(V + E):**
+O mais importante destes resultados é a confirmação empírica da complexidade O(V+E). Isso significa que podemos prever com confiança como o algoritmo se comportará conforme nossos dados crescem. Não há surpresas desagradáveis ou explosões súbitas de tempo - o crescimento é linear e controlado.
 
-Para um grafo direcionado com V vértices e densidade d, o número esperado de arestas é E ≈ d × V × (V-1)/2.
+**Aplicabilidade Prática Demonstrada:**
 
-**Exemplo de Crescimento Controlado (Densidade 0.1):**
-- V=1.000: E ≈ 50.000 arestas → 0.134ms
-- V=5.000: E ≈ 1.250.000 arestas → 5.564ms (25x mais arestas, 41.5x mais tempo)
-- V=10.000: E ≈ 5.000.000 arestas → 26.137ms (4x mais arestas, 4.7x mais tempo)
+Os tempos de execução medidos tornam o algoritmo viável para uma ampla gama de aplicações:
+- **Sistemas de build como Maven ou Gradle** podem processar dependências de projetos complexos em tempo real
+- **Compiladores** podem determinar a ordem de compilação de milhares de módulos quase instantaneamente  
+- **Sistemas de gerenciamento de cronograma** podem reorganizar milhares de tarefas com dependências sem impacto perceptível na interface
 
-**Comportamento Sub-quadrático Confirmado:**
-- Dobrar V (5k→10k): tempo aumenta apenas 4.7x (não 16x como seria quadrático)
-- Crescimento E é quadrático, mas tempo permanece quase-linear
-- **Conclusão:** Algorithm exhibits excellent O(V + E) performance in practice
 
-**Performance Profissional Validada:**
-- 10.000 vértices processados em ~26-75ms dependendo da densidade
-- Algoritmo pronto para aplicações de produção com grafos complexos
-
-**OBS.:** Pode-se ainda consultar o arquivo HTML de análise dos benchmarks que é gerado (`toposort-resultados.html`).
-
+Os dados completos dos benchmarks estão disponíveis em [`toposort-benchmark.json`](assets/toposort-benchmark.json) para quem desejar fazer análises mais aprofundadas ou reproduzir os testes.
 
 #### **Aplicações**
 
 A ordenação topológica é amplamente utilizada em problemas do mundo real, como:
+
 
   * **Gerenciamento de Projetos:** Determinar a ordem de execução de tarefas em um cronograma, onde algumas tarefas são pré-requisitos para outras.
   * **Compiladores:** Na compilação de código-fonte, a ordenação topológica define a ordem correta de compilação, já que muitas vezes os módulos ou arquivos dependem uns dos outros.
