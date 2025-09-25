@@ -1,5 +1,4 @@
 package br.ufcg;
-
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -35,10 +34,10 @@ import br.ufcg.computacao.disjointsetunion.DSULogn;
 @Measurement(iterations = 2, time = 1)
 public class DisjointSetUnionBenchmark {
 
-    @Param({"1000", "5000", "10000"})
-    private int numElementos;
+    @Param({"10", "50", "100"})
+    private int numVertices;
 
-    @Param({"0.1", "0.3", "0.5", "0.7", "1.0"})
+    @Param({"0.1", "0.3"})
     private double densidade;
 
     private int[][] operacoes; // pares (a,b) para union
@@ -51,26 +50,26 @@ public class DisjointSetUnionBenchmark {
         this.random = new Random(42);
 
         // número de operações baseado na densidade
-        int maxOperacoes = (numElementos * (numElementos - 1)) / 2;
+        int maxOperacoes = (numVertices * (numVertices - 1)) / 2;
         int numOperacoes = (int) (maxOperacoes * densidade);
 
         this.operacoes = new int[numOperacoes][2];
         for (int i = 0; i < numOperacoes; i++) {
-            int a = random.nextInt(numElementos);
-            int b = random.nextInt(numElementos);
+            int a = random.nextInt(numVertices);
+            int b = random.nextInt(numVertices);
             operacoes[i][0] = a;
             operacoes[i][1] = b;
         }
 
         // inicializa DSU O(n)
-        dsuON = new DSU(numElementos);
-        for (int i = 0; i < numElementos; i++) {
+        dsuON = new DSU(numVertices);
+        for (int i = 0; i < numVertices; i++) {
             dsuON.makeSet(i);
         }
 
         // inicializa DSU O(log n)
-        dsuOlogN = new DSULogn(numElementos);
-        for (int i = 0; i < numElementos; i++) {
+        dsuOlogN = new DSULogn(numVertices);
+        for (int i = 0; i < numVertices; i++) {
             dsuOlogN.makeSet(i);
         }
     }
