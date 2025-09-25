@@ -20,14 +20,12 @@ import br.ufcg.computacao.disjointsetunion.DSU;
 import br.ufcg.computacao.disjointsetunion.DSULogn;
 
 /**
- * Benchmark para avaliar o desempenho das duas versões da estrutura
- * Disjoint Set Union (DSU): a implementação simples (O(n)) e a versão
- * otimizada com Union by Size + Path Compression (O(log n)).
+ * Benchmark para comparar duas versões da estrutura Disjoint Set Union (DSU):
+ * - DSU simples (O(n))
+ * - DSU otimizado com Union by Size + Path Compression (O(log n))
  *
- * São executadas operações de união e busca em conjuntos de diferentes
- * tamanhos, a fim de comparar a eficiência das abordagens.
- *
- * @author Augusto de Brito Lopes
+ * A densidade controla a quantidade de operações de união simuladas,
+ * análogo à densidade de arestas em grafos.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -37,10 +35,13 @@ import br.ufcg.computacao.disjointsetunion.DSULogn;
 @Measurement(iterations = 2, time = 1)
 public class DisjointSetUnionBenchmark {
 
-    @Param({"1000", "5000", "10000", "20000", "50000"})
+    @Param({"1000", "5000", "10000"})
     private int numElementos;
 
-    private int[][] operacoes; // pares de operações union(a,b)
+    @Param({"0.1", "0.3", "0.5", "0.7", "1.0"})
+    private double densidade;
+
+    private int[][] operacoes; // pares (a,b) para union
     private DSU dsuON;
     private DSULogn dsuOlogN;
     private Random random;
@@ -49,9 +50,12 @@ public class DisjointSetUnionBenchmark {
     public void setup() {
         this.random = new Random(42);
 
-        // gera operações aleatórias de união entre pares
-        this.operacoes = new int[numElementos][2];
-        for (int i = 0; i < numElementos; i++) {
+        // número de operações baseado na densidade
+        int maxOperacoes = (numElementos * (numElementos - 1)) / 2;
+        int numOperacoes = (int) (maxOperacoes * densidade);
+
+        this.operacoes = new int[numOperacoes][2];
+        for (int i = 0; i < numOperacoes; i++) {
             int a = random.nextInt(numElementos);
             int b = random.nextInt(numElementos);
             operacoes[i][0] = a;
@@ -87,4 +91,3 @@ public class DisjointSetUnionBenchmark {
         }
     }
 }
-
