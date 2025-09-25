@@ -36,4 +36,8 @@ jmh {
     fork = 1
     resultFormat = 'JSON'
     timeUnit = 'ms'
+    
+    if (project.hasProperty('jmhInclude')) {
+        includes = [project.property('jmhInclude')]
+    }
 }
