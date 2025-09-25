@@ -83,7 +83,7 @@ chmod +x run_benchmark.sh
 **Algoritmos:**
 ```bash
 ./run_benchmark.sh --toposort         # Ordenação Topológica
-./run_benchmark.sh --bfs   
+./run_benchmark.sh --bfs              # Busca em Largura (BFS)
 ./run_benchmark.sh --dsu              # Union-Find (DSU)
 ./run_benchmark.sh --menorcaminho     # Menor Caminho: Dijkstra e Floyd-Warshall
 
@@ -97,10 +97,6 @@ chmod +x run_benchmark.sh
 ### Visualização dos Resultados
 
 Após executar o benchmark, o próprio script fornece instruções claras de como visualizar os gráficos interativos.
-
-## Visualização dos Resultados
-
-O sistema gera automaticamente visualizações HTML interativas com:
 
 ### Arquivos Gerados
 - `ALGORITMO-benchmark.json`: Dados brutos do JMH para análises customizadas
