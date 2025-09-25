@@ -98,10 +98,6 @@ chmod +x run_benchmark.sh
 
 Após executar o benchmark, o próprio script fornece instruções claras de como visualizar os gráficos interativos.
 
-## Visualização dos Resultados
-
-O sistema gera automaticamente visualizações HTML interativas com:
-
 ### Arquivos Gerados
 - `ALGORITMO-benchmark.json`: Dados brutos do JMH para análises customizadas
 - `ALGORITMO-benchmark.png`: Gráficos gerados a partir dos dados do JMH para análises customizadas
