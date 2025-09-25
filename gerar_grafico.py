@@ -52,10 +52,10 @@ def create_charts(results, output_prefix):
             # Usar estilo de linha diferente para Floyd-Warshall
             if 'floyd' in algo.lower():
                 plt.plot(x_sorted, y_sorted, marker='s', linestyle='--', linewidth=2, 
-                        label=f'{algo} (O(n³))', color='red', alpha=0.8)
+                        label=algo, color='red', alpha=0.8)
             else:
                 plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', linewidth=2, 
-                        label=f'{algo} (O((V+E)logV))', color=colors[i], alpha=0.9)
+                        label=algo, color=colors[i], alpha=0.9)
 
     plt.title('Desempenho dos Algoritmos por Número de Vértices\n(Densidade de Arestas = 0.1)', fontsize=14)
     plt.xlabel('Número de Vértices', fontsize=12)
@@ -120,7 +120,7 @@ def create_charts(results, output_prefix):
                 # Usar estilo diferente para Floyd-Warshall
                 if 'floyd' in algo.lower():
                     plt.plot(x_sorted, y_sorted, marker='s', linestyle='--', linewidth=2, 
-                            label=f'{algo} (O(n³))', color='red', alpha=0.8)
+                            label=algo, color='red', alpha=0.8)
                 else:
                     plt.plot(x_sorted, y_sorted, marker='o', linestyle='-', linewidth=2, 
                             label=algo, color=colors[i], alpha=0.9)
