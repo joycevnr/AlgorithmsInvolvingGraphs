@@ -25,8 +25,8 @@ def create_charts(results, output_prefix):
     vertices = sorted(list(set(r['numVertices'] for r in results)))
     
     unit = results[0]['unit'] if results else 'score'
-    # Gera um conjunto de cores distintas para os gráficos
-    colors = plt.cm.viridis_r([i / len(algorithms) for i in range(len(algorithms))])
+    # Gera um conjunto de cores distintas e profissionais para os gráficos
+    colors = plt.cm.Set1([i / len(algorithms) for i in range(len(algorithms))])
 
     # --- Gráfico 1: Desempenho por Vértices (Densidade fixa em 0.1) ---
     plt.figure(figsize=(14, 8))
