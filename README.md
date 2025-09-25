@@ -77,7 +77,7 @@ cd AlgorithmsInvolvingGraphs
 
 **Tornar o arquivo executável:**
 ```bash
-chmod +x run_benchamark.sh
+chmod +x run_benchmark.sh
 ```
 
 **Algoritmos:**
@@ -127,8 +127,6 @@ Para validar a eficiência do algoritmo, realizamos testes extensivos usando o f
 
 #### Análise Visual de Performance
 
-Para validar a eficiência do algoritmo, realizamos testes extensivos usando o framework JMH (Java Microbenchmark Harness), que é o padrão ouro para medir performance em Java. Testamos 12 cenários diferentes combinando 4 tamanhos de grafo (100, 500, 1.000 e 5.000 vértices) com 3 níveis de densidade (10%, 30% e 50% das conexões possíveis).
-
 <div align="center">
   <table>
     <tr>
@@ -146,7 +144,7 @@ Para validar a eficiência do algoritmo, realizamos testes extensivos usando o f
 
 O primeiro gráfico mostra algo impressionante, que mesmo quintuplicando o tamanho do grafo (de 1.000 para 5.000 vértices), o tempo de execução cresce de forma controlada e linear. Isso confirma matematicamente que a implementação segue a complexidade teórica O(V+E).
 
-Já o segundo gráfico demostra que quando aumentamos a densidade (número de conexões), o algoritmo naturalmente precisa processar mais arestas. Mas que mesmo dobrando a densidade, o tempo não explode, ele cresce proporcionalmente, mantendo a eficiência.
+O segundo gráfico demonstra que quando aumentamos a densidade (número de conexões), o algoritmo naturalmente precisa processar mais arestas. Observou-se que mesmo dobrando a densidade, o tempo não explode, ele cresce proporcionalmente, mantendo a eficiência.
 
 **Na prática, isso significa:**
 
@@ -154,7 +152,7 @@ Já o segundo gráfico demostra que quando aumentamos a densidade (número de co
 - **Análises em tempo real (1.000 vértices):** Execução muito rápida (< 0.6ms) - ideal para sistemas de build como Maven ou Gradle  
 - **Processamento de grandes volumes (5.000 vértices):** Ainda muito eficiente (< 30ms) - adequado para sistemas batch que processam milhares de dependências
 
-Isso importa, pois estes números não são apenas estatísticas, eles representam a diferença entre um sistema que responde instantaneamente e um que deixa o usuário esperando. Para um desenvolvedor construindo um compilador que precisa determinar a ordem de compilação de milhares de arquivos, ou para um sistema de gerenciamento de projetos organizando tarefas complexas, essa eficiência se traduz diretamente em produtividade.
+Estes números importam pois representam a diferença entre um sistema que responde instantaneamente e um que deixa o usuário esperando. Para um desenvolvedor construindo um compilador que precisa determinar a ordem de compilação de milhares de arquivos, ou para um sistema de gerenciamento de projetos organizando tarefas complexas, essa eficiência se traduz diretamente em produtividade.
 
 📚 **Para análises técnicas detalhadas:** [Documentação completa com dados experimentais](documentation/toposort/OrdenacaoTopologica.md)
 
@@ -164,7 +162,7 @@ Isso importa, pois estes números não são apenas estatísticas, eles represent
 
 O algoritmo de Floyd-Warshall é uma solução clássica para o problema de encontrar os caminhos mínimos entre todos os pares de vértices em grafos ponderados. Ele utiliza programação dinâmica e funciona de maneira iterativa, considerando a cada passo um vértice intermediário e atualizando as distâncias entre todos os pares de vértices. Sua complexidade de tempo é O(V³), devido aos três laços aninhados, o que o torna previsível, mas pouco escalável para grafos muito grandes. Em relação ao espaço, consome O(V²), já que precisa armazenar matrizes de distâncias e sucessores. Apesar do custo elevado, o algoritmo é bastante útil em contextos onde é necessário obter informações globais de conectividade, como em sistemas de transporte, análise de acessibilidade em mapas e jogos, além de aplicações de roteamento em redes de comunicação. Já o algoritmo de Dijkstra tem uma ideia parecida com o de Floyd-Warshall, porém, ao invés de calcular a menor distância de todos os vértices, ele calcula apenas a de um vértice origem já determinada. Ele escolhe a cada passo o vértice com menor distância acumulada a partir da origem e atualizando as distâncias dos vizinhos. Seu desempenho varia de acordo com a estrutura de dados utilizada: com matriz de adjacência, a complexidade é O(V^2), adequada para grafos pequenos ou densos; com filas de prioridade, que priorizam vértices com menores distâncias, como heaps binários, a complexidade melhora para O((V+A)log⁡V), o que o torna eficiente em grafos esparsos. Dijkstra é amplamente utilizado em aplicações práticas, como sistemas de navegação e redes de computadores.
 
-Para acessoa a documentação detalhada do algoritmo completa do [Dijkstra](documentation/dijkstra/Dijkstra.md) e do [Dijkstra](documentation/floydwarshall/FloydWarshall.md).
+Para acessar a documentação detalhada do algoritmo completa do [Dijkstra](documentation/dijkstra/Dijkstra.md) e do [Floyd-Warshall](documentation/floydwarshall/FloydWarshall.md).
 
 ### 3. Algoritmo de Disjoint Set Union (DSU)
 
