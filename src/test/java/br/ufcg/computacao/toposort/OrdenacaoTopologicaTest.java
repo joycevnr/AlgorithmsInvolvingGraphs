@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import br.ufcg.computacao.graph.Grafo;
+import br.ufcg.computacao.toposort.graph.Grafo;
 
 /**
  * Testes unitários para a classe {@link OrdenacaoTopologica}.
@@ -40,7 +40,7 @@ import br.ufcg.computacao.graph.Grafo;
  * @author Joyce Vitória Nascimento Rodrigues
  * @version 1.0
  * @see OrdenacaoTopologica
- * @see br.ufcg.computacao.graph.Grafo
+ * @see br.ufcg.computacao.toposort.graph.Grafo
  */
 public class OrdenacaoTopologicaTest {
 

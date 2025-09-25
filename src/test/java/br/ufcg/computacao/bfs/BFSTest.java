@@ -1,7 +1,8 @@
 package br.ufcg.computacao.bfs;
 
-import br.ufcg.computacao.graph.Grafo;
 import org.junit.jupiter.api.Test;
+
+import br.ufcg.computacao.toposort.graph.Grafo;
 
 import java.util.Arrays;
 import java.util.List;
