@@ -30,12 +30,7 @@ setup_algorithm() {
     --menorcaminho)
       BENCHMARK_CLASS="br.ufcg.computacao.benchmark.MenorCaminhoBenchmark"
       RESULT_FILE="menorcaminho-benchmark.json"
-      ALGORITHM_NAME="Menor Caminho (Comparativo)"
-      ;;
-    --dijkstra)
-      BENCHMARK_CLASS="br.ufcg.computacao.benchmark.DijkstraBenchmark"
-      RESULT_FILE="dijkstra-benchmark.json"
-      ALGORITHM_NAME="Dijkstra"
+      ALGORITHM_NAME="Menor Caminho (Comparativo): Dijkstra e Floyd-Warshall"
       ;;
     --bfs)
       BENCHMARK_CLASS="br.ufcg.computacao.benchmark.BFSBenchmark"
@@ -43,14 +38,9 @@ setup_algorithm() {
       ALGORITHM_NAME="Busca em Largura (BFS)"
       ;;
     --dsu)
-      BENCHMARK_CLASS="br.ufcg.computacao.benchmark.DSUBenchmark"
+      BENCHMARK_CLASS="br.ufcg.computacao.benchmark.DisjointSetUnionBenchmark"
       RESULT_FILE="dsu-benchmark.json"
       ALGORITHM_NAME="Union-Find (DSU)"
-      ;;
-    --floyd)
-      BENCHMARK_CLASS="br.ufcg.computacao.benchmark.FloydWarshallBenchmark"
-      RESULT_FILE="floyd-benchmark.json"
-      ALGORITHM_NAME="Floyd-Warshall"
       ;;
     *) return 1 ;;
   esac
@@ -65,11 +55,9 @@ show_help() {
   echo
   echo "Algoritmos disponíveis:"
   echo "  --toposort       Ordenação Topológica"
-  echo "  --dijkstra       Dijkstra"
   echo "  --bfs            Busca em Largura"
   echo "  --dsu            Union-Find (DSU)"
-  echo "  --floyd          Floyd-Warshall"
-  echo "  --menorcaminho   Menor Caminho (Comparativo)"
+  echo "  --menorcaminho   Menor Caminho (Comparativo): Dijkstra e Floyd-Warshall"
   echo
   echo "Opções:"
   echo "  --quick, -q      Modo rápido (menos iterações)"
