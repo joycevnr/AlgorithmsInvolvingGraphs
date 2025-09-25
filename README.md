@@ -6,7 +6,6 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
 - [Análise Comparativa de Algoritmos em Grafos](#análise-comparativa-de-algoritmos-em-grafos)
   - [Índice](#índice)
   - [Algoritmos Implementados](#algoritmos-implementados)
-  - [Estrutura do Projeto](#estrutura-do-projeto)
   - [Configuração Inicial](#configuração-inicial)
     - [Requisitos de Sistema](#requisitos-de-sistema)
     - [Clonando o Repositório](#clonando-o-repositório)
@@ -23,29 +22,29 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
       - [Aplicações Práticas](#aplicações-práticas)
       - [Resultados dos Benchmarks](#resultados-dos-benchmarks)
       - [Análise dos Resultados](#análise-dos-resultados)
-    - [2. Algoritmo de Dijkstra](#2-algoritmo-de-dijkstra)
+    - [2. Algoritmo de Dijkstra e Floyd-Warshall](#2-algoritmo-de-dijkstra-e-floyd-warshall)
+    - [3. Algoritmo de Disjoint Set Union (DSU)](#3-algoritmo-de-disjoint-set-union-dsu)
+    - [4. Algoritmo de Busca em Largura (BFS)](#4-algoritmo-de-busca-em-largura-bfs)
   - [Licença](#licença)
+  - [Autores](#autores)
 
 ## Algoritmos Implementados
 
-1. **Ordenação Topológica com DFS** : Ordenação dos vértices em um grafo direcionado acíclico
-2. **Algoritmo de Dijkstra** : Caminho mais curto de origem única em grafos com pesos não-negativos
-3. **Union-Find (DSU)** : Estrutura de dados para operações de união e busca eficientes
-4. **Floyd-Warshall** : Caminho mais curto entre todos os pares de vértices
-5. **Busca em Largura (BFS)** : Em desenvolvimento 
+- **Ordenação Topológica (DFS)**: Ordena vértices em grafo direcionado acíclico
+- **Dijkstra**: Menor caminho de origem única  
+- **Union-Find (DSU)**: Operações de união e busca
+- **Floyd-Warshall**: Menor caminho entre todos os pares
+- **BFS**: Busca em largura (em desenvolvimento)
 
-## Estrutura do Projeto
-Este trabalho, desenvolvido para a disciplina de Laboratório de Estrutura de Dados, tem como objetivo implementar e analisar o desempenho de cinco algoritmos clássicos em grafos. Buscamos compreender suas características, limitações e cenários de aplicação ideais, mensurando sua performance em tempo de execução e uso de memória através de benchmarks com diferentes cargas de dados (tamanho e densidade dos grafos). (rever)
-
-```
+```bash
 .
 ├── src/
 │   ├── main/java/        # Implementações dos algoritmos
 │   ├── test/java/        # Testes unitários
 │   └── jmh/java/         # Benchmarks JMH
 ├── documentation/        # Documentação detalhada de cada algoritmo
-├── benchmark.sh          # Script unificado para todos os benchmarks
-└── *-resultados.html     # Visualizações geradas pelos benchmarks
+├── run_benchmark.sh      # Script unificado para todos os benchmarks
+└── gerar_grafico         # Adição de algoritmos para geração de gráficos
 ```
 
 ## Configuração Inicial
@@ -54,6 +53,7 @@ Este trabalho, desenvolvido para a disciplina de Laboratório de Estrutura de Da
 - JDK 11 ou superior
 - Gradle 7.0+ (ou use o wrapper incluído: `./gradlew`)
 - Git
+- Matplotlib
 
 ### Clonando o Repositório
 ```bash
@@ -75,19 +75,23 @@ cd AlgorithmsInvolvingGraphs
 
 ## Executando Benchmarks
 
+**Tornar o arquivo executável:**
+```bash
+chmod +x run_benchamark.sh
+```
+
 **Algoritmos:**
 ```bash
-./benchmark.sh --toposort     # Ordenação Topológica
-./benchmark.sh --dijkstra     # Dijkstra
-./benchmark.sh --bfs   
-./benchmark.sh --dsu          # Union-Find (DSU)
-./benchmark.sh --floyd        # Floyd-Warshall
+./run_benchmark.sh --toposort         # Ordenação Topológica
+./run_benchmark.sh --bfs   
+./run_benchmark.sh --dsu              # Union-Find (DSU)
+./run_benchmark.sh --menorcaminho     # Menor Caminho: Dijkstra e Floyd-Warshall
 
 # Modo rápido (menos iterações)
-./benchmark.sh --toposort --quick
+./run_benchmark.sh --toposort --quick
 
 # Ver ajuda
-./benchmark.sh --help
+./run_benchmark.sh --help
 ```
 
 ### Visualização dos Resultados
@@ -99,13 +103,13 @@ Após executar o benchmark, o próprio script fornece instruções claras de com
 O sistema gera automaticamente visualizações HTML interativas com:
 
 ### Arquivos Gerados
-- `ALGORITMO-resultados.html`: Visualização completa de cada algoritmo
 - `ALGORITMO-benchmark.json`: Dados brutos do JMH para análises customizadas
+- `ALGORITMO-benchmark.png`: Gráficos gerados a partir dos dados do JMH para análises customizadas
+
 
 ## Análises Detalhadas dos Algoritmos
 
 ### 1. Ordenação Topológica (DFS)
-**Autora:** Joyce Vitória Nascimento Rodrigues
 
 #### Complexidade Teórica
 - **Tempo:** O(V + E) - visita cada vértice e aresta exatamente uma vez
@@ -143,14 +147,41 @@ O sistema gera automaticamente visualizações HTML interativas com:
 - **Impacto da Densidade:** Densidade 0.5 é 2-5x mais lenta que densidade 0.1, confirmando dependência das arestas
 - **Performance Profissional:** 10.000 vértices processados em ~75ms demonstra eficiência para aplicações reais
 
-**Visualização completa:** `toposort-resultados.html` com gráficos interativos
+Para acessoa a documentação detalhada do algoritmo completa [acesse](documentation/toposort/OrdenacaoTopologica.md).
 
 ---
 
-### 2. Algoritmo de Dijkstra
+### 2. Algoritmo de Dijkstra e Floyd-Warshall 
 
+O algoritmo de Floyd-Warshall é uma solução clássica para o problema de encontrar os caminhos mínimos entre todos os pares de vértices em grafos ponderados. Ele utiliza programação dinâmica e funciona de maneira iterativa, considerando a cada passo um vértice intermediário e atualizando as distâncias entre todos os pares de vértices. Sua complexidade de tempo é O(V³), devido aos três laços aninhados, o que o torna previsível, mas pouco escalável para grafos muito grandes. Em relação ao espaço, consome O(V²), já que precisa armazenar matrizes de distâncias e sucessores. Apesar do custo elevado, o algoritmo é bastante útil em contextos onde é necessário obter informações globais de conectividade, como em sistemas de transporte, análise de acessibilidade em mapas e jogos, além de aplicações de roteamento em redes de comunicação. Já o algoritmo de Dijkstra tem uma ideia parecida com o de Floyd-Warshall, porém, ao invés de calcular a menor distância de todos os vértices, ele calcula apenas a de um vértice origem já determinada. Ele escolhe a cada passo o vértice com menor distância acumulada a partir da origem e atualizando as distâncias dos vizinhos. Seu desempenho varia de acordo com a estrutura de dados utilizada: com matriz de adjacência, a complexidade é O(V^2), adequada para grafos pequenos ou densos; com filas de prioridade, que priorizam vértices com menores distâncias, como heaps binários, a complexidade melhora para O((V+A)log⁡V), o que o torna eficiente em grafos esparsos. Dijkstra é amplamente utilizado em aplicações práticas, como sistemas de navegação e redes de computadores.
+
+Para acessoa a documentação detalhada do algoritmo completa do [Dijkstra](documentation/dijkstra/Dijkstra.md) e do [Dijkstra](documentation/floydwarshall/FloydWarshall.md).
+
+### 3. Algoritmo de Disjoint Set Union (DSU)
+
+O Disjoint Set Union (DSU), também conhecido como Union-Find, é uma estrutura de dados fundamental para lidar com conjuntos disjuntos. Ela permite determinar rapidamente se dois elementos pertencem ao mesmo conjunto e unir conjuntos distintos. A eficiência do DSU depende das heurísticas empregadas: na versão básica, sem otimizações, as operações podem custar até O(n) no pior caso; já com técnicas como Union by Size/Rank e Path Compression, o custo é reduzido para tempo quase constante, com complexidade amortizada de O(log n). Essa eficiência torna o DSU essencial em algoritmos de grafos, como na detecção de ciclos e no algoritmo de Kruskal para árvores geradoras mínimas, além de aplicações em problemas de conectividade dinâmica e redes.
+
+### 4. Algoritmo de Busca em Largura (BFS)
+
+O algoritmo de Busca em Largura (BFS) é uma das soluções fundamentais para o problema de percorrer grafos e encontrar caminhos mínimos em grafos não ponderados. Ele funciona de forma em camadas, visitando primeiro todos os vértices a distância 1 da origem, depois os a distância 2, e assim sucessivamente, garantindo sempre a menor quantidade de arestas até cada vértice alcançável. A implementação utiliza uma fila para gerenciar os vértices a explorar, além de vetores auxiliares para armazenar distâncias, predecessores e a ordem de visita. Sua complexidade de tempo é O(V+A), onde V é o número de vértices e A o número de arestas, sendo eficiente tanto para grafos esparsos quanto para grafos densos. Por isso, a BFS é amplamente utilizada em aplicações práticas como análise de redes sociais, sistemas de roteamento em redes de computadores, jogos de tabuleiro e problemas de inteligência artificial que envolvem busca em grafos de estados.
 
 ## Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+
+## Autores
+
+
+| Nome do Integrante                                | Perfil no GitHub                                   |
+| ------------------------------------------------- | -------------------------------------------------- |
+| *<ins>-Augusto de Brito Lopes-</ins>* | *<ins>[@AugustoBritoLopes](https://github.com/AugustoBritoLopes)</ins>* |
+| *<ins>-Gleydson Fabricio Rodrigues de Moura-</ins>* | *<ins>[@gleydsonfabricio](https://github.com/gleydsonfabricio)</ins>* |
+| *<ins>-Gustavo Luiz Ferreira de Souza-</ins>* | *<ins>[@TenGustavo](https://github.com/TenGustavo)</ins>* |
+| *<ins>Joyce Vitória Nascimento Rodrigues</ins>* | *<ins>[@joycevnr](https://github.com/joycevnr)</ins>* |
+| *<ins>Maria Eduarda Capela Cabral Pinheiro da Silva</ins>* | *<ins>[@Eduarda-Cabral](https://github.com/Eduarda-Cabral)</ins>* |
+
+<br>
+
+
 
