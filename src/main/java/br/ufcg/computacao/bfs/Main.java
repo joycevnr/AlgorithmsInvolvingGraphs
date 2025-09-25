@@ -31,8 +31,8 @@ public class Main {
             Config cfg = parseArgs(args);
             validarConfig(cfg);
 
-            Grafo g = new Grafo(cfg.n, cfg.directed);
-            int m;
+            Grafo g = new Grafo(cfg.n);
+            long m;
 
             if (cfg.inputPath != null) {
                 m = carregarArestasDeArquivo(g, cfg.inputPath, cfg.oneBased);
@@ -165,7 +165,7 @@ public class Main {
 
     // ----------------- I/O/Utils -----------------
 
-    private static int carregarArestasDeArquivo(Grafo g, String path, boolean oneBased) throws IOException {
+    private static long carregarArestasDeArquivo(Grafo g, String path, boolean oneBased) throws IOException {
         int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linha;
@@ -184,21 +184,21 @@ public class Main {
         return count;
     }
 
-    private static int gerarArestasAleatorias(Grafo g, int m, long seed) {
+    private static long gerarArestasAleatorias(Grafo g, int m, long seed) {
         Random rnd = new Random(seed);
         int n = g.getNumVertices(), adicionadas = 0;
         while (adicionadas < m) {
             int u = rnd.nextInt(n), v = rnd.nextInt(n);
             if (u == v) continue;
-            if (!g.contemAresta(u, v)) { g.adicionarAresta(u, v); adicionadas++; }
+            if (!g.existeAresta(u, v)) { g.adicionarAresta(u, v); adicionadas++; }
         }
         return adicionadas;
     }
 
-    private static int contarArestas(Grafo g) {
+    private static long contarArestas(Grafo g) {
         long soma = 0;
         for (int v = 0; v < g.getNumVertices(); v++) soma += g.getAdjacentes(v).size();
-        return g.isDirecionado() ? (int) soma : (int) (soma / 2);
+        return soma;
     }
 
     private static void gcPause() {
