@@ -34,7 +34,7 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
 - **Dijkstra**: Menor caminho de origem única  
 - **Union-Find (DSU)**: Operações de união e busca
 - **Floyd-Warshall**: Menor caminho entre todos os pares
-- **BFS**: Busca em largura (em desenvolvimento)
+- **BFS**: Busca em largura
 
 ```bash
 .
