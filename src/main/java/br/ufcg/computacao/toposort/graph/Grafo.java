@@ -1,4 +1,4 @@
-package br.ufcg.computacao.graph;
+package br.ufcg.computacao.toposort.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -12,12 +12,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    
     implementation 'org.openjdk.jmh:jmh-core:1.37'
     annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 application {
@@ -37,10 +36,8 @@ jmh {
     fork = 1
     resultFormat = 'JSON'
     timeUnit = 'ms'
-    // Permitir que o filtro seja configurado pelos parâmetros da linha de comando
+    
     if (project.hasProperty('jmhInclude')) {
         includes = [project.property('jmhInclude')]
     }
-    // Permitir que o nome do arquivo seja configurado pelos parâmetros da linha de comando
-    // resultsFile será definido via -rff nos parâmetros JMH
 }

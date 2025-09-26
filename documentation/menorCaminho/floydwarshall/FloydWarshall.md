@@ -90,3 +90,8 @@ Compreender a eficiência do algoritmo é fundamental para decidir quando usá-l
 
   * **Complexidade de Espaço: O(V²)**
   O espaço é necessário para armazenar as matrizes de distancias e sucessores, ambas de dimensão V×V.
+
+## **Bibliografia**
+1. FLOYD, R. W. (1962). Algorithm 97: Shortest Path. Communications of the ACM, 5(6), 345.
+2. WARSHALL, S. (1962). A theorem on Boolean matrices. Journal of the ACM, 9(1), 11-12.
+3. CORMEN, T. H.; LEISERSON, C. E.; RIVEST, R. L.; STEIN, C. Introduction to Algorithms. 3rd ed. MIT Press, 2009. 
