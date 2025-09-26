@@ -155,8 +155,24 @@ Estes números importam pois representam a diferença entre um sistema que respo
 ---
 
 ### 2. Algoritmo de Dijkstra e Floyd-Warshall 
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%">
+        <img src="documentation/menorCaminho/assets/menorcaminho-benchmark_por_vertices.png" alt="Gráfico 1:Comparação dos algoritmos de menor caminho(tempo x número e vértices)" width="100%">
+        <p align="center"><em>Gráfico 1:Comparação dos algoritmos de menor caminho(tempo x número de vértices)</em></p>
+      </td>
+      <td width="50%">
+        <img src="documentation/menorCaminho/assets/menorcaminho-benchmark_dijkstra_por_vertices.png" alt="Grafico 2:Performance de Dijkstra por Vétices" width="100%">
+        <p align="center"><em>Grafico 2:Performance de Dijkstra por Vétices</em></p>
+      </td>
+    </tr>
+  </table>
+</div>
 
-O algoritmo de Floyd-Warshall é uma solução clássica para o problema de encontrar os caminhos mínimos entre todos os pares de vértices em grafos ponderados. Ele utiliza programação dinâmica e funciona de maneira iterativa, considerando a cada passo um vértice intermediário e atualizando as distâncias entre todos os pares de vértices. Sua complexidade de tempo é O(V³), devido aos três laços aninhados, o que o torna previsível, mas pouco escalável para grafos muito grandes. Em relação ao espaço, consome O(V²), já que precisa armazenar matrizes de distâncias e sucessores. Apesar do custo elevado, o algoritmo é bastante útil em contextos onde é necessário obter informações globais de conectividade, como em sistemas de transporte, análise de acessibilidade em mapas e jogos, além de aplicações de roteamento em redes de comunicação. Já o algoritmo de Dijkstra tem uma ideia parecida com o de Floyd-Warshall, porém, ao invés de calcular a menor distância de todos os vértices, ele calcula apenas a de um vértice origem já determinada. Ele escolhe a cada passo o vértice com menor distância acumulada a partir da origem e atualizando as distâncias dos vizinhos. Seu desempenho varia de acordo com a estrutura de dados utilizada: com matriz de adjacência, a complexidade é O(V^2), adequada para grafos pequenos ou densos; com filas de prioridade, que priorizam vértices com menores distâncias, como heaps binários, a complexidade melhora para O((V+A)log⁡V), o que o torna eficiente em grafos esparsos. Dijkstra é amplamente utilizado em aplicações práticas, como sistemas de navegação e redes de computadores.
+O algoritmo de Floyd-Warshall é uma solução clássica para o problema de encontrar os caminhos mínimos entre todos os pares de vértices em grafos ponderados. Ele utiliza programação dinâmica e funciona de maneira iterativa, considerando a cada passo um vértice intermediário e atualizando as distâncias entre todos os pares de vértices. Sua complexidade de tempo é O(V³), devido aos três laços aninhados, o que o torna previsível, mas pouco escalável para grafos muito grandes. Em relação ao espaço, consome O(V²), já que precisa armazenar matrizes de distâncias e sucessores. Apesar do custo elevado, o algoritmo é bastante útil em contextos onde é necessário obter informações globais de conectividade, como em sistemas de transporte, análise de acessibilidade em mapas e jogos, além de aplicações de roteamento em redes de comunicação. 
+Já o algoritmo de Dijkstra tem uma ideia parecida com o de Floyd-Warshall, porém, ao invés de calcular a menor distância de todos os vértices, ele calcula apenas a de um vértice origem já determinada. Ele escolhe a cada passo o vértice com menor distância acumulada a partir da origem e atualizando as distâncias dos vizinhos. Seu desempenho varia de acordo com a estrutura de dados utilizada: com matriz de adjacência, a complexidade de tempo é O(v²), adequada para grafos pequenos ou densos; com filas de prioridade, que priorizam vértices com menores distâncias, como heaps binários, a complexidade melhora para O((V+E)log⁡V),onde é E é o número de arestas, o que o torna eficiente em grafos esparsos e seu custo espacial é O(V). Dijkstra é amplamente utilizado em aplicações práticas, como sistemas de navegação e redes de computadores.
+O gráfico 1 faz parecer que as linhas de Dijkstra com e sem fila tem o mesmo custo, isso acontece porque a linha de Floyd-Warshall empurra elas para baixo. Como visto no gráfico 2, o custo de Dijkstra sem fila de prioridade é maior que o de Dijkstra com fila de prioridade.
 
 Para acessar a documentação detalhada do algoritmo completa do [Dijkstra](documentation/menorCaminho/dijkstra/Dijkstra.md) e do [Floyd-Warshall](documentation/menorCaminho/floydwarshall/FloydWarshall.md).
 
@@ -164,10 +180,12 @@ Para acessar a documentação detalhada do algoritmo completa do [Dijkstra](docu
 
 O Disjoint Set Union (DSU), também conhecido como Union-Find, é uma estrutura de dados fundamental para lidar com conjuntos disjuntos. Ela permite determinar rapidamente se dois elementos pertencem ao mesmo conjunto e unir conjuntos distintos. A eficiência do DSU depende das heurísticas empregadas: na versão básica, sem otimizações, as operações podem custar até O(n) no pior caso; já com técnicas como Union by Size/Rank e Path Compression, o custo é reduzido para tempo quase constante, com complexidade amortizada de O(log n). Essa eficiência torna o DSU essencial em algoritmos de grafos, como na detecção de ciclos e no algoritmo de Kruskal para árvores geradoras mínimas, além de aplicações em problemas de conectividade dinâmica e redes.
 
+Para acessar a documentação detalhada do algoritmo completa do [Disjoint Set Union (DSU)](documentation/menorCaminho/disjointsetunion/DisjointSetUnion (DisjointSetUnion.md) 
 ### 4. Algoritmo de Busca em Largura (BFS)
 
 O algoritmo de Busca em Largura (BFS) é uma das soluções fundamentais para o problema de percorrer grafos e encontrar caminhos mínimos em grafos não ponderados. Ele funciona de forma em camadas, visitando primeiro todos os vértices a distância 1 da origem, depois os a distância 2, e assim sucessivamente, garantindo sempre a menor quantidade de arestas até cada vértice alcançável. A implementação utiliza uma fila para gerenciar os vértices a explorar, além de vetores auxiliares para armazenar distâncias, predecessores e a ordem de visita. Sua complexidade de tempo é O(V+A), onde V é o número de vértices e A o número de arestas, sendo eficiente tanto para grafos esparsos quanto para grafos densos. Por isso, a BFS é amplamente utilizada em aplicações práticas como análise de redes sociais, sistemas de roteamento em redes de computadores, jogos de tabuleiro e problemas de inteligência artificial que envolvem busca em grafos de estados.
 
+Para acessar a documentação detalhada do algoritmo completa do [Busca em Largura (BFS)](documentation/menorCaminho/bfs/BFs.md)
 ## Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
