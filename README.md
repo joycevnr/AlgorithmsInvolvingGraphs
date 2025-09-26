@@ -180,23 +180,39 @@ Para acessar a documentação detalhada do algoritmo completa do [Dijkstra](docu
 
 ### 3. Algoritmo de Disjoint Set Union (DSU)
 
-#### Complexidade Teórica
+O Disjoint Set Union (DSU), também conhecido como Union-Find, é uma estrutura de dados fundamental para lidar com conjuntos disjuntos. Ela permite determinar rapidamente se dois elementos pertencem ao mesmo conjunto e unir conjuntos distintos. A eficiência do DSU depende das heurísticas empregadas: na versão básica, sem otimizações, as operações podem custar até O(n) no pior caso; já com técnicas como Union by Size/Rank e Path Compression, o custo é reduzido para tempo quase constante, com complexidade amortizada de O(log n). Essa eficiência torna o DSU essencial em algoritmos de grafos, como na detecção de ciclos e no algoritmo de Kruskal para árvores geradoras mínimas, além de aplicações em problemas de conectividade dinâmica e redes.
 
-- **Tempo (sem otimizações):** O(n) no pior caso para operações de união ou busca  
-- **Tempo (com otimizações - Union by Rank/Size + Path Compression):** O(α(n)) por operação, onde α(n) é a Função Inversa de Ackermann (cresce muito lentamente, sendo praticamente constante na prática)  
-- **Espaço:** O(n) - para armazenar os pais e, opcionalmente, os ranks/tamanhos  
+#### Representação gráfica 
 
-#### Aplicações Práticas
-- Detecção de ciclos em grafos não direcionados  
-- Algoritmo de Kruskal para Árvores Geradoras Mínimas  
-- Problemas de conectividade dinâmica (ex.: redes de computadores, redes sociais)  
-- Processamento de componentes conexos em imagens ou mapas  
-- Sistemas de classificação/agrupamento em competições ou conjuntos disjuntos de dados  
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%">
+        <img src="documentation\disjointsetunion\assets\dsu-benchmark_por_vertices.png" alt="Gráfico 1: Comparação por número de vértices" width="100%">
+        <p align="center"><em>Gráfico 1: Comparação por número de vértices</em></p>
+      </td>
+      <td width="50%">
+        <img src="documentation\disjointsetunion\assets\dsu-benchmark_por_densidade.png" alt="Grafico 2: Desempenho por densidade e aresta" width="100%">
+        <p align="center"><em>Grafico 2: Desempenho por densidade e aresta</em></p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+#### Interpretação dos Resultados
+
+Os gráficos comprovam a diferença de desempenho entre o **DSU básico (sem otimizações)** e o **DSU otimizado (Union by Rank + Path Compression)**:
+
+- **Por número de vértices (Gráfico 1):**  
+  Com o aumento do tamanho do grafo, o DSU básico cresce muito rápido em tempo de execução, tornando-se inviável em cenários grandes. Já o DSU otimizado apresenta crescimento lento, praticamente estável em escala logarítmica.
+
+- **Por densidade de arestas (Gráfico 2):**  
+  À medida que a densidade aumenta, o DSU básico tem crescimento de tempo quase linear, enquanto o DSU otimizado mantém custo praticamente constante. Isso demonstra que as heurísticas reduzem significativamente o impacto do aumento de arestas.
+
 
 Para acessar a documentação detalhada do algoritmo completa do [Disjoint-set-union](documentation/disjointsetunion/DisjointSetUnion.MD)
 
 
-Para acessar a documentação detalhada do algoritmo completa do [Disjoint Set Union (DSU)](documentation/disjointsetunion/DisjointSetUnion.MD)
  
 ### 4. Algoritmo de Busca em Largura (BFS)
 
