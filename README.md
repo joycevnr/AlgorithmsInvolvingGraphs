@@ -150,7 +150,7 @@ O segundo gráfico demonstra que quando aumentamos a densidade (número de conex
 
 Estes números importam pois representam a diferença entre um sistema que responde instantaneamente e um que deixa o usuário esperando. Para um desenvolvedor construindo um compilador que precisa determinar a ordem de compilação de milhares de arquivos, ou para um sistema de gerenciamento de projetos organizando tarefas complexas, essa eficiência se traduz diretamente em produtividade.
 
-📚 **Para análises técnicas detalhadas:** [Documentação completa com dados experimentais](documentation/toposort/OrdenacaoTopologica.md)
+Para acessar a documentação detalhada do algoritmo completa do [acesse](documentation/toposort/OrdenacaoTopologica.md).
 
 ---
 
