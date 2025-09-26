@@ -146,6 +146,23 @@ A classe **DSULogn** incorpora duas heurísticas fundamentais:
 - Com **Union by Size** + *Path Compression*: cada operação tem custo **O(α(n)) amortizado** onde α(n) é a função inversa de Ackermann, que cresce muito lentamente, tornando as operações praticamente constantes.
 
 ### Representação gráfica 
+
+#### Desempenho por Densidade de Arestas
+![Benchmark DSU por Densidade](./assets/dsu-benchmark_por_densidade.png)
+
+#### Desempenho por Número de Vértices
+![Benchmark DSU por Vértices](./assets/dsu-benchmark_por_vertices.png)
+
+#### Interpretação dos Resultados
+
+Os gráficos comprovam a diferença de desempenho entre o **DSU básico (sem otimizações)** e o **DSU otimizado (Union by Rank + Path Compression)**:
+
+- **Por densidade de arestas (Gráfico 1):**  
+  À medida que a densidade aumenta, o DSU básico tem crescimento de tempo quase linear, enquanto o DSU otimizado mantém custo praticamente constante. Isso demonstra que as heurísticas reduzem significativamente o impacto do aumento de arestas.
+
+- **Por número de vértices (Gráfico 2):**  
+  Com o aumento do tamanho do grafo, o DSU básico cresce muito rápido em tempo de execução, tornando-se inviável em cenários grandes. Já o DSU otimizado apresenta crescimento lento, praticamente estável em escala logarítmica.
+
 ---
 
 ## Conclusão

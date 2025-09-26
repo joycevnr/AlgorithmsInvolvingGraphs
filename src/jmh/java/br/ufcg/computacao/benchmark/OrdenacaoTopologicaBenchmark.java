@@ -17,8 +17,8 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
-import br.ufcg.computacao.graph.Grafo;
 import br.ufcg.computacao.toposort.OrdenacaoTopologica;
+import br.ufcg.computacao.toposort.graph.Grafo;
 
 /**
  * Benchmark para avaliar o desempenho da Ordenação Topológica
@@ -34,10 +34,10 @@ import br.ufcg.computacao.toposort.OrdenacaoTopologica;
 @Measurement(iterations = 3, time = 5)
 public class OrdenacaoTopologicaBenchmark {
 
-    @Param({"100", "500", "1000", "5000", "10000"})
+    @Param({ "100", "500", "1000", "5000" })
     private int numVertices;
 
-    @Param({"0.1", "0.3", "0.5"})
+    @Param({ "0.1", "0.3", "0.5" })
     private double densidade;
 
     private Grafo grafo;
@@ -50,15 +50,16 @@ public class OrdenacaoTopologicaBenchmark {
         this.random = new Random(42);
 
         gerarGrafoAciclicoDirecionado(numVertices, densidade);
-        
+
         this.ordenacaoTopologica = new OrdenacaoTopologica(grafo);
     }
 
     private void gerarGrafoAciclicoDirecionado(int numVertices, double densidade) {
-        // garanto que é um DAG: adicionar arestas apenas de vértices menores para maiores
+        // garanto que é um DAG: adicionar arestas apenas de vértices menores para
+        // maiores
         int maxArestas = (numVertices * (numVertices - 1)) / 2;
         int numArestas = (int) (maxArestas * densidade);
-        
+
         for (int i = 0; i < numArestas; i++) {
             int origem = random.nextInt(numVertices - 1);
             int destino = origem + 1 + random.nextInt(numVertices - origem - 1);
@@ -74,5 +75,3 @@ public class OrdenacaoTopologicaBenchmark {
         blackhole.consume(resultado);
     }
 }
-
-// repositório: https://github.com/openjdk/jmh

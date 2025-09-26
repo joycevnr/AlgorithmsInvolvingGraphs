@@ -1,4 +1,9 @@
+<<<<<<< HEAD:src/jmh/java/br/ufcg/DisjointSetUnionBenchmark.java
 package br.ufcg;
+=======
+package br.ufcg.computacao.benchmark;
+
+>>>>>>> origin/main:src/jmh/java/br/ufcg/computacao/benchmark/DisjointSetUnionBenchmark.java
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -33,13 +38,22 @@ import br.ufcg.computacao.disjointsetunion.DSULogn;
 @Warmup(iterations = 1, time = 1)
 @Measurement(iterations = 2, time = 1)
 public class DisjointSetUnionBenchmark {
+    
+    @Param({ "100", "500", "1000", "5000" })
+    private int numVertices;
 
+<<<<<<< HEAD:src/jmh/java/br/ufcg/DisjointSetUnionBenchmark.java
     @Param({"10", "50", "100"})
     private int numVertices;
 
     @Param({"0.1", "0.3"})
     private double densidade;
 
+=======
+    @Param({ "0.1", "0.3", "0.5" })
+    private double densidade;
+
+>>>>>>> origin/main:src/jmh/java/br/ufcg/computacao/benchmark/DisjointSetUnionBenchmark.java
     private int[][] operacoes; // pares (a,b) para union
     private DSU dsuON;
     private DSULogn dsuOlogN;
