@@ -14,7 +14,6 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
     - [Executar testes de uma classe específica](#executar-testes-de-uma-classe-específica)
   - [Executando Benchmarks](#executando-benchmarks)
     - [Visualização dos Resultados](#visualização-dos-resultados)
-  - [Visualização dos Resultados](#visualização-dos-resultados-1)
     - [Arquivos Gerados](#arquivos-gerados)
   - [Análises Detalhadas dos Algoritmos](#análises-detalhadas-dos-algoritmos)
     - [1. Ordenação Topológica (DFS)](#1-ordenação-topológica-dfs)
@@ -24,7 +23,15 @@ Este projeto contém implementações de cinco algoritmos de grafos e um sistema
       - [Análise Visual de Performance](#análise-visual-de-performance)
     - [2. Algoritmo de Dijkstra e Floyd-Warshall](#2-algoritmo-de-dijkstra-e-floyd-warshall)
     - [3. Algoritmo de Disjoint Set Union (DSU)](#3-algoritmo-de-disjoint-set-union-dsu)
+      - [Representação gráfica](#representação-gráfica)
+      - [Interpretação dos Resultados](#interpretação-dos-resultados)
     - [4. Algoritmo de Busca em Largura (BFS)](#4-algoritmo-de-busca-em-largura-bfs)
+  - [Complexidade Teórica](#complexidade-teórica-1)
+  - [Aplicações Práticas](#aplicações-práticas-1)
+  - [Resultados dos Benchmarks](#resultados-dos-benchmarks-1)
+  - [Análise Visual de Performance](#análise-visual-de-performance-1)
+  - [Interpretação Prática](#interpretação-prática)
+  - [Conclusão](#conclusão)
   - [Licença](#licença)
   - [Autores](#autores)
 
@@ -216,7 +223,72 @@ Para acessar a documentação detalhada do algoritmo completa do [Disjoint-set-u
  
 ### 4. Algoritmo de Busca em Largura (BFS)
 
-O algoritmo de Busca em Largura (BFS) é uma das soluções fundamentais para o problema de percorrer grafos e encontrar caminhos mínimos em grafos não ponderados. Ele funciona de forma em camadas, visitando primeiro todos os vértices a distância 1 da origem, depois os a distância 2, e assim sucessivamente, garantindo sempre a menor quantidade de arestas até cada vértice alcançável. A implementação utiliza uma fila para gerenciar os vértices a explorar, além de vetores auxiliares para armazenar distâncias, predecessores e a ordem de visita. Sua complexidade de tempo é O(V+A), onde V é o número de vértices e A o número de arestas, sendo eficiente tanto para grafos esparsos quanto para grafos densos. Por isso, a BFS é amplamente utilizada em aplicações práticas como análise de redes sociais, sistemas de roteamento em redes de computadores, jogos de tabuleiro e problemas de inteligência artificial que envolvem busca em grafos de estados.
+## Complexidade Teórica
+
+- **Tempo:** O(V + A) – visita cada vértice e cada aresta exatamente uma vez  
+- **Espaço:** O(V + A) – para fila, distâncias, predecessores e estrutura de vizinhos
+
+---
+
+## Aplicações Práticas
+
+- **Sistemas de navegação** – encontrar caminhos mais curtos em mapas não ponderados  
+- **Redes sociais** – calcular graus de separação entre usuários  
+- **Roteamento em redes** – determinar menor número de saltos entre roteadores  
+- **Jogos e IA** – busca em grafos de estados (tabuleiros, puzzles, árvores de decisão)
+
+---
+
+## Resultados dos Benchmarks
+
+Para validar a eficiência do algoritmo, realizamos testes com o framework **JMH (Java Microbenchmark Harness)**.  
+Foram simulados 12 cenários diferentes, combinando 4 tamanhos de grafos (100, 500, 1.000 e 5.000 vértices) com 3 níveis de densidade (10%, 30% e 50% das conexões possíveis).  
+
+No benchmark, os grafos são gerados como **DAGs (arestas u → v com u < v)**, seguindo o mesmo padrão do benchmark de Ordenação Topológica, para manter a consistência entre os testes do projeto.
+
+---
+
+## Análise Visual de Performance
+
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%">
+        <img src="documentation/bfs/assets/bfs-benchmark_por_vertices.png" alt="Performance por Vértices" width="100%">
+        <p align="center"><em>Escalabilidade: como o tempo cresce com o tamanho</em></p>
+      </td>
+      <td width="50%">
+        <img src="documentation/bfs/assets/bfs-benchmark_por_densidade.png" alt="Performance por Densidade" width="100%">
+        <p align="center"><em>Densidade: o impacto das conexões na performance</em></p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+📈 **Escalabilidade: como o tempo cresce com o tamanho do grafo**  
+O tempo de execução aumenta de forma controlada e linear mesmo multiplicando o número de vértices.  
+Isso confirma que a implementação segue a complexidade teórica O(V + A).
+
+📊 **Densidade: impacto das conexões na performance**  
+Quando aumentamos a densidade (mais arestas), o tempo cresce proporcionalmente.  
+Mesmo duplicando a densidade, o tempo não explode – cresce de forma previsível e eficiente.
+
+---
+
+## Interpretação Prática
+
+- **Sistemas interativos (até 500 vértices):** Resposta instantânea (< 0.2ms) – ideal para aplicações em tempo real  
+- **Análises em tempo real (1.000 vértices):** Execução muito rápida (< 1ms) – adequado para sistemas de rede ou grafos de estados em jogos  
+- **Grandes volumes (5.000 vértices):** Ainda eficiente (< 40ms) – viável para análise de redes sociais ou sistemas batch que processam milhares de conexões
+
+---
+
+## Conclusão
+
+O algoritmo de Busca em Largura (BFS) é uma das soluções fundamentais para o problema de percorrer grafos e encontrar caminhos mínimos em grafos não ponderados. Ele funciona de forma em camadas, visitando primeiro todos os vértices a distância 1 da origem, depois os a distância 2, e assim sucessivamente, garantindo sempre a menor quantidade de arestas até cada vértice alcançável. A implementação utiliza uma fila para gerenciar os vértices a explorar, além de vetores auxiliares para armazenar distâncias, predecessores e a ordem de visita. Sua complexidade de tempo é O(V+A), onde V é o número de vértices e A o número de arestas, sendo eficiente tanto para grafos esparsos quanto para grafos densos. Por isso, a BFS é amplamente utilizada em aplicações práticas como análise de redes sociais, sistemas de roteamento em redes de computadores, jogos de tabuleiro e problemas de inteligência artificial que envolvem busca em grafos de estados. 
+A BFS é um dos algoritmos mais eficientes e robustos para encontrar **caminhos mínimos em grafos não ponderados**.  
+Graças à sua simplicidade e garantias matemáticas, é amplamente utilizada em sistemas reais que exigem desempenho e escalabilidade.
+
 
 Para acessar a documentação detalhada do algoritmo completa do [Busca em Largura (BFS)](documentation/bfs/Bfs.md)
 
