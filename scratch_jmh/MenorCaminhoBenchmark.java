@@ -1,5 +1,3 @@
-package br.ufcg.computacao.benchmark;
-
 import java.util.Random;
 
 import java.util.concurrent.TimeUnit;
