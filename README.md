@@ -180,7 +180,21 @@ Para acessar a documentação detalhada do algoritmo completa do [Dijkstra](docu
 
 ### 3. Algoritmo de Disjoint Set Union (DSU)
 
-O Disjoint Set Union (DSU), também conhecido como Union-Find, é uma estrutura de dados fundamental para lidar com conjuntos disjuntos. Ela permite determinar rapidamente se dois elementos pertencem ao mesmo conjunto e unir conjuntos distintos. A eficiência do DSU depende das heurísticas empregadas: na versão básica, sem otimizações, as operações podem custar até O(n) no pior caso; já com técnicas como Union by Size/Rank e Path Compression, o custo é reduzido para tempo quase constante, com complexidade amortizada de O(log n). Essa eficiência torna o DSU essencial em algoritmos de grafos, como na detecção de ciclos e no algoritmo de Kruskal para árvores geradoras mínimas, além de aplicações em problemas de conectividade dinâmica e redes.
+#### Complexidade Teórica
+
+- **Tempo (sem otimizações):** O(n) no pior caso para operações de união ou busca  
+- **Tempo (com otimizações - Union by Rank/Size + Path Compression):** O(α(n)) por operação, onde α(n) é a Função Inversa de Ackermann (cresce muito lentamente, sendo praticamente constante na prática)  
+- **Espaço:** O(n) - para armazenar os pais e, opcionalmente, os ranks/tamanhos  
+
+#### Aplicações Práticas
+- Detecção de ciclos em grafos não direcionados  
+- Algoritmo de Kruskal para Árvores Geradoras Mínimas  
+- Problemas de conectividade dinâmica (ex.: redes de computadores, redes sociais)  
+- Processamento de componentes conexos em imagens ou mapas  
+- Sistemas de classificação/agrupamento em competições ou conjuntos disjuntos de dados  
+
+Para acessar a documentação detalhada do algoritmo completa do [Disjoint-set-union](documentation/disjointsetunion/DisjointSetUnion.MD)
+
 
 Para acessar a documentação detalhada do algoritmo completa do [Disjoint Set Union (DSU)](documentation/disjointsetunion/DisjointSetUnion.MD)
  
