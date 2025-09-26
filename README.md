@@ -180,12 +180,12 @@ Para acessar a documentação detalhada do algoritmo completa do [Dijkstra](docu
 
 O Disjoint Set Union (DSU), também conhecido como Union-Find, é uma estrutura de dados fundamental para lidar com conjuntos disjuntos. Ela permite determinar rapidamente se dois elementos pertencem ao mesmo conjunto e unir conjuntos distintos. A eficiência do DSU depende das heurísticas empregadas: na versão básica, sem otimizações, as operações podem custar até O(n) no pior caso; já com técnicas como Union by Size/Rank e Path Compression, o custo é reduzido para tempo quase constante, com complexidade amortizada de O(log n). Essa eficiência torna o DSU essencial em algoritmos de grafos, como na detecção de ciclos e no algoritmo de Kruskal para árvores geradoras mínimas, além de aplicações em problemas de conectividade dinâmica e redes.
 
-Para acessar a documentação detalhada do algoritmo completa do [Disjoint Set Union (DSU)](documentation/menorCaminho/disjointsetunion/DisjointSetUnion (DisjointSetUnion.md) 
+Para acessar a documentação detalhada do algoritmo completa do [Disjoint Set Union (DSU)](documentation/disjointsetunion/DisjointSetUnion.md) 
 ### 4. Algoritmo de Busca em Largura (BFS)
 
 O algoritmo de Busca em Largura (BFS) é uma das soluções fundamentais para o problema de percorrer grafos e encontrar caminhos mínimos em grafos não ponderados. Ele funciona de forma em camadas, visitando primeiro todos os vértices a distância 1 da origem, depois os a distância 2, e assim sucessivamente, garantindo sempre a menor quantidade de arestas até cada vértice alcançável. A implementação utiliza uma fila para gerenciar os vértices a explorar, além de vetores auxiliares para armazenar distâncias, predecessores e a ordem de visita. Sua complexidade de tempo é O(V+A), onde V é o número de vértices e A o número de arestas, sendo eficiente tanto para grafos esparsos quanto para grafos densos. Por isso, a BFS é amplamente utilizada em aplicações práticas como análise de redes sociais, sistemas de roteamento em redes de computadores, jogos de tabuleiro e problemas de inteligência artificial que envolvem busca em grafos de estados.
 
-Para acessar a documentação detalhada do algoritmo completa do [Busca em Largura (BFS)](documentation/menorCaminho/bfs/BFs.md)
+Para acessar a documentação detalhada do algoritmo completa do [Busca em Largura (BFS)](documentation/bfs/BFs.md)
 ## Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
